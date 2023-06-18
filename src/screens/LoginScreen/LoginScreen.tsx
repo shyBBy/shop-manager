@@ -1,0 +1,57 @@
+import React from 'react';
+import {Dimensions, Image, TouchableOpacity, View} from 'react-native';
+import {Layout, Text} from '@ui-kitten/components';
+import LoginForm from "../../components/Forms/LoginForm";
+import {CreatedBy} from "../../components/CreatedBy/CreatedBy";
+import {useNavigation} from "@react-navigation/native";
+import {StackNavigationProp} from "@react-navigation/stack";
+
+
+const logoImage = require('../../../assets/logo2.png'); // Załóżmy, że logo znajduje się w folderze assets
+
+
+type RootStackParamList = {
+    Register: undefined;
+    // Dodaj inne ekrany, jeśli są wymagane
+};
+
+type RegisterNavigationProp = StackNavigationProp<RootStackParamList,
+    "Register">;
+
+const LoginScreen: React.FC = () => {
+    const screenWidth = Dimensions.get('window').width;
+    const navigation = useNavigation<RegisterNavigationProp>();
+
+    const handleRegisterPress = () => {
+        navigation.navigate('Register');
+    };
+
+    return (
+        <Layout style={{height: '100%'}}>
+            <View style={{
+                padding: 5,
+                marginTop: `5%`,
+            }}>
+                <View>
+                    <Image
+                        source={logoImage}
+                        style={{
+                            width: screenWidth * 0.6, // Wybierz odpowiednią szerokość w zależności od preferencji
+                            height: undefined,
+                            aspectRatio: 1, // Utrzymuje proporcje obrazka
+                            alignSelf: 'center',
+                            resizeMode: 'contain', // Dopasowuje obrazek do wymiarów
+                        }}
+                    />
+                </View>
+                <LoginForm/>
+                <TouchableOpacity onPress={handleRegisterPress}>
+                    <Text style={{ alignSelf: 'center', marginTop: 16 }}>Nie masz konta? Zarejestruj się</Text>
+                </TouchableOpacity>
+                <CreatedBy/>
+            </View>
+        </Layout>
+    );
+};
+
+export default LoginScreen;
