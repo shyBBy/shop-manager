@@ -15,6 +15,7 @@ export interface UserRes {
         token: string;
         email: string;
         uuid: string;
+        store: boolean;
     };
 }
 

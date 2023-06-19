@@ -106,6 +106,7 @@ export const AuthProvider = ({children}: { children: JSX.Element }) => {
                     token: responseData.data.token,
                     email: responseData.data.email,
                     uuid: responseData.data.uuid,
+                    store: responseData.data.store,
                 };
 
                 setUser(responseData);

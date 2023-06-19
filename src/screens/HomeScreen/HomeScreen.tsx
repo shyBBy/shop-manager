@@ -3,11 +3,11 @@ import {Text, View} from 'react-native';
 
 const HomeScreen: React.FC = () => {
 
+const {user} = useAuth();
 
     return (
         <View>
-            <Text>Witaj</Text>
-
+            
         </View>
     );
 };
