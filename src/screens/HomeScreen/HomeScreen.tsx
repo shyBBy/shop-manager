@@ -2,33 +2,26 @@ import React, {useEffect, useState} from 'react';
 import {useAuth} from "../../hooks/useAuth";
 import {Layout, Text} from "@ui-kitten/components";
 import {CreateStoreScreenContainer} from "./CreateStoreScreen/CreateStoreScreen";
+import {BasicStoreDetails} from "../../components/BasicStoreDetails/BasicStoreDetails";
 
-const Home: React.FC = () => {
+const Home: React.FC = (store: any) => {
     const {user} = useAuth();
 
 
     return (
         <>
             <Layout style={{paddingLeft: 10}}>
-                <Text category='h4'>Nazwa sklepu</Text>
-                {user?.email ? (
-                    <Text>Email: {user.email}</Text>
-                ) : (
-                    <Text>Nie jesteś zalogowany</Text>
-                )}
-
                 {user?.store ? (
-                    <Text>SKLEP: {user.store?.name}</Text>
-                ) : (
-                    <Text>Brak sklepu</Text>
-                )}
+                    <Text category='h4'>{user.store?.name}</Text>
+                ) : null}
             </Layout>
+            <BasicStoreDetails/>
         </>
     );
 }
 
 const HomeScreen: React.FC = () => {
-    const { user } = useAuth();
+    const {user} = useAuth();
     const [userStore, setUserStore] = useState(user?.store);
 
     useEffect(() => {
@@ -37,7 +30,7 @@ const HomeScreen: React.FC = () => {
 
     return (
         <>
-            {userStore ? <Home /> : <CreateStoreScreenContainer />}
+            {userStore ? <Home/> : <CreateStoreScreenContainer/>}
         </>
     );
 };

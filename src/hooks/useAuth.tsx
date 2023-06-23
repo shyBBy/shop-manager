@@ -6,6 +6,7 @@ import {useNavigation} from "@react-navigation/native";
 import {setIfErrMsg} from "../helpers/setIfErrMsg";
 import {Login, UserRes} from "../interfaces/auth.interfaces";
 import {LoginNavigationProp} from "../interfaces/navigation.interfaces";
+import {StorageManager} from "../helpers/asyncStorage";
 
 
 interface AuthContextType {
@@ -105,6 +106,7 @@ export const AuthProvider = ({children}: { children: JSX.Element }) => {
             }
 
             const userData = (await res.json()) as UserRes;
+            await StorageManager.saveObject('store', userData.store)
             setUser(userData);
             ToastAndroid.show(
                 `Pomyślnie zalogowano, witaj ${userData.email}`,

@@ -12,33 +12,25 @@ class API {
     }
 
     private async getAuthorizationHeader() {
-        const token = await AsyncStorage.getItem('jwt');
         return {
-            Authorization: `Bearer ${token}`,
+            credentials: 'include',
+            'Content-Type': 'application/json',
         };
     }
 
-    private async handleResponse(response: Response) {
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.message);
-        }
-        return response.json();
-    }
 
-    public async getStoreByUserUuid(user_uuid: string | any) {
-        try {
-            const headers = await this.getAuthorizationHeader();
-            const response = await fetch(`https://api.dev-olczak.pl/store/${user_uuid}`, {
-                headers,
-
-            });
-            return this.handleResponse(response);
-        } catch (error) {
-            console.error('Błąd pobierania sklepu:', error);
-            throw error;
-        }
-    }
+    // public async getStoreByUserId(user_id: string | any) {
+    //     try {
+    //         const response = await fetch(`https://api.dev-olczak.pl/store/byuserid/${user_id}`, {
+    //             credentials: 'include',
+    //         });
+    //         const data = await response.json()
+    //         console.log(`--------W API------`, data)
+    //     } catch (error) {
+    //         console.error('Błąd pobierania sklepu:', error);
+    //         throw error;
+    //     }
+    // }
 
     public async getAllStores() {
         try {
@@ -46,7 +38,7 @@ class API {
             const response = await fetch(`${this.baseUrl}/store/list`, {
                 headers,
             });
-            return this.handleResponse(response);
+
         } catch (error) {
             console.error('Błąd pobierania wszystkich sklepów:', error);
             throw error;
@@ -59,7 +51,7 @@ class API {
             const response = await fetch(`${this.baseUrl}/orders/${orderId}`, {
                 headers,
             });
-            return this.handleResponse(response);
+
         } catch (error) {
             console.error('Błąd pobierania zamówienia:', error);
             throw error;
@@ -68,11 +60,12 @@ class API {
 
     public async getAllOrders() {
         try {
-            const headers = await this.getAuthorizationHeader();
-            const response = await fetch(`${this.baseUrl}/orders`, {
-                headers,
+
+            const response = await fetch(`${this.baseUrl}/order/list`, {
+                credentials: 'include',
             });
-            return this.handleResponse(response);
+            const data = await response.json()
+            return data
         } catch (error) {
             console.error('Błąd pobierania wszystkich zamówień:', error);
             throw error;
@@ -121,7 +114,7 @@ class API {
                 },
                 body: JSON.stringify({ status: newStatus }),
             });
-            return this.handleResponse(response);
+
         } catch (error) {
             console.error('Błąd zmiany statusu zamówienia:', error);
             throw error;
@@ -134,7 +127,7 @@ class API {
             const response = await fetch(`${this.baseUrl}/user`, {
                 headers,
             });
-            return this.handleResponse(response);
+
         } catch (error) {
             console.error('Błąd pobierania zalogowanego użytkownika:', error);
             throw error;
@@ -144,101 +137,4 @@ class API {
 
 export default new API();
 
-
-//AXIOS METHOD
-
-
-// import AsyncStorage from '@react-native-async-storage/async-storage';
-// import axios, { AxiosInstance } from 'axios';
-//
-// class API {
-//     private client: AxiosInstance;
-//
-//     constructor() {
-//         this.client = axios.create({
-//             baseURL: 'https://api.dev-olczak.pl',
-//         });
-//
-//         this.client.interceptors.request.use(async (config) => {
-//             const token = await AsyncStorage.getItem('jwt');
-//             if (token) {
-//                 config.headers.Authorization = `Bearer ${token}`;
-//             }
-//             return config;
-//         });
-//     }
-//
-//     public async getStoreByUserUuid(user_uuid: string | any) {
-//         try {
-//             const response = await this.client.get(`/store/${user_uuid}`);
-//             return response.data;
-//         } catch (error) {
-//             console.error('Błąd pobierania sklepu:', error);
-//             throw error;
-//         }
-//     }
-//
-//
-//     public async getAllStores() {
-//         try {
-//             const response = await this.client.get('/stores');
-//             return response.data;
-//         } catch (error) {
-//             console.error('Błąd pobierania wszystkich sklepów:', error);
-//             throw error;
-//         }
-//     }
-//
-//     public async getOrder(orderId: string) {
-//         try {
-//             const response = await this.client.get(`/orders/${orderId}`);
-//             return response.data;
-//         } catch (error) {
-//             console.error('Błąd pobierania zamówienia:', error);
-//             throw error;
-//         }
-//     }
-//
-//     public async getAllOrders() {
-//         try {
-//             const response = await this.client.get('/orders');
-//             return response.data;
-//         } catch (error) {
-//             console.error('Błąd pobierania wszystkich zamówień:', error);
-//             throw error;
-//         }
-//     }
-//
-//     public async createStore(storeData: any) {
-//         try {
-//             const response = await this.client.post('/store/create', storeData);
-//             return response.data;
-//         } catch (error) {
-//             console.error('Błąd tworzenia sklepu:', error);
-//             throw error;
-//         }
-//     }
-//
-//     public async changeOrderStatus(orderId: string, newStatus: string) {
-//         try {
-//             const response = await this.client.put(`/orders/${orderId}/status`, { status: newStatus });
-//             return response.data;
-//         } catch (error) {
-//             console.error('Błąd zmiany statusu zamówienia:', error);
-//             throw error;
-//         }
-//     }
-//
-//     public async getLoggedInUser() {
-//         try {
-//             const response = await this.client.get('/user');
-//             return response.data;
-//         } catch (error) {
-//             console.error('Błąd pobierania zalogowanego użytkownika:', error);
-//             throw error;
-//         }
-//     }
-// }
-//
-// export default new API();
 
