@@ -1,25 +1,17 @@
-import {Login, UserRes} from "../interfaces/auth.interfaces";
 import {BackHandler, ToastAndroid} from "react-native";
 import {createContext, useContext, useEffect, useState} from "react";
-import axios from "axios";
 import {config} from "../config/config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {useNavigation} from "@react-navigation/native";
-import {StackNavigationProp} from "@react-navigation/stack";
-
-export type RootStackParamList = {
-    Login: undefined;
-    // Dodaj inne ekrany, jeśli są wymagane
-};
-
-export type LoginNavigationProp = StackNavigationProp<RootStackParamList,
-    "Login">;
+import {setIfErrMsg} from "../helpers/setIfErrMsg";
+import {Login, UserRes} from "../interfaces/auth.interfaces";
+import {LoginNavigationProp} from "../interfaces/navigation.interfaces";
 
 
 interface AuthContextType {
     user: UserRes | null;
     setUser: React.Dispatch<React.SetStateAction<UserRes | null>>;
-    signIn: (data: Login) => Promise<void>;
+    signIn: (data: Login) => Promise<any>;
     signOut: () => void;
 }
 
@@ -53,7 +45,7 @@ export const AuthProvider = ({children}: { children: JSX.Element }) => {
                 BackHandler.removeEventListener("hardwareBackPress", handleBackButton); // Usuwanie nasłuchiwania na wciśnięcie przycisku powrotu
                 navigation.reset({
                     index: 0,
-                    routes: [{ name: "Login" }],
+                    routes: [{name: "Login"}],
                 });
             } else {
                 const errorData = await response.json();
@@ -69,61 +61,56 @@ export const AuthProvider = ({children}: { children: JSX.Element }) => {
     };
 
     useEffect(() => {
-        const checkLoginStatus = async () => {
+        (async () => {
             try {
-                const res = await fetch(`${config.API_URL}/user`, {
-                    credentials: "include",
-                });
-
-                if (res.ok) {
-                    const userData = await res.json() as UserRes;
+                const res = await fetch(
+                    `${config.API_URL}/user`,
+                    {
+                        credentials: 'include',
+                    },
+                );
+                const errMsg = await setIfErrMsg(res);
+                if (!errMsg) {
+                    const userData = await res.json();
                     setUser(userData);
                 } else {
                     setUser(null);
                 }
-            } catch (error) {
-                setUser(null);
-            }
-        };
+            } catch (err) {
 
-        checkLoginStatus();
+            }
+        })();
     }, []);
 
     const signIn = async (data: Login) => {
         try {
-            const response = await fetch(`${config.API_URL}/auth/login`, {
+            const res = await fetch(`${config.API_URL}/auth/login`, {
                 method: "POST",
+                credentials: 'include',
                 headers: {
-                    "Content-Type": "application/json",
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(data),
-                credentials: "include",
             });
 
-            if (response.ok) {
-                const responseData = await response.json();
-                const userData = {
-                    token: responseData.data.token,
-                    email: responseData.data.email,
-                    uuid: responseData.data.uuid,
-                    store: responseData.data.store,
-                };
-
-                setUser(responseData);
-
+            if (!res.ok) {
+                const errorData = await res.json()
                 ToastAndroid.show(
-                    `Pomyślnie zalogowano, witaj ${userData.email}`,
+                    `${errorData.message}`,
                     ToastAndroid.LONG
                 );
-
-                await AsyncStorage.setItem("jwt", userData.token);
-
-                axios.defaults.headers.common["Authorization"] = `Bearer ${userData.token}`;
-            } else {
-                const errorData = await response.json();
-                ToastAndroid.show(`${errorData.message}`, ToastAndroid.SHORT);
                 setUser(null);
+                return
             }
+
+            const userData = (await res.json()) as UserRes;
+            setUser(userData);
+            ToastAndroid.show(
+                `Pomyślnie zalogowano, witaj ${userData.email}`,
+                ToastAndroid.LONG
+            );
+
         } catch (error) {
             ToastAndroid.show(
                 "Coś poszło nie tak, spróbuj raz jeszcze.",

@@ -1,18 +1,19 @@
-import React, { useState } from 'react';
-import { Button, Text, TextInput, View } from 'react-native';
-import { Controller, useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { Login } from '../../interfaces/auth.interfaces';
-import { useAuth } from '../../hooks/useAuth';
-import { loginSchema } from '../../schemas/login.schema';
+import React, {useState} from 'react';
+import {View} from 'react-native';
+import {Controller, useForm} from 'react-hook-form';
+import {yupResolver} from '@hookform/resolvers/yup';
+import {Login} from '../../interfaces/auth.interfaces';
+import {useAuth} from '../../hooks/useAuth';
+import {loginSchema} from '../../schemas/login.schema';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import {Button, Input, Text} from '@ui-kitten/components';
 
 const LoginForm = () => {
     const [message, setMessage] = useState('');
-    const { signIn } = useAuth();
+    const {signIn} = useAuth();
 
-    const { control, handleSubmit, formState: { errors } } = useForm<{ email: string; password: string }>({
+    const {control, handleSubmit, formState: {errors}} = useForm<{ email: string; password: string }>({
         resolver: yupResolver(loginSchema),
     });
 
@@ -29,22 +30,22 @@ const LoginForm = () => {
     };
 
     return (
-        <View style={{ padding: 16 }}>
+        <View style={{padding: 16}}>
             <Controller
                 control={control}
-                render={({ field: { onChange, onBlur, value } }) => (
+                render={({field: {onChange, onBlur, value}}) => (
                     <View>
-                        <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Login</Text>
-                        <TextInput
-                            placeholder="Wpisz swój e-mail"
-                            keyboardType="email-address"
+                        <Text category="h6" style={{fontWeight: 'bold'}}>Login</Text>
+                        <Input
+                            placeholder="Wpisz swój adres e-mail"
+                            keyboardType="default"
                             autoCapitalize="none"
                             onChangeText={onChange}
                             onBlur={onBlur}
                             value={value}
-                            style={{ borderWidth: 1, borderColor: 'gray', padding: 10, marginBottom: 10 }}
+                            style={{marginBottom: 10}}
                         />
-                        {errors.email && <Text style={{ color: 'red' }}>{errors.email.message}</Text>}
+                        {errors.email && <Text style={{color: 'red'}}>{errors.email.message}</Text>}
                     </View>
                 )}
                 name="email"
@@ -53,26 +54,27 @@ const LoginForm = () => {
 
             <Controller
                 control={control}
-                render={({ field: { onChange, onBlur, value } }) => (
+                render={({field: {onChange, onBlur, value}}) => (
                     <View>
-                        <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Hasło</Text>
-                        <TextInput
+                        <Text category="h6" style={{fontWeight: 'bold'}}>Hasło</Text>
+                        <Input
                             placeholder="Wpisz swoje hasło"
-                            secureTextEntry
+                            keyboardType="default"
                             autoCapitalize="none"
                             onChangeText={onChange}
                             onBlur={onBlur}
                             value={value}
-                            style={{ borderWidth: 1, borderColor: 'gray', padding: 10, marginBottom: 10 }}
+                            style={{marginBottom: 10}}
+                            secureTextEntry={true}
                         />
-                        {errors.password && <Text style={{ color: 'red' }}>{errors.password.message}</Text>}
+                        {errors.password && <Text style={{color: 'red'}}>{errors.password.message}</Text>}
                     </View>
                 )}
                 name="password"
                 defaultValue=""
             />
-            <View style={{ alignItems: 'center' }}>
-                <Button title="Zaloguj się" onPress={handleSubmit(handleFormSubmit)} />
+            <View style={{alignItems: 'center'}}>
+                <Button onPress={handleSubmit(handleFormSubmit)}>Zaloguj się</Button>
             </View>
         </View>
     );

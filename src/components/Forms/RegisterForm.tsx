@@ -3,17 +3,11 @@ import {Controller, useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {registerSchema} from "../../schemas/register.schema";
 import {config} from "../../config/config";
-import {Button, Text, TextInput, ToastAndroid, View} from "react-native";
+import {ToastAndroid, View} from "react-native";
 import {useNavigation} from "@react-navigation/native";
-import {StackNavigationProp} from "@react-navigation/stack";
+import {Button, Card, Input, Text} from '@ui-kitten/components';
+import {LoginNavigationProp} from "../../interfaces/navigation.interfaces";
 
-type RootStackParamList = {
-    Login: undefined;
-    // Dodaj inne ekrany, jeśli są wymagane
-};
-
-type LoginNavigationProp = StackNavigationProp<RootStackParamList,
-    "Login">;
 
 export const RegisterForm = () => {
     const navigation = useNavigation<LoginNavigationProp>();
@@ -56,15 +50,15 @@ export const RegisterForm = () => {
                 control={control}
                 render={({ field: { onChange, onBlur, value } }) => (
                     <View>
-                        <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Login</Text>
-                        <TextInput
+                        <Text category="h6" style={{ fontWeight: 'bold' }}>Login</Text>
+                        <Input
                             placeholder="Wpisz swój e-mail"
-                            keyboardType="email-address"
+                            keyboardType="default"
                             autoCapitalize="none"
                             onChangeText={onChange}
                             onBlur={onBlur}
                             value={value}
-                            style={{ borderWidth: 1, borderColor: 'gray', padding: 10, marginBottom: 10 }}
+                            style={{ marginBottom: 10 }}
                         />
                         {errors.email && <Text style={{ color: 'red' }}>{errors.email.message}</Text>}
                     </View>
@@ -77,15 +71,16 @@ export const RegisterForm = () => {
                 control={control}
                 render={({ field: { onChange, onBlur, value } }) => (
                     <View>
-                        <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Hasło</Text>
-                        <TextInput
-                            placeholder="Wpisz swoje hasło"
-                            secureTextEntry
+                        <Text category="h6" style={{ fontWeight: 'bold' }}>Hasło</Text>
+                        <Input
+                            placeholder="Wpisz hasło"
+                            keyboardType="default"
                             autoCapitalize="none"
                             onChangeText={onChange}
                             onBlur={onBlur}
                             value={value}
-                            style={{ borderWidth: 1, borderColor: 'gray', padding: 10, marginBottom: 10 }}
+                            style={{ marginBottom: 10 }}
+                            secureTextEntry={true}
                         />
                         {errors.password && <Text style={{ color: 'red' }}>{errors.password.message}</Text>}
                     </View>
@@ -94,14 +89,7 @@ export const RegisterForm = () => {
                 defaultValue=""
             />
             <View style={{ alignItems: 'center' }}>
-                {/*<Button title="Utwórz konto" onPress={handleSubmit(onSubmit)} />*/}
-                <Button title="Tymczasowo rejestracja wyłączona" />
-            </View>
-            <View style={{marginTop: 30 }}>
-                <Text>Skorzystaj z konta testowego:</Text>
-                <Text>login: test@test.com</Text>
-                <Text>haslo: test123</Text>
-                <Text>Kliknij poniżej aby przejść na stronę logowania</Text>
+                <Button onPress={handleSubmit(onSubmit)}>Stwórz konto</Button>
             </View>
         </View>
     )

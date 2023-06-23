@@ -1,18 +1,76 @@
-import React from 'react';
-import {Controller, useForm} from "react-hook-form";
-import {yupResolver} from "@hookform/resolvers/yup";
-import {registerSchema} from "../../schemas/register.schema";
-import {config} from "../../config/config";
-import {Button, Text, TextInput, ToastAndroid, View} from "react-native";
-import {useNavigation} from "@react-navigation/native";
-import {StackNavigationProp} from "@react-navigation/stack";
+import React from "react";
+import {createMaterialTopTabNavigator} from "@react-navigation/material-top-tabs";
+import {Card, Layout, Tab, TabBar, Text} from '@ui-kitten/components';
+import {CreateStoreForm} from "../../../components/Forms/CreateStoreForm";
+import {useAuth} from "../../../hooks/useAuth";
 
-export const CreateStoreScreen: React.FC = () => {
+interface TopTabBarProps {
+    navigation: any;
+    state: any;
+}
+
+const {Navigator, Screen} = createMaterialTopTabNavigator();
+
+const TutorialScreen = () => (
+    <Layout style={{flex: 1}}>
+        <Card>
+            <Text category="h6" style={{ marginBottom: 10 }}>Konfiguracja sklepu WooCommerce</Text>
+            <Text style={{ marginBottom: 15 }}>
+                Jeśli widzisz ten komunikat, oznacza to, że nie masz jeszcze skonfigurowanego sklepu WooCommerce.
+                Aby wygenerować klucz klienta (consumer key) i klucz sekretny (consumer secret) dla swojego sklepu WooCommerce,
+                postępuj zgodnie z poniższymi krokami:
+            </Text>
+            <Text>
+                1. Zaloguj się do panelu administratora swojego sklepu WooCommerce.
+            </Text>
+            <Text>
+                2. Przejdź do sekcji "Ustawienia" (Settings) w menu bocznym.
+            </Text>
+            <Text>
+                3. Wybierz zakładkę "API" (API).
+            </Text>
+            <Text>
+                4. Kliknij przycisk "Utwórz klucz" (Generate API Key) lub "Dodaj klucz" (Add Key).
+            </Text>
+            <Text>
+                5. Podaj opis dla swojego klucza (np. "Moje aplikacje"), wybierz uprawnienia dostępu
+                (zalecane minimum to "Widok" - Read) i kliknij przycisk "Generuj klucz" (Generate Key).
+            </Text>
+            <Text>
+                6. Po wygenerowaniu klucza klienta i klucza sekretnego, skopiuj je i zapisz w bezpiecznym miejscu.
+            </Text>
+            <Text>
+                Gotowe! Teraz możesz użyć tych kluczy do integracji swojego sklepu WooCommerce z innymi aplikacjami lub usługami.
+            </Text>
+        </Card>
+    </Layout>
+);
+
+const CreateStoreScreen = () => (
+    <Layout style={{flex: 1, padding: 20}}>
+        <CreateStoreForm/>
+    </Layout>
+);
+
+const TopTabBar = ({navigation, state}: TopTabBarProps) => (
+    <TabBar
+        selectedIndex={state.index}
+        onSelect={index => navigation.navigate(state.routeNames[index])}>
+        <Tab title='PORADNIK'/>
+        <Tab title='DODAJ SKLEP'/>
+    </TabBar>
+);
+
+const TabNavigator = () => (
+    <Navigator tabBar={props => <TopTabBar {...props} />}>
+        <Screen name='Users' component={TutorialScreen}/>
+        <Screen name='Orders' component={CreateStoreScreen}/>
+    </Navigator>
+);
 
 
+export const CreateStoreScreenContainer = () => {
     return (
-        <View>
-            
-        </View>
-    );
-};
+        <TabNavigator/>
+    )
+}
