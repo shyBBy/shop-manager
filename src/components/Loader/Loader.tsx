@@ -1,6 +1,6 @@
 import React from "react";
-import { Layout, Spinner } from "@ui-kitten/components";
-import { StyleSheet } from "react-native";
+import {Layout, Spinner, Text} from "@ui-kitten/components";
+import {StyleSheet, View} from "react-native";
 
 const styles = StyleSheet.create({
     container: {
@@ -11,9 +11,10 @@ const styles = StyleSheet.create({
 });
 
 export const Loader = () => (
-    <Layout style={styles.container}>
-        <Spinner size="giant" />
-    </Layout>
+    <View style={styles.container}>
+        <Spinner size="giant" status='info' />
+        <Text>Wczytywanie listy zamówień</Text>
+    </View>
 );
 
 

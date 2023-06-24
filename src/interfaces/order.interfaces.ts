@@ -147,3 +147,23 @@ export type GetOneOrderResponse = OrderProfileInterface
 
 export type GetListOfOrdersResponse = GetOneOrderResponse[]
 
+export enum OrderStatus {
+    ALL = "all",
+    SENT = "in-transit",
+    IN_PROGRESS = "processing",
+    COMPLETED = "completed",
+    CANCELLED = "cancelled",
+}
+
+export enum OrderStatusColor {
+    PENDING = "#ffd166",
+    PROCESSING = "#b3c7d6",
+    ON_HOLD = "#ffb380",
+    COMPLETED = "#a0d9af",
+    CANCELLED = "#780000",
+    REFUNDED = "#d6b3d6",
+    FAILED = "#808080",
+    IN_TRANSIT = "#feeaa1",
+    TRASH = "black",
+    DEFAULT = "gray",
+}

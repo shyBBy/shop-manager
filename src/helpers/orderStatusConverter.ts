@@ -1,3 +1,7 @@
+import {MaterialCommunityIcons, AntDesign, Feather} from '@expo/vector-icons';
+import {OrderStatusColor} from "../interfaces/order.interfaces";
+
+
 export const OrderStatusConverter = (status: string) => {
     switch (status) {
         case "pending":
@@ -12,6 +16,8 @@ export const OrderStatusConverter = (status: string) => {
             return "Anulowane";
         case "refunded":
             return "Zwrócone";
+        case "in-transit":
+            return "Wysłane";
         case "failed":
             return "Nieudane";
         case "trash":
@@ -24,22 +30,25 @@ export const OrderStatusConverter = (status: string) => {
 export const getStatusColor = (status: string) => {
     switch (status) {
         case "pending":
-            return "#ffd166";
+            return OrderStatusColor.PENDING;
         case "processing":
-            return "#468faf";
+            return OrderStatusColor.PROCESSING;
         case "on-hold":
-            return "#fb8500";
+            return OrderStatusColor.ON_HOLD;
         case "completed":
-            return "#80ed99";
+            return OrderStatusColor.COMPLETED;
         case "cancelled":
-            return "#780000";
+            return OrderStatusColor.CANCELLED;
         case "refunded":
-            return "purple";
+            return OrderStatusColor.REFUNDED;
         case "failed":
-            return "gray";
+            return OrderStatusColor.FAILED;
+        case "in-transit":
+            return OrderStatusColor.IN_TRANSIT;
         case "trash":
-            return "black";
+            return OrderStatusColor.TRASH;
         default:
-            return "gray";
+            return OrderStatusColor.DEFAULT;
     }
 };
+
