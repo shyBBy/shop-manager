@@ -9,18 +9,29 @@ import ShopScreen from "../screens/ShopScreen/ShopScreen";
 import OrdersScreen from "../screens/OrdersScreen/OrdersScreen";
 import SettingsScreen from "../screens/SettingsScreen/SettingsScreen";
 import HomeScreen from "../screens/HomeScreen/HomeScreen";
+import {createStackNavigator} from "@react-navigation/stack";
+import {SingleOrderProfileScreen} from "../screens/OrdersScreen/SingleOrderProfileScreen/SingleOrderProfileScreen";
+
 
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
+
+const OrdersStack = () => (
+    <Stack.Navigator screenOptions={{headerShown: false}}>
+        <Stack.Screen name="Orders" component={OrdersScreen} />
+        <Stack.Screen name="SingleOrderProfile" component={SingleOrderProfileScreen} />
+    </Stack.Navigator>
+);
 
 const AuthenticatedApp = () => {
     return (
         <ApplicationProvider {...eva} theme={eva.light}>
-            <IconRegistry icons={EvaIconsPack}/>
+            <IconRegistry icons={EvaIconsPack} />
 
             <Tab.Navigator
                 tabBar={props => <BottomTabBar {...props} />}
-                screenOptions={({route}) => ({
-                    tabBarIcon: ({color, size}) => {
+                screenOptions={({ route }) => ({
+                    tabBarIcon: ({ color, size }) => {
                         let iconName;
 
                         if (route.name === 'Główna') {
@@ -33,16 +44,15 @@ const AuthenticatedApp = () => {
                             iconName = 'shopping-cart-outline';
                         }
 
-                        return <Icon name={iconName} width={size} height={size} fill={color}/>;
+                        return <Icon name={iconName} width={size} height={size} fill={color} />;
                     },
                 })}
             >
-                <Tab.Screen name="Główna" options={{title: 'Mój sklep'}} component={HomeScreen}/>
-                <Tab.Screen name="Zamówienia" component={OrdersScreen}/>
-                <Tab.Screen name="Ustawienia" component={SettingsScreen}/>
-                <Tab.Screen name="Sklep" component={ShopScreen}/>
+                <Tab.Screen name="Główna" options={{ title: 'Mój sklep' }} component={HomeScreen} />
+                <Tab.Screen name="Zamówienia" component={OrdersStack} />
+                <Tab.Screen name="Ustawienia" component={SettingsScreen} />
+                <Tab.Screen name="Sklep" component={ShopScreen} />
             </Tab.Navigator>
-
         </ApplicationProvider>
     );
 };

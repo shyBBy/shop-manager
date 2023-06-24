@@ -2,13 +2,20 @@ import React from "react";
 import {Button, ListItem, Text} from "@ui-kitten/components";
 import {getStatusColor, OrderStatusConverter} from "../../helpers/orderStatusConverter";
 import {AntDesign, Feather, MaterialCommunityIcons} from '@expo/vector-icons';
-import {View} from "react-native";
+import {ToastAndroid, View} from "react-native";
 import {OrderStatusColor} from "../../interfaces/order.interfaces";
+import { useNavigation } from "@react-navigation/native";
 
 
 export const SingleOrderElementOfList = (props: any) => {
     const {order} = props
+    const navigation = useNavigation();
 
+    const showOrderProfileScreen = (orderId: number) => {
+        const id = orderId.toString();
+        // @ts-ignore
+        navigation.navigate("SingleOrderProfile", { orderId: id });
+    };
 
     const formatDate = (dateString: string) => {
         const date = new Date(dateString);
@@ -28,18 +35,21 @@ export const SingleOrderElementOfList = (props: any) => {
         switch (status) {
             case "processing":
                 return (
-                    <MaterialCommunityIcons style={{marginRight: 5}} name="progress-clock" size={30} color={OrderStatusColor.PROCESSING} />
+                    <MaterialCommunityIcons style={{marginRight: 5}} name="progress-clock" size={30}
+                                            color={OrderStatusColor.PROCESSING}/>
                 );
             case "in-transit":
                 return (
-                    <MaterialCommunityIcons style={{marginRight: 5}} name="truck-fast-outline" size={30} color={OrderStatusColor.IN_TRANSIT} />
+                    <MaterialCommunityIcons style={{marginRight: 5}} name="truck-fast-outline" size={30}
+                                            color={OrderStatusColor.IN_TRANSIT}/>
                 );
             case "completed":
-                return <AntDesign style={{marginRight: 5}} name="checkcircleo" size={30} color={OrderStatusColor.COMPLETED} />;
+                return <AntDesign style={{marginRight: 5}} name="checkcircleo" size={30}
+                                  color={OrderStatusColor.COMPLETED}/>;
             case "cancelled":
-                return <Feather style={{marginRight: 5}} name="x-circle" size={30} color={OrderStatusColor.CANCELLED} />;
+                return <Feather style={{marginRight: 5}} name="x-circle" size={30} color={OrderStatusColor.CANCELLED}/>;
             default:
-                return <Feather style={{marginRight: 5}} name="box" size={30} color={OrderStatusColor.DEFAULT} />;
+                return <Feather style={{marginRight: 5}} name="box" size={30} color={OrderStatusColor.DEFAULT}/>;
         }
     };
 
@@ -75,6 +85,7 @@ export const SingleOrderElementOfList = (props: any) => {
             accessoryLeft={() => getOrderIcon(order.status)}
             accessoryRight={InstallButton}
             style={{marginBottom: 5, marginTop: 5}}
+            onPress={() => showOrderProfileScreen(order.id)}
         />
     );
 }

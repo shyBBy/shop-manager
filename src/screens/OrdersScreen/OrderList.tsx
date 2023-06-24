@@ -4,14 +4,20 @@ import Api from "../../api/api";
 import {Loader} from "../../components/Loader/Loader";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {SingleOrderElementOfList} from "../../components/Orders/SingleOrderElementOfList";
-import {View} from "react-native";
+import {ToastAndroid, View} from "react-native";
 import {Button, Layout, Tab, TabBar, Text} from "@ui-kitten/components";
+import {useNavigation} from "@react-navigation/native";
 
+
+interface OrderListProps {
+    orders: GetListOfOrdersResponse[];
+}
 
 export const OrderList = () => {
     const [ordersList, setOrdersList] = useState<GetListOfOrdersResponse>([]);
     const [loading, setLoading] = useState(true);
     const [selectedTabIndex, setSelectedTabIndex] = useState(0);
+    const navigation = useNavigation();
 
     useEffect(() => {
         (async () => {
@@ -32,6 +38,7 @@ export const OrderList = () => {
     const handleTabSelect = (selectedIndex: number) => {
         setSelectedTabIndex(selectedIndex);
     };
+
 
     if (loading) {
         return (
