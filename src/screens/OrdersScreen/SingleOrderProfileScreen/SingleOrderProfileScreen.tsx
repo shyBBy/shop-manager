@@ -24,15 +24,20 @@ export const SingleOrderProfileScreen = () => {
     const navigation = useNavigation();
     const route = useRoute<RouteProp<Record<string, SingleOrderProfileParams>, string>>();
     const [order, setOrder] = useState<GetOneOrderResponse | null>(null)
+    const [shipping, setShipping] = useState<any>(null)
+    const [shippingTracking, setShippingTracking] = useState<any>(null)
     const [loading, setLoading] = useState(true);
     const {orderId} = route.params;
 
 
     useEffect(() => {
         (async () => {
-            const order = await Api.getOrder(orderId);
-            setOrder(order);
+            const data = await Api.getOrder(orderId);
+            setOrder(data.order);
+            setShipping(data.shipping)
+            setShippingTracking(data.shipping_tracking)
             setLoading(false);
+            console.log(data)
         })();
     }, []);
 
@@ -84,6 +89,14 @@ export const SingleOrderProfileScreen = () => {
                     {order?.line_items.map(product => (
                         <SingleProductElementOfList product={product} key={product.id}/>
                     ))}
+                </Card>
+            </Layout>
+
+            <Layout>
+                <Card>
+                    <Text category='h6'>Historia przesyłki:</Text>
+                    
+                    <Text>{`${shipping?.id}`}</Text>
                 </Card>
             </Layout>
         </SafeAreaView>

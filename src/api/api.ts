@@ -50,7 +50,7 @@ class API {
                 credentials: 'include',
             });
             const data = await response.json()
-            return data.order
+            return data
         } catch (error) {
             console.error('Błąd pobierania zamówienia:', error);
             throw error;
