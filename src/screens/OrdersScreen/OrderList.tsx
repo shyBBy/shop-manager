@@ -73,9 +73,9 @@ export const OrderList = () => {
                 </TabBar>
                 <View style={{flex: 1, marginTop: 40}}>
                     {filteredOrders.map((order) => (
-                        <Layout>
+                        <Layout key={order.id}>
                             <Card>
-                                <SingleOrderElementOfList order={order} key={order.id}/>
+                                <SingleOrderElementOfList order={order}/>
                             </Card>
                         </Layout>
                     ))}

@@ -6,6 +6,7 @@ import {ToastAndroid, View} from "react-native";
 import {OrderStatusColor} from "../../interfaces/order.interfaces";
 import { useNavigation } from "@react-navigation/native";
 import {formatDate} from "../Utils/formatDate.utils";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 
 export const SingleOrderElementOfList = (props: any) => {
@@ -31,52 +32,53 @@ export const SingleOrderElementOfList = (props: any) => {
         switch (status) {
             case "processing":
                 return (
-                    <MaterialCommunityIcons style={{marginRight: 5}} name="progress-clock" size={30}
+                    <MaterialCommunityIcons  name="progress-clock" size={30}
                                             color={OrderStatusColor.PROCESSING}/>
                 );
             case "in-transit":
                 return (
-                    <MaterialCommunityIcons style={{marginRight: 5}} name="truck-fast-outline" size={30}
+                    <MaterialCommunityIcons  name="truck-fast-outline" size={30}
                                             color={OrderStatusColor.IN_TRANSIT}/>
                 );
             case "completed":
-                return <AntDesign style={{marginRight: 5}} name="checkcircleo" size={30}
+                return <AntDesign  name="checkcircleo" size={30}
                                   color={OrderStatusColor.COMPLETED}/>;
             case "cancelled":
-                return <Feather style={{marginRight: 5}} name="x-circle" size={30} color={OrderStatusColor.CANCELLED}/>;
+                return <Feather  name="x-circle" size={30} color={OrderStatusColor.CANCELLED}/>;
             default:
-                return <Feather style={{marginRight: 5}} name="box" size={30} color={OrderStatusColor.DEFAULT}/>;
+                return <Feather  name="box" size={30} color={OrderStatusColor.DEFAULT}/>;
         }
     };
 
-    const ClientData = (): React.ReactElement => (
-        <>
-            <Text>{`${order.billing.first_name} ${order.billing.last_name}`}</Text>
-            <View style={{
-                backgroundColor: statusColor,
-                borderRadius: 4,
-                padding: 4,
-                alignSelf: 'flex-start',
-                marginTop: 4,
-            }}>
-                <Text category="s2" style={{color: '#46494c'}}>
-                    {OrderStatusConverter(order.status)}
-                </Text>
-            </View>
-        </>
-    )
-
-
-    const OrderDateAndNumber = (): React.ReactElement => (
-        <>
-            <Text>{formatDate(order.date_created)}</Text>
-            <Text style={{fontWeight: 'bold'}}>{`#${order.id}`}</Text>
-        </>
-    )
-
+    // onPress={() => showOrderProfileScreen(order.id)}
     return (
-        <View>
+        <TouchableOpacity onPress={() => showOrderProfileScreen(order.id)}>
+                <View style={{flexDirection: 'row', marginTop: 1, alignItems: 'center'}} >
+                <View style={{flexBasis: 55}}>
+                    {getOrderIcon(order.status)}
+                </View>
 
-        </View>
+                <View style={{flexBasis: 170, flexGrow: 2}}>
+                    <Text>{formatDate(order.date_created)}</Text>
+                    <View style={{ flexDirection: 'row', flexBasis: 170}}>
+                        <Text style={{fontWeight: 'bold', marginRight: 10}}>{`#${order.id}`}</Text>
+                        <Text>{`${order.billing.first_name} ${order.billing.last_name}`}</Text>
+                    </View>
+                    <View style={{
+                        backgroundColor: statusColor,
+                        borderRadius: 4,
+                        padding: 4,
+                        alignSelf: 'flex-start',
+                        marginTop: 4,
+                    }}>
+                        <Text category="s2" style={{color: '#46494c'}}>
+                        {OrderStatusConverter(order.status)}
+                        </Text>
+                    </View>
+                </View>
+
+                <Text>{`${order.total} zł`}</Text>
+            </View>
+        </TouchableOpacity>
     );
 }

@@ -21,6 +21,8 @@ export const OrderStatusConverter = (status: string | any) => {
             return "Nieudane";
         case "trash":
             return "Kosz";
+        case "refund":
+            return "Zwrócone";
         default:
             return status;
     }
