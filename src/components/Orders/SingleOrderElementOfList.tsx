@@ -5,6 +5,7 @@ import {AntDesign, Feather, MaterialCommunityIcons} from '@expo/vector-icons';
 import {ToastAndroid, View} from "react-native";
 import {OrderStatusColor} from "../../interfaces/order.interfaces";
 import { useNavigation } from "@react-navigation/native";
+import {formatDate} from "../Utils/formatDate.utils";
 
 
 export const SingleOrderElementOfList = (props: any) => {
@@ -17,12 +18,7 @@ export const SingleOrderElementOfList = (props: any) => {
         navigation.navigate("SingleOrderProfile", { orderId: id });
     };
 
-    const formatDate = (dateString: string) => {
-        const date = new Date(dateString);
-        const day = date.getDate();
-        const month = date.toLocaleString("default", {month: "short"});
-        return `${day} ${month}`;
-    };
+
     const statusColor = getStatusColor(order.status)
 
     const InstallButton = (): React.ReactElement => (
@@ -79,13 +75,8 @@ export const SingleOrderElementOfList = (props: any) => {
     )
 
     return (
-        <ListItem
-            title={<OrderDateAndNumber/>}
-            description={<ClientData/>}
-            accessoryLeft={() => getOrderIcon(order.status)}
-            accessoryRight={InstallButton}
-            style={{marginBottom: 5, marginTop: 5}}
-            onPress={() => showOrderProfileScreen(order.id)}
-        />
+        <View>
+
+        </View>
     );
 }

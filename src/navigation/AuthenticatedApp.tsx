@@ -49,7 +49,7 @@ const AuthenticatedApp = () => {
                 })}
             >
                 <Tab.Screen name="Główna" options={{ title: 'Mój sklep' }} component={HomeScreen} />
-                <Tab.Screen name="Zamówienia" component={OrdersStack} />
+                <Tab.Screen options={{headerShown: false}} name="Zamówienia" component={OrdersStack} />
                 <Tab.Screen name="Ustawienia" component={SettingsScreen} />
                 <Tab.Screen name="Sklep" component={ShopScreen} />
             </Tab.Navigator>

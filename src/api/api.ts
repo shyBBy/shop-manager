@@ -1,4 +1,3 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {config} from "../config/config";
 import {ToastAndroid} from "react-native";
 import {useNavigation} from "@react-navigation/native";
@@ -45,13 +44,13 @@ class API {
         }
     }
 
-    public async getOrder(orderId: string) {
+    public async getOrder(orderId: string | number) {
         try {
-            const headers = await this.getAuthorizationHeader();
-            const response = await fetch(`${this.baseUrl}/orders/${orderId}`, {
-                headers,
+            const response = await fetch(`${this.baseUrl}/order/${orderId}`, {
+                credentials: 'include',
             });
-
+            const data = await response.json()
+            return data.order
         } catch (error) {
             console.error('Błąd pobierania zamówienia:', error);
             throw error;
@@ -112,7 +111,7 @@ class API {
                     ...headers,
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ status: newStatus }),
+                body: JSON.stringify({status: newStatus}),
             });
 
         } catch (error) {

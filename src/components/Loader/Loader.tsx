@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
 export const Loader = () => (
     <View style={styles.container}>
         <Spinner size="giant" status='info' />
-        <Text>Wczytywanie listy zamówień</Text>
+        <Text>Wczytywanie...</Text>
     </View>
 );
 

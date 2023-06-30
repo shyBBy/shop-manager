@@ -1,8 +1,7 @@
-import {MaterialCommunityIcons, AntDesign, Feather} from '@expo/vector-icons';
 import {OrderStatusColor} from "../interfaces/order.interfaces";
 
 
-export const OrderStatusConverter = (status: string) => {
+export const OrderStatusConverter = (status: string | any) => {
     switch (status) {
         case "pending":
             return "Oczekujące";
@@ -27,7 +26,7 @@ export const OrderStatusConverter = (status: string) => {
     }
 };
 
-export const getStatusColor = (status: string) => {
+export const getStatusColor = (status: string | any) => {
     switch (status) {
         case "pending":
             return OrderStatusColor.PENDING;

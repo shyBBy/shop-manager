@@ -4,10 +4,9 @@ import Api from "../../api/api";
 import {Loader} from "../../components/Loader/Loader";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {SingleOrderElementOfList} from "../../components/Orders/SingleOrderElementOfList";
-import {ToastAndroid, View} from "react-native";
-import {Button, Layout, Tab, TabBar, Text} from "@ui-kitten/components";
+import {View} from "react-native";
+import {Card, Layout, Tab, TabBar, Text} from "@ui-kitten/components";
 import {useNavigation} from "@react-navigation/native";
-
 
 interface OrderListProps {
     orders: GetListOfOrdersResponse[];
@@ -61,21 +60,28 @@ export const OrderList = () => {
     );
 
     return (
-        <Layout style={{flex: 1}}>
-            <TabBar
-                selectedIndex={selectedTabIndex}
-                onSelect={handleTabSelect}
-            >
-                {orderStatusTabs.map((tab) => (
-                    <Tab title={tab.title} key={tab.status}/>
-                ))}
-            </TabBar>
-            <View style={{flex: 1}}>
-                {filteredOrders.map((order) => (
-                    <SingleOrderElementOfList order={order} key={order.id}/>
-                ))}
-                {/*<Button style={{padding: 5}} appearance='outline' status='info' size='small'>Wyświetl więcej</Button>*/}
-            </View>
-        </Layout>
+        <SafeAreaView>
+            <Layout style={{flex: 1}}>
+                <Text style={{marginLeft: 15, marginTop: 15}} category='h6' >Lista zamówień</Text>
+                <TabBar
+                    selectedIndex={selectedTabIndex}
+                    onSelect={handleTabSelect}
+                >
+                    {orderStatusTabs.map((tab) => (
+                        <Tab title={tab.title} key={tab.status}/>
+                    ))}
+                </TabBar>
+                <View style={{flex: 1, marginTop: 40}}>
+                    {filteredOrders.map((order) => (
+                        <Layout>
+                            <Card>
+                                <SingleOrderElementOfList order={order} key={order.id}/>
+                            </Card>
+                        </Layout>
+                    ))}
+                    {/*<Button style={{padding: 5}} appearance='outline' status='info' size='small'>Wyświetl więcej</Button>*/}
+                </View>
+            </Layout>
+        </SafeAreaView>
     );
 };
