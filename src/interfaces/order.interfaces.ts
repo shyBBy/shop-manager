@@ -140,6 +140,7 @@ export interface OrderProfileInterface {
             href: string;
         }>;
     };
+    payment_status: string;
 }
 
 

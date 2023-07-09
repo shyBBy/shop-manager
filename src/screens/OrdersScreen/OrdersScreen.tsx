@@ -5,9 +5,7 @@ import {OrderList} from "./OrderList";
 const OrdersScreen: React.FC = () => {
     return (
         <ScrollView>
-            <View>
-                <OrderList/>
-            </View>
+            <OrderList/>
         </ScrollView>
     );
 };

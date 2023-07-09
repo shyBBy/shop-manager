@@ -5,19 +5,17 @@ import {GetOneOrderResponse} from "../../../interfaces/order.interfaces";
 import Api from "../../../api/api";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {Loader} from "../../../components/Loader/Loader";
-import {Ionicons} from '@expo/vector-icons';
-import {View} from "react-native";
-import {StyleSheet} from "react-native";
-import {formatDate, formatDateWithYearAndHours} from "../../../components/Utils/formatDate.utils";
+import {AntDesign, Ionicons} from '@expo/vector-icons';
+import {ScrollView, StyleSheet, View} from "react-native";
+import {formatDateWithYearAndHours} from "../../../components/Utils/formatDate.utils";
 import {getStatusColor, OrderStatusConverter} from "../../../helpers/orderStatusConverter";
-import { AntDesign } from '@expo/vector-icons';
 import {SingleProductElementOfList} from "../../../components/Orders/SingleProductElementOfList";
+import {ShippingOrderInformation} from "../../../components/Orders/ShippingOrder/ShippingOrderInformation";
+import {PaymentInfo} from "../../../components/Orders/Payment/PaymentInfo";
 
 interface SingleOrderProfileParams {
     orderId: number;
 }
-
-
 
 
 export const SingleOrderProfileScreen = () => {
@@ -37,14 +35,17 @@ export const SingleOrderProfileScreen = () => {
             setShipping(data.shipping)
             setShippingTracking(data.shipping_tracking)
             setLoading(false);
-            console.log(data)
+            console.log(`data`, data)
+            console.log(`order`, data.order)
+            console.log(`shipping`, data.shipping)
+            console.log(`tracking`, data.shipping_tracking)
         })();
     }, []);
 
     if (loading) {
         return (
             <SafeAreaView>
-                <Loader/>
+                <Loader title={'Wczytywanie szczegółowych danych zamówienia'}/>
             </SafeAreaView>
         );
     }
@@ -55,50 +56,75 @@ export const SingleOrderProfileScreen = () => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <Layout style={styles.layoutContainer}>
-                <View style={styles.header}>
-                    <Ionicons name="arrow-back" size={27} color="black" onPress={handleGoBack} />
-                    <Text style={styles.orderTitle} category='h5'>Zamówienie: #{orderId}</Text>
-                </View>
-            </Layout>
-
-            <Layout>
-                <Card>
-                    <Text>{formatDateWithYearAndHours(order?.date_created)}</Text>
-                    <Text category='h5'>{`${order?.billing.first_name} ${order?.billing.last_name}`}</Text>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <View style={{
-                            backgroundColor: getStatusColor(order?.status),
-                            borderRadius: 4,
-                            padding: 4,
-                            alignSelf: 'flex-start',
-                            marginTop: 4,
-                        }}>
-                            <Text category="s2" style={{ color: '#46494c', flexGrow: 1 }}>
-                                {OrderStatusConverter(order?.status)}
-                            </Text>
-                        </View>
-                        <AntDesign name="edit" size={24} color="black" />
+            <ScrollView>
+                <Layout style={styles.layoutContainer}>
+                    <View style={styles.header}>
+                        <Ionicons name="arrow-back" size={27} color="black" onPress={handleGoBack}/>
+                        <Text style={styles.orderTitle} category='h5'>Zamówienie: #{orderId}</Text>
                     </View>
-                </Card>
-            </Layout>
+                </Layout>
 
-            <Layout>
-                <Card>
-                    <Text category='h6'>Zamówione produkty:</Text>
-                    {order?.line_items.map(product => (
-                        <SingleProductElementOfList product={product} key={product.id}/>
-                    ))}
-                </Card>
-            </Layout>
+                <Layout>
+                    <Card>
+                        <Text>{formatDateWithYearAndHours(order?.date_created)}</Text>
+                        <Text category='h5'>{`${order?.billing.first_name} ${order?.billing.last_name}`}</Text>
+                        <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+                            <View style={{
+                                backgroundColor: getStatusColor(order?.status),
+                                borderRadius: 4,
+                                padding: 4,
+                                alignSelf: 'flex-start',
+                                marginTop: 4,
+                            }}>
+                                <Text category="s2" style={{color: '#46494c', flexGrow: 1}}>
+                                    {OrderStatusConverter(order?.status)}
+                                </Text>
+                            </View>
+                            <AntDesign name="edit" size={24} color="black"/>
+                        </View>
+                    </Card>
+                </Layout>
 
-            <Layout>
-                <Card>
-                    <Text category='h6'>Historia przesyłki:</Text>
-                    
-                    <Text>{`${shipping?.id}`}</Text>
-                </Card>
-            </Layout>
+                <Layout>
+                    <Card>
+                        <Text category='h6'>Dane kupującego:</Text>
+                        <View>
+                            <Text>{`${order?.billing.first_name} ${order?.billing.last_name}`}</Text>
+                            <Text>{`${order?.billing.address_1}`}</Text>
+                            <Text>{`${order?.billing.postcode} ${order?.billing.city}`}</Text>
+                            <Text>{`${order?.billing.country}`}</Text>
+                            <Text>{`${order?.billing.email}`}</Text>
+                            <Text>{`${order?.billing.phone}`}</Text>
+                        </View>
+                        {order?.billing.company ? <View><Text category='h6'>Dane Firmy:</Text>
+                            <View>
+                                <Text>{`${order?.billing.company}`}</Text>
+                            </View></View> : <Text>Brak</Text>}
+                    </Card>
+                </Layout>
+
+                <Layout>
+                    <Card>
+                        <Text category='h6'>Zamówione produkty:</Text>
+                        {order?.line_items.map(product => (
+                            <SingleProductElementOfList product={product} key={product.id}/>
+                        ))}
+                    </Card>
+                </Layout>
+
+                <Layout>
+                    <Card>
+                        <Text category='h6'>Płatność:</Text>
+                        <PaymentInfo order={order}/>
+                    </Card>
+                </Layout>
+
+                <Layout>
+                    <Card>
+                        <ShippingOrderInformation shipping={shipping} key={order?.id} order={order}/>
+                    </Card>
+                </Layout>
+            </ScrollView>
         </SafeAreaView>
     );
 }

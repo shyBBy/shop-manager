@@ -4,9 +4,10 @@ import Api from "../../api/api";
 import {Loader} from "../../components/Loader/Loader";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {SingleOrderElementOfList} from "../../components/Orders/SingleOrderElementOfList";
-import {View} from "react-native";
+import {TouchableOpacity, View} from "react-native";
 import {Card, Layout, Tab, TabBar, Text} from "@ui-kitten/components";
 import {useNavigation} from "@react-navigation/native";
+import { Ionicons } from '@expo/vector-icons';
 
 interface OrderListProps {
     orders: GetListOfOrdersResponse[];
@@ -17,6 +18,7 @@ export const OrderList = () => {
     const [loading, setLoading] = useState(true);
     const [selectedTabIndex, setSelectedTabIndex] = useState(0);
     const navigation = useNavigation();
+    const [loadingOrders, setLoadingOrders] = useState(false);
 
     useEffect(() => {
         (async () => {
@@ -39,10 +41,10 @@ export const OrderList = () => {
     };
 
 
-    if (loading) {
+    if (loading || loadingOrders) {
         return (
             <SafeAreaView>
-                <Loader/>
+                <Loader title={'Wczytywanie listy zamówień...'}/>
             </SafeAreaView>
         );
     }
@@ -59,18 +61,38 @@ export const OrderList = () => {
         orderStatusTabs[selectedTabIndex].status
     );
 
+    const handleRefreshOrders = async () => {
+        try {
+            setLoadingOrders(true);
+            const orders = await Api.getAllOrders();
+            setOrdersList(orders);
+        } catch (error) {
+            console.error("Error refreshing orders", error);
+        } finally {
+            setLoadingOrders(false);
+        }
+    };
+
     return (
         <SafeAreaView>
             <Layout style={{flex: 1}}>
-                <Text style={{marginLeft: 15, marginTop: 15}} category='h6' >Lista zamówień</Text>
-                <TabBar
-                    selectedIndex={selectedTabIndex}
-                    onSelect={handleTabSelect}
-                >
-                    {orderStatusTabs.map((tab) => (
-                        <Tab title={tab.title} key={tab.status}/>
-                    ))}
-                </TabBar>
+                <View>
+                    <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', margin: 15}}>
+                        <Text category='h6' >Lista zamówień</Text>
+                        <TouchableOpacity onPress={handleRefreshOrders} style={{flexDirection: 'row', alignItems: 'center'}}>
+                            <Ionicons name="reload-circle-outline" size={20} color="black" />
+                            <Text>Odśwież listę zamówień</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <TabBar
+                        selectedIndex={selectedTabIndex}
+                        onSelect={handleTabSelect}
+                    >
+                        {orderStatusTabs.map((tab) => (
+                            <Tab title={tab.title} key={tab.status}/>
+                        ))}
+                    </TabBar>
+                </View>
                 <View style={{flex: 1, marginTop: 40}}>
                     {filteredOrders.map((order) => (
                         <Layout key={order.id}>
@@ -79,7 +101,6 @@ export const OrderList = () => {
                             </Card>
                         </Layout>
                     ))}
-                    {/*<Button style={{padding: 5}} appearance='outline' status='info' size='small'>Wyświetl więcej</Button>*/}
                 </View>
             </Layout>
         </SafeAreaView>

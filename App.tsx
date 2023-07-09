@@ -9,29 +9,33 @@ import * as eva from '@eva-design/eva';
 import AuthenticatedApp from "./src/navigation/AuthenticatedApp";
 import {StatusBar} from "expo-status-bar";
 
+
 const App = () => {
-  return (
-      <SafeAreaProvider>
-        <StatusBar style="auto"/>
-        <ApplicationProvider {...eva} theme={eva.light}>
-          <NavigationContainer>
-            <AuthProvider>
-              <AppContent />
-            </AuthProvider>
-          </NavigationContainer>
-        </ApplicationProvider>
-      </SafeAreaProvider>
-  );
+    return (
+        <SafeAreaProvider>
+            <StatusBar style="auto"/>
+            <ApplicationProvider {...eva} theme={eva.light}>
+                <NavigationContainer>
+                    <AuthProvider>
+                        <AppContent/>
+                    </AuthProvider>
+                </NavigationContainer>
+            </ApplicationProvider>
+        </SafeAreaProvider>
+    );
 };
 
 function AppContent() {
-  const {user} = useAuth();
 
-  return (
-      <>
-        {user ? <AuthenticatedApp /> : <UnauthenticatedApp />}
-      </>
-  );
+    const {user} = useAuth();
+
+    return (
+        <>
+            {user ? <AuthenticatedApp/> : <UnauthenticatedApp/>}
+        </>
+    );
 }
 
 export default App;
+
+
