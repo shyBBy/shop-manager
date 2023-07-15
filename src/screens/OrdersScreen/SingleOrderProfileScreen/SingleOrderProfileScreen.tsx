@@ -12,6 +12,7 @@ import {getStatusColor, OrderStatusConverter} from "../../../helpers/orderStatus
 import {SingleProductElementOfList} from "../../../components/Orders/SingleProductElementOfList";
 import {ShippingOrderInformation} from "../../../components/Orders/ShippingOrder/ShippingOrderInformation";
 import {PaymentInfo} from "../../../components/Orders/Payment/PaymentInfo";
+import {Test} from "./Test";
 
 interface SingleOrderProfileParams {
     orderId: number;
@@ -33,12 +34,13 @@ export const SingleOrderProfileScreen = () => {
             const data = await Api.getOrder(orderId);
             setOrder(data.order);
             setShipping(data.shipping)
+            // console.log(data)
             setShippingTracking(data.shipping_tracking)
             setLoading(false);
-            console.log(`data`, data)
-            console.log(`order`, data.order)
-            console.log(`shipping`, data.shipping)
-            console.log(`tracking`, data.shipping_tracking)
+            // console.log(`data`, data)
+            // console.log(`order`, data.order)
+            // console.log(`shipping`, data.shipping)
+            // console.log(`tracking`, data.shipping_tracking)
         })();
     }, []);
 
@@ -121,7 +123,7 @@ export const SingleOrderProfileScreen = () => {
 
                 <Layout>
                     <Card>
-                        <ShippingOrderInformation shipping={shipping} key={order?.id} order={order}/>
+                        <ShippingOrderInformation shipping={shipping} shippingTracking={shippingTracking} key={order?.id} order={order}/>
                     </Card>
                 </Layout>
             </ScrollView>

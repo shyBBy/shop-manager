@@ -6,11 +6,12 @@ import {OrderProfileInterface} from "../../../interfaces/order.interfaces";
 
 interface ShippingOrderInformationProps {
     shipping: SingleShippingInterface;
+    shippingTracking: any;
     order: OrderProfileInterface | null
 }
 
 
-export const ShippingOrderInformation: React.FC<ShippingOrderInformationProps> = ({shipping, order}) => {
+export const ShippingOrderInformation: React.FC<ShippingOrderInformationProps> = ({shipping, order, shippingTracking}) => {
 
     const handleOpenURL = useCallback(async () => {
         const url = 'https://furgonetka.pl/konto/sprzedaz';
@@ -20,6 +21,8 @@ export const ShippingOrderInformation: React.FC<ShippingOrderInformationProps> =
     const handleOpenTrackingShiping = useCallback(async (url: any) => {
         await Linking.openURL(url);
     }, []);
+
+    console.log(shipping)
 
     if (!shipping) {
         return (
@@ -34,7 +37,7 @@ export const ShippingOrderInformation: React.FC<ShippingOrderInformationProps> =
 
     return (
         <>
-            <View>
+            <View >
                 <Text category='h6'>Numer przesyłki:</Text>
                 <TouchableOpacity onPress={handleOpenURL} style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
                     <Text>{shipping.parcels[0].package_no}</Text>

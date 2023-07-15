@@ -23,6 +23,7 @@ export const OrderList = () => {
     useEffect(() => {
         (async () => {
             const orders = await Api.getAllOrders();
+            console.log(orders)
             setOrdersList(orders);
             setLoading(false);
         })();
