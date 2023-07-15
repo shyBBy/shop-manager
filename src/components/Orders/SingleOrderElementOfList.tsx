@@ -28,57 +28,38 @@ export const SingleOrderElementOfList = (props: any) => {
         </Button>
     );
 
-    // const getOrderIcon = (status: string): React.ReactElement => {
-    //     switch (status) {
-    //         case "processing":
-    //             return (
-    //                 <MaterialCommunityIcons name="progress-clock" size={30}
-    //                                         color={OrderStatusColor.PROCESSING}/>
-    //             );
-    //         case "in-transit":
-    //             return (
-    //                 <MaterialCommunityIcons name="truck-fast-outline" size={30}
-    //                                         color={OrderStatusColor.IN_TRANSIT}/>
-    //             );
-    //         case "completed":
-    //             return <AntDesign name="checkcircleo" size={30}
-    //                               color={OrderStatusColor.COMPLETED}/>;
-    //         case "cancelled":
-    //             return <Feather name="x-circle" size={30} color={OrderStatusColor.CANCELLED}/>;
-    //         default:
-    //             return <Feather name="box" size={30} color={OrderStatusColor.DEFAULT}/>;
-    //     }
-    // };
-
-    // onPress={() => showOrderProfileScreen(order.id)}
     return (
         <TouchableOpacity onPress={() => showOrderProfileScreen(order.id)}>
-            <View style={{flexDirection: 'row', marginTop: 1, alignItems: 'center'}}>
-                {/*<View style={{flexBasis: 55}}>*/}
-                {/*    {getOrderIcon(order.status)}*/}
-                {/*</View>*/}
-
-                <View style={{flexBasis: 170, flexGrow: 2}}>
+            <View style={{flexDirection: 'row', marginTop: 1}}>
+                <View style={{flex: 1}}>
                     <Text style={{fontSize: 18}}>{formatDate(order.date_created)}</Text>
-                    <View style={{flexDirection: 'row', flexBasis: 170}}>
-                        <Text style={{fontWeight: 'bold', marginRight: 10, fontSize: 18}}>{`#${order.id}`}</Text>
-                        <Text style={{fontSize: 18}}>{`${order.billing.first_name} ${order.billing.last_name}`}</Text>
-                    </View>
-                    <View style={{
-                        backgroundColor: statusColor,
-                        borderRadius: 4,
-                        padding: 4,
-                        alignSelf: 'flex-start',
-                        marginTop: 4,
-                    }}>
+                    <Text style={{fontWeight: 'bold', fontSize: 18}}>
+                        {`#${order.id}`}
+                    </Text>
+                    <Text style={{fontSize: 18}}>
+                        {`${order.billing.first_name} ${order.billing.last_name}`}
+                    </Text>
+                    <View
+                        style={{
+                            backgroundColor: statusColor,
+                            borderRadius: 4,
+                            padding: 4,
+                            alignSelf: 'flex-start',
+                            marginTop: 4,
+                        }}
+                    >
                         <Text category="s2" style={{color: '#46494c', fontSize: 18}}>
                             {OrderStatusConverter(order.status)}
                         </Text>
                     </View>
                 </View>
-
-                <Text style={{fontSize: 18}}>{`${order.total} zł`}</Text>
+                <View style={{alignItems: 'flex-end', justifyContent: 'center'}}>
+                    <Text style={{fontSize: 18}}>{`${order.total} zł`}</Text>
+                </View>
             </View>
         </TouchableOpacity>
+
+
+
     );
 }

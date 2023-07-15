@@ -11,8 +11,8 @@ export const BottomTabBar: React.FC<BottomTabBarProps> = ({ navigation, state })
         <BottomNavigation selectedIndex={state.index} onSelect={onSelect}>
             <BottomNavigationTab title="Główna" />
             <BottomNavigationTab title="Zamówienia" />
-            <BottomNavigationTab title="Ustawienia" />
-            <BottomNavigationTab title="Sklep" />
+            <BottomNavigationTab title="Przesyłki" />
+            <BottomNavigationTab title="Magazyn" />
         </BottomNavigation>
     );
 };

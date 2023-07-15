@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 
-const ShopScreen: React.FC = () => {
+const Warehouse: React.FC = () => {
     return (
         <View>
             <Text>Welcome to Shop Screen!</Text>
@@ -9,4 +9,4 @@ const ShopScreen: React.FC = () => {
     );
 };
 
-export default ShopScreen;
+export default Warehouse;

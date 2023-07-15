@@ -31,11 +31,11 @@ export const PaymentInfo = (props: Props) => {
                 <Text category='h6' style={{fontSize: 17}}>{`${order?.total} zł`}</Text>
             </View>
             <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 20}}>
-                <Text>Rodzaj płatności:</Text>
+                <Text>Rodzaj:</Text>
                 <Text>{order?.payment_method_title}</Text>
             </View>
             <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 2}}>
-                <Text>Data płatności:</Text>
+                <Text>Data:</Text>
                 <Text>{formatDateWithYearAndHours(order?.date_paid)}</Text>
             </View>
         </View>

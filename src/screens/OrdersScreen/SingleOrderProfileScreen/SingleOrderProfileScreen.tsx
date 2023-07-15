@@ -6,13 +6,12 @@ import Api from "../../../api/api";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {Loader} from "../../../components/Loader/Loader";
 import {AntDesign, Ionicons} from '@expo/vector-icons';
-import {ScrollView, StyleSheet, View} from "react-native";
+import {RefreshControl, ScrollView, StyleSheet, View} from "react-native";
 import {formatDateWithYearAndHours} from "../../../components/Utils/formatDate.utils";
 import {getStatusColor, OrderStatusConverter} from "../../../helpers/orderStatusConverter";
 import {SingleProductElementOfList} from "../../../components/Orders/SingleProductElementOfList";
 import {ShippingOrderInformation} from "../../../components/Orders/ShippingOrder/ShippingOrderInformation";
 import {PaymentInfo} from "../../../components/Orders/Payment/PaymentInfo";
-import {Test} from "./Test";
 
 interface SingleOrderProfileParams {
     orderId: number;
@@ -27,22 +26,34 @@ export const SingleOrderProfileScreen = () => {
     const [shippingTracking, setShippingTracking] = useState<any>(null)
     const [loading, setLoading] = useState(true);
     const {orderId} = route.params;
+    const [refreshing, setRefreshing] = useState(false);
 
 
     useEffect(() => {
         (async () => {
+            await fetchData();
+        })();
+    }, []);
+
+    const fetchData = async () => {
+        try {
             const data = await Api.getOrder(orderId);
             setOrder(data.order);
             setShipping(data.shipping)
-            // console.log(data)
             setShippingTracking(data.shipping_tracking)
             setLoading(false);
-            // console.log(`data`, data)
-            // console.log(`order`, data.order)
-            // console.log(`shipping`, data.shipping)
-            // console.log(`tracking`, data.shipping_tracking)
-        })();
-    }, []);
+        } catch (e) {
+            console.error("Error fetching orders", e);
+        } finally {
+            setLoading(false);
+            setRefreshing(false);
+        }
+    }
+
+    const handleRefreshOrders = async () => {
+        setRefreshing(true);
+        await fetchData();
+    };
 
     if (loading) {
         return (
@@ -57,15 +68,17 @@ export const SingleOrderProfileScreen = () => {
     };
 
     return (
-        <SafeAreaView style={styles.container}>
-            <ScrollView>
-                <Layout style={styles.layoutContainer}>
-                    <View style={styles.header}>
-                        <Ionicons name="arrow-back" size={27} color="black" onPress={handleGoBack}/>
-                        <Text style={styles.orderTitle} category='h5'>Zamówienie: #{orderId}</Text>
-                    </View>
-                </Layout>
-
+        <>
+            <SafeAreaView style={styles.container}/>
+            <Layout style={styles.layoutContainer}>
+                <View style={styles.header}>
+                    <Ionicons name="arrow-back" size={27} color="black" onPress={handleGoBack}/>
+                    <Text style={styles.orderTitle} category='h5'>Zamówienie: #{orderId}</Text>
+                </View>
+            </Layout>
+            <ScrollView refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={handleRefreshOrders}/>
+            }>
                 <Layout>
                     <Card>
                         <Text>{formatDateWithYearAndHours(order?.date_created)}</Text>
@@ -123,11 +136,12 @@ export const SingleOrderProfileScreen = () => {
 
                 <Layout>
                     <Card>
-                        <ShippingOrderInformation shipping={shipping} shippingTracking={shippingTracking} key={order?.id} order={order}/>
+                        <ShippingOrderInformation shipping={shipping} shippingTracking={shippingTracking}
+                                                  key={order?.id} order={order}/>
                     </Card>
                 </Layout>
             </ScrollView>
-        </SafeAreaView>
+        </>
     );
 }
 

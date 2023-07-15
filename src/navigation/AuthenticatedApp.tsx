@@ -5,9 +5,9 @@ import {EvaIconsPack} from '@ui-kitten/eva-icons';
 import * as eva from '@eva-design/eva';
 
 import {BottomTabBar} from "../components/BottomTabBar/BottomTabBar";
-import ShopScreen from "../screens/ShopScreen/ShopScreen";
+import Warehouse from "../screens/WarehouseScreen/Warehouse";
 import OrdersScreen from "../screens/OrdersScreen/OrdersScreen";
-import SettingsScreen from "../screens/SettingsScreen/SettingsScreen";
+import ShippingScreen from "../screens/ShippingScreen/ShippingScreen";
 import HomeScreen from "../screens/HomeScreen/HomeScreen";
 import {createStackNavigator} from "@react-navigation/stack";
 import {SingleOrderProfileScreen} from "../screens/OrdersScreen/SingleOrderProfileScreen/SingleOrderProfileScreen";
@@ -38,9 +38,9 @@ const AuthenticatedApp = () => {
                             iconName = 'home-outline';
                         } else if (route.name === 'Zamówienia') {
                             iconName = 'shopping-bag-outline';
-                        } else if (route.name === 'Ustawienia') {
+                        } else if (route.name === 'Przesyłki') {
                             iconName = 'settings-outline';
-                        } else if (route.name === 'Sklep') {
+                        } else if (route.name === 'Magazyn') {
                             iconName = 'shopping-cart-outline';
                         }
 
@@ -50,8 +50,8 @@ const AuthenticatedApp = () => {
             >
                 <Tab.Screen name="Główna" options={{ title: 'Mój sklep' }} component={HomeScreen} />
                 <Tab.Screen options={{headerShown: false}} name="Zamówienia" component={OrdersStack} />
-                <Tab.Screen name="Ustawienia" component={SettingsScreen} />
-                <Tab.Screen name="Sklep" component={ShopScreen} />
+                <Tab.Screen name="Przesyłki" component={ShippingScreen} />
+                <Tab.Screen name="Magazyn" component={Warehouse} />
             </Tab.Navigator>
         </ApplicationProvider>
     );

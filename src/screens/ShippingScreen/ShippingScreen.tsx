@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text, Button, ToastAndroid} from 'react-native';
 import {useAuth} from "../../hooks/useAuth";
 
-const SettingsScreen: React.FC = () => {
+const ShippingScreen: React.FC = () => {
     const { signOut } = useAuth();
 
     const handleSignOut = async () => {
@@ -16,4 +16,4 @@ const SettingsScreen: React.FC = () => {
     );
 };
 
-export default SettingsScreen;
+export default ShippingScreen;
