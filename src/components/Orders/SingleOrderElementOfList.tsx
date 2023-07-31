@@ -1,9 +1,7 @@
 import React from "react";
 import {Button, Text} from "@ui-kitten/components";
 import {getStatusColor, OrderStatusConverter} from "../../helpers/orderStatusConverter";
-import {AntDesign, Feather, MaterialCommunityIcons} from '@expo/vector-icons';
 import {View} from "react-native";
-import {OrderStatusColor} from "../../interfaces/order.interfaces";
 import {useNavigation} from "@react-navigation/native";
 import {formatDate} from "../Utils/formatDate.utils";
 import {TouchableOpacity} from "react-native-gesture-handler";
@@ -58,7 +56,6 @@ export const SingleOrderElementOfList = (props: any) => {
                 </View>
             </View>
         </TouchableOpacity>
-
 
 
     );

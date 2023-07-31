@@ -18,19 +18,6 @@ class API {
     }
 
 
-    // public async getStoreByUserId(user_id: string | any) {
-    //     try {
-    //         const response = await fetch(`https://api.dev-olczak.pl/store/byuserid/${user_id}`, {
-    //             credentials: 'include',
-    //         });
-    //         const data = await response.json()
-    //         console.log(`--------W API------`, data)
-    //     } catch (error) {
-    //         console.error('Błąd pobierania sklepu:', error);
-    //         throw error;
-    //     }
-    // }
-
     public async getAllStores() {
         try {
             const headers = await this.getAuthorizationHeader();
@@ -70,6 +57,7 @@ class API {
             throw error;
         }
     }
+
 
     public async createStore(storeData: any) {
         const navigation = useNavigation<HomeNavigationProp>();
@@ -132,6 +120,39 @@ class API {
             throw error;
         }
     }
+
+
+
+    //REFUNDS SECTION START
+
+    public async getAllRefunds() {
+        try {
+
+            const response = await fetch(`${this.baseUrl}/refund/list`, {
+                credentials: 'include',
+            });
+            const data = await response.json()
+            return data
+        } catch (error) {
+            console.error('Błąd pobierania wszystkich zamówień:', error);
+            throw error;
+        }
+    }
+
+    public async getRefund(refundId: string | number) {
+        try {
+            const response = await fetch(`${this.baseUrl}/refund/${refundId}`, {
+                credentials: 'include',
+            });
+            const data = await response.json()
+            return data
+        } catch (error) {
+            console.error('Błąd pobierania zwrotu:', error);
+            throw error;
+        }
+    }
+
+    //REFUNDS SECTION END
 }
 
 export default new API();

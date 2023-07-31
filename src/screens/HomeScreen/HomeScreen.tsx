@@ -3,7 +3,9 @@ import {useAuth} from "../../hooks/useAuth";
 import {Layout, Text} from "@ui-kitten/components";
 import {CreateStoreScreenContainer} from "./CreateStoreScreen/CreateStoreScreen";
 import {BasicStoreDetails} from "../../components/BasicStoreDetails/BasicStoreDetails";
-import {ScrollView} from "react-native";
+import {ScrollView, View} from "react-native";
+import {Theme} from "../../theme";
+import {SafeAreaView} from "react-native-safe-area-context";
 
 const Home: React.FC = (store: any) => {
     const {user} = useAuth();
@@ -11,12 +13,10 @@ const Home: React.FC = (store: any) => {
 
     return (
         <>
-            <Layout style={{paddingLeft: 10}}>
-                {user?.store ? (
-                    <Text category='h4'>{user.store?.name}</Text>
-                ) : null}
-            </Layout>
-            <BasicStoreDetails/>
+            <SafeAreaView/>
+            <ScrollView style={{backgroundColor: Theme.colors.background}}>
+                <BasicStoreDetails/>
+            </ScrollView>
         </>
     );
 }
@@ -31,9 +31,7 @@ const HomeScreen: React.FC = () => {
 
     return (
         <>
-            <ScrollView>
-                {userStore ? <Home/> : <CreateStoreScreenContainer/>}
-            </ScrollView>
+            {userStore ? <Home/> : <CreateStoreScreenContainer/>}
         </>
     );
 };

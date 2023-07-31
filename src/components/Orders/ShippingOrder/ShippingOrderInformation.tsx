@@ -22,7 +22,6 @@ export const ShippingOrderInformation: React.FC<ShippingOrderInformationProps> =
         await Linking.openURL(url);
     }, []);
 
-    console.log(shipping)
 
     if (!shipping) {
         return (

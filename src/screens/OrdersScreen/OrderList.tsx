@@ -4,7 +4,7 @@ import Api from "../../api/api";
 import {Loader} from "../../components/Loader/Loader";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {SingleOrderElementOfList} from "../../components/Orders/SingleOrderElementOfList";
-import {RefreshControl, ScrollView, View, useWindowDimensions} from "react-native";
+import {RefreshControl, ScrollView, useWindowDimensions, View} from "react-native";
 import {Card, Layout, Tab, TabBar, Text} from "@ui-kitten/components";
 import {useNavigation} from "@react-navigation/native";
 
@@ -20,7 +20,7 @@ export const OrderList = () => {
     const [loadingOrders, setLoadingOrders] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
 
-    const { width, height } = useWindowDimensions();
+    const {width, height} = useWindowDimensions();
     const fontSize = width < 300 ? 9 : 13;
 
     useEffect(() => {
@@ -80,7 +80,7 @@ export const OrderList = () => {
     );
 
 
-    const CustomTab = ({ title, textStyle }: { title: string; textStyle: object }) => (
+    const CustomTab = ({title, textStyle}: { title: string; textStyle: object }) => (
         <Text style={textStyle}>{title}</Text>
     );
 
@@ -99,7 +99,7 @@ export const OrderList = () => {
                     {orderStatusTabs.map((tab) => (
                         <Tab
                             title={() => (
-                                <CustomTab title={tab.title} textStyle={{ fontSize }} />
+                                <CustomTab title={tab.title} textStyle={{fontSize}}/>
                             )}
                             key={tab.status}
                         />
