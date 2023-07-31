@@ -1,6 +1,6 @@
 import React from "react";
 import {Image, View} from "react-native";
-import {Text} from "@ui-kitten/components";
+import {Text} from "react-native-paper";
 import {Product} from "../../interfaces/product.interface";
 import {roundPrice} from "../../helpers/roundPrice";
 

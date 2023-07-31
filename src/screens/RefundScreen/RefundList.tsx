@@ -4,9 +4,9 @@ import {RefreshControl, ScrollView, useWindowDimensions, View} from "react-nativ
 import Api from "../../api/api";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {Loader} from "../../components/Loader/Loader";
-import {Card, Layout} from "@ui-kitten/components";
 import {GetListOfAllRefundsResponse} from "../../interfaces/refund.interface";
 import {SingleRefundElementOfList} from "../../components/Refunds/SingleRefundElementOfList";
+import {Card, Text} from "react-native-paper";
 
 
 export const RefundList = () => {
@@ -62,11 +62,11 @@ export const RefundList = () => {
 
                     <View style={{flex: 1}}>
                         {refundList.map((refund) => (
-                            <Layout key={refund.uuid} style={{marginTop: 15}}>
+                            <View key={refund.uuid} style={{marginTop: 15}}>
                                 <Card>
                                     <SingleRefundElementOfList refund={refund}/>
                                 </Card>
-                            </Layout>
+                            </View>
                         ))}
                     </View>
 

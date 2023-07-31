@@ -1,6 +1,6 @@
 import React from "react";
 import {Linking, TouchableOpacity} from 'react-native';
-import { Text, useTheme } from '@ui-kitten/components';
+import {Text, useTheme} from "react-native-paper";
 
 export const CreatedBy = () => {
     const theme = useTheme();
@@ -22,7 +22,7 @@ export const CreatedBy = () => {
 
     return(
         <TouchableOpacity onPress={handlePress}>
-            <Text style={{ color: theme['color-basic-600'], justifyContent: 'center', textAlign: 'center' }}>
+            <Text style={{justifyContent: 'center', textAlign: 'center' }}>
                 © Aplikacja stworzona przez Dawid 'shyBBy' Olczak © 2023
             </Text>
         </TouchableOpacity>

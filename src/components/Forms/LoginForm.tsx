@@ -7,7 +7,7 @@ import {useAuth} from '../../hooks/useAuth';
 import {loginSchema} from '../../schemas/login.schema';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import {Button, Input, Text} from '@ui-kitten/components';
+import {Text, Card, Button, TextInput} from "react-native-paper";
 
 const LoginForm = () => {
     const [message, setMessage] = useState('');
@@ -35,8 +35,8 @@ const LoginForm = () => {
                 control={control}
                 render={({field: {onChange, onBlur, value}}) => (
                     <View>
-                        <Text category="h6" style={{fontWeight: 'bold'}}>Login</Text>
-                        <Input
+                        <Text  style={{fontWeight: 'bold'}}>Login</Text>
+                        <TextInput
                             placeholder="Wpisz swój adres e-mail"
                             keyboardType="default"
                             autoCapitalize="none"
@@ -56,8 +56,8 @@ const LoginForm = () => {
                 control={control}
                 render={({field: {onChange, onBlur, value}}) => (
                     <View>
-                        <Text category="h6" style={{fontWeight: 'bold'}}>Hasło</Text>
-                        <Input
+                        <Text  style={{fontWeight: 'bold'}}>Hasło</Text>
+                        <TextInput
                             placeholder="Wpisz swoje hasło"
                             keyboardType="default"
                             autoCapitalize="none"

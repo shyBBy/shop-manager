@@ -1,10 +1,10 @@
 import React from "react";
-import {Button, Text} from "@ui-kitten/components";
 import {getStatusColor, OrderStatusConverter} from "../../helpers/orderStatusConverter";
 import {View} from "react-native";
 import {useNavigation} from "@react-navigation/native";
 import {formatDate} from "../Utils/formatDate.utils";
 import {TouchableOpacity} from "react-native-gesture-handler";
+import {Button, Text, Card} from "react-native-paper";
 
 
 export const SingleOrderElementOfList = (props: any) => {
@@ -21,7 +21,7 @@ export const SingleOrderElementOfList = (props: any) => {
     const statusColor = getStatusColor(order.status)
 
     const InstallButton = (): React.ReactElement => (
-        <Button size='small' appearance='outline' status='basic'>
+        <Button>
             {`${order.total} zł`}
         </Button>
     );
@@ -46,7 +46,7 @@ export const SingleOrderElementOfList = (props: any) => {
                             marginTop: 4,
                         }}
                     >
-                        <Text category="s2" style={{color: '#46494c', fontSize: 18}}>
+                        <Text  style={{color: '#46494c', fontSize: 18}}>
                             {OrderStatusConverter(order.status)}
                         </Text>
                     </View>

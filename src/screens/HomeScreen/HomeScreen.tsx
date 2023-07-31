@@ -1,10 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {useAuth} from "../../hooks/useAuth";
-import {Layout, Text} from "@ui-kitten/components";
 import {CreateStoreScreenContainer} from "./CreateStoreScreen/CreateStoreScreen";
 import {BasicStoreDetails} from "../../components/BasicStoreDetails/BasicStoreDetails";
 import {ScrollView, View} from "react-native";
-import {Theme} from "../../theme";
 import {SafeAreaView} from "react-native-safe-area-context";
 
 const Home: React.FC = (store: any) => {
@@ -14,7 +12,7 @@ const Home: React.FC = (store: any) => {
     return (
         <>
             <SafeAreaView/>
-            <ScrollView style={{backgroundColor: Theme.colors.background}}>
+            <ScrollView>
                 <BasicStoreDetails/>
             </ScrollView>
         </>

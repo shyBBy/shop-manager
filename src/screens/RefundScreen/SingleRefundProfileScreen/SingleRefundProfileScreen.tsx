@@ -6,9 +6,9 @@ import {SafeAreaView} from "react-native-safe-area-context";
 import {Loader} from "../../../components/Loader/Loader";
 import {RefreshControl, ScrollView, StyleSheet, View} from "react-native";
 import {Ionicons} from "@expo/vector-icons";
-import {Card, Layout, Text} from "@ui-kitten/components";
 import {RefundRes} from "../../../interfaces/refund.interface";
 import {RefundDetails} from "../../../components/Refunds/RefundDetails";
+import {Card, Text} from "react-native-paper";
 
 
 
@@ -64,31 +64,31 @@ export const SingleRefundProfileScreen = () => {
     return(
         <>
             <SafeAreaView/>
-            <Layout style={styles.layoutContainer}>
+            <View style={styles.layoutContainer}>
                 <View style={styles.header}>
                     <Ionicons name="arrow-back" size={27} color="black" onPress={handleGoBack}/>
-                    <Text style={styles.orderTitle} category='h5'>Zwrot nr: #{refundId}</Text>
+                    <Text style={styles.orderTitle} >Zwrot nr: #{refundId}</Text>
                 </View>
-            </Layout>
+            </View>
             <ScrollView refreshControl={
                 <RefreshControl refreshing={refreshing} onRefresh={handleRefreshRefund}/>
             }>
-                <Layout>
+                <View>
                     <Card>
-                        <Text category='h6'>Szczegóły zwrotu</Text>
+                        <Text >Szczegóły zwrotu</Text>
                         <RefundDetails/>
                     </Card>
-                </Layout>
-                <Layout>
+                </View>
+                <View>
                     <Card>
                         <Text>Test</Text>
                     </Card>
-                </Layout>
-                <Layout>
+                </View>
+                <View>
                     <Card>
                         <Text>Test</Text>
                     </Card>
-                </Layout>
+                </View>
 
             </ScrollView>
         </>

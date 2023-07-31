@@ -1,76 +1,47 @@
-import {dark, light} from "@eva-design/eva";
-import {ThemeType} from "@ui-kitten/components";
+import {MD3LightTheme as DefaultTheme,} from 'react-native-paper';
 
-export const Theme = {
-    // Paleta kolorów
-    colors: {
-        // Domyślny kolor tła (można zmienić na potrzeby konkretnych ekranów)
-        background: '#191923',
-        // Pozostałe kolory z palety
-        primary: '#FFC107',
-        secondary: '#14213D',
-        accent: '#000000',
-        white: '#FFFFFF',
-        grey: '#9C9C9C',
-        // Możesz dodać więcej kolorów według potrzeb
-    },
-    text: {
-        colors: {
-          primary: '#FFFFFF',
-          secondary: '#9C9C9C',
-          accent: '#FFC107',
-        },
-        fonts: {
-          RobotoLight: 'RobotoLight',
-          RobotoRegular: 'RobotoRegular',
-          RobotoMedium: 'RobotoMedium',
-          RobotoBold: 'RobotoBold',
-          AsapLight: 'AsapLight',
-          AsapRegular: 'AsapRegular',
-          AsapMedium: 'AsapMedium',
-          AsapBold: 'AsapBold',
-          BebasNeu: 'BebasNeu',
-          RegularFont: 'AsapRegular',
-          SectionTitleFont: 'BebasNeu',
-        },
-        size: {
-            h1: 32,      // Duży nagłówek
-            h2: 24,      // Średni nagłówek
-            h3: 20,      // Mały nagłówek
-            h4: 18,      // Nagłówek sekcji
-            h5: 16,      // Podtytuł, ważne informacje
-            h6: 14,      // Mały podtytuł, dodatkowe informacje
-            body1: 16,   // Tekst podstawowy
-            body2: 14,   // Tekst mniejszy, dodatkowe informacje
-            subtitle1: 18,  // Podtytuł nagłówka sekcji
-            subtitle2: 16,  // Podtytuł mniejszy
-        },
-    },
-    card: {
-        backgroundColor: '#20202A'
-    },
-    layout: {
-        backgroundColor: '#14213D'
-    },
-    view: {
-        backgroundColor: '#14213D'
-    },
-    // Czcionki
-    textFontFamily: 'Roboto',
-    headingFontFamily: 'BebasNeue',
-    // Rozmiary czcionek
-    textSize: 16,
-    headingSize: 24,
-};
 
-export const lightTheme: ThemeType = {
-    ...light,
-    ...Theme,
-    // Dopasuj pozostałe style do motywu jasnego
-};
-
-export const darkTheme: ThemeType = {
-    ...dark,
-    ...Theme,
-    // Dopasuj pozostałe style do motywu ciemnego
-};
+export const theme = {
+    "colors": {
+        "primary": "rgb(120, 69, 172)",
+        "onPrimary": "rgb(255, 255, 255)",
+        "primaryContainer": "rgb(240, 219, 255)",
+        "onPrimaryContainer": "rgb(44, 0, 81)",
+        "secondary": "rgb(102, 90, 111)",
+        "onSecondary": "rgb(255, 255, 255)",
+        "secondaryContainer": "rgb(237, 221, 246)",
+        "onSecondaryContainer": "rgb(33, 24, 42)",
+        "tertiary": "rgb(128, 81, 88)",
+        "onTertiary": "rgb(255, 255, 255)",
+        "tertiaryContainer": "rgb(255, 217, 221)",
+        "onTertiaryContainer": "rgb(50, 16, 23)",
+        "error": "rgb(186, 26, 26)",
+        "onError": "rgb(255, 255, 255)",
+        "errorContainer": "rgb(255, 218, 214)",
+        "onErrorContainer": "rgb(65, 0, 2)",
+        "background": "rgb(255, 251, 255)",
+        "onBackground": "rgb(29, 27, 30)",
+        "surface": "rgb(255, 251, 255)",
+        "onSurface": "rgb(29, 27, 30)",
+        "surfaceVariant": "rgb(233, 223, 235)",
+        "onSurfaceVariant": "rgb(74, 69, 78)",
+        "outline": "rgb(124, 117, 126)",
+        "outlineVariant": "rgb(204, 196, 206)",
+        "shadow": "rgb(0, 0, 0)",
+        "scrim": "rgb(0, 0, 0)",
+        "inverseSurface": "rgb(50, 47, 51)",
+        "inverseOnSurface": "rgb(245, 239, 244)",
+        "inversePrimary": "rgb(220, 184, 255)",
+        "elevation": {
+            "level0": "transparent",
+            "level1": "rgb(248, 242, 251)",
+            "level2": "rgb(244, 236, 248)",
+            "level3": "rgb(240, 231, 246)",
+            "level4": "rgb(239, 229, 245)",
+            "level5": "rgb(236, 226, 243)"
+        },
+        "surfaceDisabled": "rgba(29, 27, 30, 0.12)",
+        "onSurfaceDisabled": "rgba(29, 27, 30, 0.38)",
+        "backdrop": "rgba(51, 47, 55, 0.4)"
+    }
+}

@@ -5,8 +5,8 @@ import {registerSchema} from "../../schemas/register.schema";
 import {config} from "../../config/config";
 import {ToastAndroid, View} from "react-native";
 import {useNavigation} from "@react-navigation/native";
-import {Button, Card, Input, Text} from '@ui-kitten/components';
 import {LoginNavigationProp} from "../../interfaces/navigation.interfaces";
+import {Text, Card, Button, TextInput} from "react-native-paper";
 
 
 export const RegisterForm = () => {
@@ -50,8 +50,8 @@ export const RegisterForm = () => {
                 control={control}
                 render={({ field: { onChange, onBlur, value } }) => (
                     <View>
-                        <Text category="h6" style={{ fontWeight: 'bold' }}>Login</Text>
-                        <Input
+                        <Text  style={{ fontWeight: 'bold' }}>Login</Text>
+                        <TextInput
                             placeholder="Wpisz swój e-mail"
                             keyboardType="default"
                             autoCapitalize="none"
@@ -71,8 +71,8 @@ export const RegisterForm = () => {
                 control={control}
                 render={({ field: { onChange, onBlur, value } }) => (
                     <View>
-                        <Text category="h6" style={{ fontWeight: 'bold' }}>Hasło</Text>
-                        <Input
+                        <Text  style={{ fontWeight: 'bold' }}>Hasło</Text>
+                        <TextInput
                             placeholder="Wpisz hasło"
                             keyboardType="default"
                             autoCapitalize="none"

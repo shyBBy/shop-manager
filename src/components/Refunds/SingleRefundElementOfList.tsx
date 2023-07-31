@@ -2,7 +2,7 @@ import React from "react";
 import {useNavigation} from "@react-navigation/native";
 import {TouchableOpacity} from "react-native-gesture-handler";
 import {View} from "react-native";
-import {Text} from "@ui-kitten/components";
+import {Text} from "react-native-paper";
 
 export const SingleRefundElementOfList = (props: any) => {
     const {refund} = props
@@ -33,7 +33,7 @@ export const SingleRefundElementOfList = (props: any) => {
                                 marginTop: 4,
                             }}
                         >
-                            <Text category="s2" style={{color: '#46494c', fontSize: 18}}>
+                            <Text style={{color: '#46494c', fontSize: 18}}>
                                 {refund.reason}
                             </Text>
                         </View>

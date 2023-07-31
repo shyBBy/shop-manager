@@ -1,5 +1,5 @@
 import React from "react";
-import {Card, Text} from "@ui-kitten/components";
+import {Text, Card} from "react-native-paper";
 
 export const RegisterDescribe = () => {
     return(

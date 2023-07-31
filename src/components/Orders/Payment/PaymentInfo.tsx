@@ -1,5 +1,5 @@
 import React from "react";
-import {Text} from "@ui-kitten/components";
+import {Text} from "react-native-paper";
 import {OrderProfileInterface} from "../../../interfaces/order.interfaces";
 import {View} from "react-native";
 import {formatDateWithYearAndHours} from "../../Utils/formatDate.utils";
@@ -27,8 +27,8 @@ export const PaymentInfo = (props: Props) => {
                 <Text>{`${order?.total_tax} zł`}</Text>
             </View>
             <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 2}}>
-                <Text category='h6' style={{fontSize: 17}}>Łączna wartość brutto:</Text>
-                <Text category='h6' style={{fontSize: 17}}>{`${order?.total} zł`}</Text>
+                <Text  style={{fontSize: 17}}>Łączna wartość brutto:</Text>
+                <Text  style={{fontSize: 17}}>{`${order?.total} zł`}</Text>
             </View>
             <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 20}}>
                 <Text>Rodzaj:</Text>

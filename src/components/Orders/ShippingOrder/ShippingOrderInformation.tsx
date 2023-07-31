@@ -1,6 +1,6 @@
 import React, {useCallback} from "react";
 import {SingleShippingInterface} from "../../../interfaces/shipping.interfaces";
-import {Button, Text} from "@ui-kitten/components";
+import {Button, Text} from "react-native-paper";
 import {Linking, TouchableOpacity, View} from "react-native";
 import {OrderProfileInterface} from "../../../interfaces/order.interfaces";
 
@@ -26,7 +26,7 @@ export const ShippingOrderInformation: React.FC<ShippingOrderInformationProps> =
     if (!shipping) {
         return (
             <View>
-                <Text category='h6'>Etykieta nie została wygenerowana!</Text>
+                <Text >Etykieta nie została wygenerowana!</Text>
                 <Text style={{fontSize: 15}}>Aby utworzyć list przewozowy musisz wygenerować etykietę klikająć w
                     poniższy przycisk.</Text>
                 <Button style={{margin: 10}} onPress={handleOpenURL}>Wygeneruj etykiete</Button>
@@ -37,7 +37,7 @@ export const ShippingOrderInformation: React.FC<ShippingOrderInformationProps> =
     return (
         <>
             <View >
-                <Text category='h6'>Numer przesyłki:</Text>
+                <Text >Numer przesyłki:</Text>
                 <TouchableOpacity onPress={handleOpenURL} style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
                     <Text>{shipping.parcels[0].package_no}</Text>
                     <Button onPress={() => handleOpenTrackingShiping(shipping.parcels[0].tracking_url)} >Śledź paczkę</Button>

@@ -5,8 +5,9 @@ import {Loader} from "../../components/Loader/Loader";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {SingleOrderElementOfList} from "../../components/Orders/SingleOrderElementOfList";
 import {RefreshControl, ScrollView, useWindowDimensions, View} from "react-native";
-import {Card, Layout, Tab, TabBar, Text} from "@ui-kitten/components";
 import {useNavigation} from "@react-navigation/native";
+import {TabBar} from "react-native-tab-view";
+import {Card, Text} from "react-native-paper";
 
 interface OrderListProps {
     orders: GetListOfOrdersResponse[];
@@ -86,42 +87,42 @@ export const OrderList = () => {
 
     return (
         <>
-            <Layout>
+            <View>
                 <View style={{
                     flexDirection: "row",
                     alignItems: "center",
                     justifyContent: "space-between",
                     margin: 15
                 }}>
-                    <Text category="h6">Lista zamówień</Text>
+                    <Text>Lista zamówień</Text>
                 </View>
-                <TabBar selectedIndex={selectedTabIndex} onSelect={handleTabSelect}>
-                    {orderStatusTabs.map((tab) => (
-                        <Tab
-                            title={() => (
-                                <CustomTab title={tab.title} textStyle={{fontSize}}/>
-                            )}
-                            key={tab.status}
-                        />
-                    ))}
-                </TabBar>
-            </Layout>
+                {/*<TabBar selectedIndex={selectedTabIndex} onSelect={handleTabSelect}>*/}
+                {/*    {orderStatusTabs.map((tab) => (*/}
+                {/*        <Tab*/}
+                {/*            title={() => (*/}
+                {/*                <CustomTab title={tab.title} textStyle={{fontSize}}/>*/}
+                {/*            )}*/}
+                {/*            key={tab.status}*/}
+                {/*        />*/}
+                {/*    ))}*/}
+                {/*</TabBar>*/}
+            </View>
             <ScrollView
                 refreshControl={
                     <RefreshControl refreshing={refreshing} onRefresh={handleRefreshOrders}/>
                 }
             >
-                <Layout style={{flex: 1}}>
+                <View style={{flex: 1}}>
                     <View style={{flex: 1, marginTop: 40}}>
                         {filteredOrders.map((order) => (
-                            <Layout key={order.id}>
+                            <View key={order.id}>
                                 <Card>
                                     <SingleOrderElementOfList order={order}/>
                                 </Card>
-                            </Layout>
+                            </View>
                         ))}
                     </View>
-                </Layout>
+                </View>
             </ScrollView>
         </>
     );

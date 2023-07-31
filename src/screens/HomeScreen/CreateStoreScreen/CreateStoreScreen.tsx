@@ -1,8 +1,10 @@
 import React from "react";
 import {createMaterialTopTabNavigator} from "@react-navigation/material-top-tabs";
-import {Card, Layout, Tab, TabBar, Text} from '@ui-kitten/components';
+import {Text, Card} from "react-native-paper";
 import {CreateStoreForm} from "../../../components/Forms/CreateStoreForm";
 import {useAuth} from "../../../hooks/useAuth";
+import {View} from "react-native";
+import {TabBar} from "react-native-tab-view";
 
 interface TopTabBarProps {
     navigation: any;
@@ -12,9 +14,9 @@ interface TopTabBarProps {
 const {Navigator, Screen} = createMaterialTopTabNavigator();
 
 const TutorialScreen = () => (
-    <Layout style={{flex: 1}}>
+    <View style={{flex: 1}}>
         <Card>
-            <Text category="h6" style={{ marginBottom: 10 }}>Konfiguracja sklepu WooCommerce</Text>
+            <Text style={{ marginBottom: 10 }}>Konfiguracja sklepu WooCommerce</Text>
             <Text style={{ marginBottom: 15 }}>
                 Jeśli widzisz ten komunikat, oznacza to, że nie masz jeszcze skonfigurowanego sklepu WooCommerce.
                 Aby wygenerować klucz klienta (consumer key) i klucz sekretny (consumer secret) dla swojego sklepu WooCommerce,
@@ -43,34 +45,34 @@ const TutorialScreen = () => (
                 Gotowe! Teraz możesz użyć tych kluczy do integracji swojego sklepu WooCommerce z innymi aplikacjami lub usługami.
             </Text>
         </Card>
-    </Layout>
+    </View>
 );
 
 const CreateStoreScreen = () => (
-    <Layout style={{flex: 1, padding: 20}}>
+    <View style={{flex: 1, padding: 20}}>
         <CreateStoreForm/>
-    </Layout>
+    </View>
 );
 
-const TopTabBar = ({navigation, state}: TopTabBarProps) => (
-    <TabBar
-        selectedIndex={state.index}
-        onSelect={index => navigation.navigate(state.routeNames[index])}>
-        <Tab title='PORADNIK'/>
-        <Tab title='DODAJ SKLEP'/>
-    </TabBar>
-);
+// const TopTabBar = ({navigation, state}: TopTabBarProps) => (
+//     <TabBar
+//         selectedIndex={state.index}
+//         onSelect={index => navigation.navigate(state.routeNames[index])}>
+//         <Tab title='PORADNIK'/>
+//         <Tab title='DODAJ SKLEP'/>
+//     </TabBar>
+// );
 
-const TabNavigator = () => (
-    <Navigator tabBar={props => <TopTabBar {...props} />}>
-        <Screen name='Users' component={TutorialScreen}/>
-        <Screen name='Orders' component={CreateStoreScreen}/>
-    </Navigator>
-);
+// const TabNavigator = () => (
+//     <Navigator tabBar={props => <TopTabBar {...props} />}>
+//         <Screen name='Users' component={TutorialScreen}/>
+//         <Screen name='Orders' component={CreateStoreScreen}/>
+//     </Navigator>
+// );
 
 
 export const CreateStoreScreenContainer = () => {
     return (
-        <TabNavigator/>
+        <Text>NAWIGACJA</Text>
     )
 }

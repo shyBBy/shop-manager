@@ -1,17 +1,15 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import 'react-native-gesture-handler';
-import {ApplicationProvider} from "@ui-kitten/components";
-import UnauthenticatedApp from "./src/navigation/UnauthenticatedApp";
-import {NavigationContainer} from "@react-navigation/native";
-import {AuthProvider, useAuth} from "./src/hooks/useAuth";
-import {SafeAreaProvider, SafeAreaView} from "react-native-safe-area-context";
-import * as eva from '@eva-design/eva';
-import * as Font from 'expo-font';
-import AuthenticatedApp from "./src/navigation/AuthenticatedApp";
-import {StatusBar} from "expo-status-bar";
-import {Loader} from "./src/components/Loader/Loader";
-import {useFonts} from "expo-font";
+import React, {useEffect, useState} from 'react';
+import {StatusBar} from 'expo-status-bar';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {NavigationContainer} from '@react-navigation/native';
+import {PaperProvider} from 'react-native-paper';
+import {useFonts} from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
+
+import {theme} from './src/theme';
+import {AuthProvider, useAuth} from './src/hooks/useAuth';
+import UnauthenticatedApp from "./src/navigation/UnauthenticatedApp";
+import AuthenticatedApp from "./src/navigation/AuthenticatedApp";
 
 
 const App = () => {
@@ -44,13 +42,13 @@ const App = () => {
     return (
         <SafeAreaProvider>
             <StatusBar style="auto"/>
-            <ApplicationProvider {...eva} theme={{...eva.light}}>
+            <PaperProvider theme={theme}>
                 <NavigationContainer>
                     <AuthProvider>
                         <AppContent/>
                     </AuthProvider>
                 </NavigationContainer>
-            </ApplicationProvider>
+            </PaperProvider>
         </SafeAreaProvider>
     );
 };

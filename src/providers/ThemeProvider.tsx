@@ -1,5 +1,5 @@
 // Domyślny motyw
-import {darkTheme, lightTheme} from "../theme";
+import {darkTheme, lightTheme} from "../themeOLD";
 import {Appearance} from "react-native";
 import {createContext, useContext, useState} from "react";
 

@@ -1,10 +1,10 @@
 import React from "react";
 import {Dimensions, TouchableOpacity, View} from "react-native";
-import {Layout, Text} from "@ui-kitten/components";
 import {RegisterForm} from "../../components/Forms/RegisterForm";
 import {useNavigation} from "@react-navigation/native";
-import {LoginNavigationProp} from "../../hooks/useAuth";
 import {RegisterDescribe} from "./RegisterDescribe";
+import {LoginNavigationProp} from "../../interfaces/navigation.interfaces";
+import {Text} from "react-native-paper";
 
 export const RegisterScreen = () => {
     const screenWidth = Dimensions.get('window').width;
@@ -14,7 +14,7 @@ export const RegisterScreen = () => {
         navigation.navigate('Login');
     };
     return (
-        <Layout style={{height: '100%'}}>
+        <View style={{height: '100%'}}>
             <View>
                 <RegisterDescribe/>
                 <RegisterForm/>
@@ -22,6 +22,6 @@ export const RegisterScreen = () => {
                     <Text style={{ alignSelf: 'center', marginTop: 16 }}>Posiadasz już konto? Zaloguj się!</Text>
                 </TouchableOpacity>
             </View>
-        </Layout>
+        </View>
     )
 }

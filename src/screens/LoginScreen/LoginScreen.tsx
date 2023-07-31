@@ -1,10 +1,10 @@
 import React from 'react';
 import {Dimensions, Image, TouchableOpacity, View} from 'react-native';
-import {Layout, Text} from '@ui-kitten/components';
 import LoginForm from "../../components/Forms/LoginForm";
 import {CreatedBy} from "../../components/CreatedBy/CreatedBy";
 import {useNavigation} from "@react-navigation/native";
 import {StackNavigationProp} from "@react-navigation/stack";
+import {Text} from "react-native-paper";
 
 
 const logoImage = require('../../../assets/logo2.png'); // Załóżmy, że logo znajduje się w folderze assets
@@ -27,7 +27,7 @@ const LoginScreen: React.FC = () => {
     };
 
     return (
-        <Layout style={{height: '100%'}}>
+        <View style={{height: '100%'}}>
             <View style={{
                 padding: 5,
                 marginTop: `5%`,
@@ -50,7 +50,7 @@ const LoginScreen: React.FC = () => {
                 </TouchableOpacity>
                 <CreatedBy/>
             </View>
-        </Layout>
+        </View>
     );
 };
 

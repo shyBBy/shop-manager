@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-import {Card, Layout, Text} from "@ui-kitten/components";
 import {RouteProp, useNavigation, useRoute} from "@react-navigation/native";
 import {GetOneOrderResponse} from "../../../interfaces/order.interfaces";
 import Api from "../../../api/api";
@@ -12,6 +11,8 @@ import {getStatusColor, OrderStatusConverter} from "../../../helpers/orderStatus
 import {SingleProductElementOfList} from "../../../components/Orders/SingleProductElementOfList";
 import {ShippingOrderInformation} from "../../../components/Orders/ShippingOrder/ShippingOrderInformation";
 import {PaymentInfo} from "../../../components/Orders/Payment/PaymentInfo";
+
+import {Card, Text} from "react-native-paper";
 
 interface SingleOrderProfileParams {
     orderId: number;
@@ -70,19 +71,19 @@ export const SingleOrderProfileScreen = () => {
     return (
         <>
             <SafeAreaView style={styles.container}/>
-            <Layout style={styles.layoutContainer}>
+            <View style={styles.layoutContainer}>
                 <View style={styles.header}>
                     <Ionicons name="arrow-back" size={27} color="black" onPress={handleGoBack}/>
-                    <Text style={styles.orderTitle} category='h5'>Zamówienie: #{orderId}</Text>
+                    <Text style={styles.orderTitle}>Zamówienie: #{orderId}</Text>
                 </View>
-            </Layout>
+            </View>
             <ScrollView refreshControl={
                 <RefreshControl refreshing={refreshing} onRefresh={handleRefreshOrders}/>
             }>
-                <Layout>
+                <View>
                     <Card>
                         <Text>{formatDateWithYearAndHours(order?.date_created)}</Text>
-                        <Text category='h5'>{`${order?.billing.first_name} ${order?.billing.last_name}`}</Text>
+                        <Text>{`${order?.billing.first_name} ${order?.billing.last_name}`}</Text>
                         <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
                             <View style={{
                                 backgroundColor: getStatusColor(order?.status),
@@ -91,18 +92,18 @@ export const SingleOrderProfileScreen = () => {
                                 alignSelf: 'flex-start',
                                 marginTop: 4,
                             }}>
-                                <Text category="s2" style={{color: '#46494c', flexGrow: 1}}>
+                                <Text style={{color: '#46494c', flexGrow: 1}}>
                                     {OrderStatusConverter(order?.status)}
                                 </Text>
                             </View>
                             <AntDesign name="edit" size={24} color="black"/>
                         </View>
                     </Card>
-                </Layout>
+                </View>
 
-                <Layout>
+                <View>
                     <Card>
-                        <Text category='h6'>Dane kupującego:</Text>
+                        <Text>Dane kupującego:</Text>
                         <View>
                             <Text>{`${order?.billing.first_name} ${order?.billing.last_name}`}</Text>
                             <Text>{`${order?.billing.address_1}`}</Text>
@@ -111,35 +112,35 @@ export const SingleOrderProfileScreen = () => {
                             <Text>{`${order?.billing.email}`}</Text>
                             <Text>{`${order?.billing.phone}`}</Text>
                         </View>
-                        {order?.billing.company ? <View><Text category='h6'>Dane Firmy:</Text>
+                        {order?.billing.company ? <View><Text>Dane Firmy:</Text>
                             <View>
                                 <Text>{`${order?.billing.company}`}</Text>
                             </View></View> : <Text>Brak</Text>}
                     </Card>
-                </Layout>
+                </View>
 
-                <Layout>
+                <View>
                     <Card>
-                        <Text category='h6'>Zamówione produkty:</Text>
+                        <Text>Zamówione produkty:</Text>
                         {order?.line_items.map(product => (
                             <SingleProductElementOfList product={product} key={product.id}/>
                         ))}
                     </Card>
-                </Layout>
+                </View>
 
-                <Layout>
+                <View>
                     <Card>
-                        <Text category='h6'>Płatność:</Text>
+                        <Text>Płatność:</Text>
                         <PaymentInfo order={order}/>
                     </Card>
-                </Layout>
+                </View>
 
-                <Layout>
+                <View>
                     <Card>
                         <ShippingOrderInformation shipping={shipping} shippingTracking={shippingTracking}
                                                   key={order?.id} order={order}/>
                     </Card>
-                </Layout>
+                </View>
             </ScrollView>
         </>
     );
