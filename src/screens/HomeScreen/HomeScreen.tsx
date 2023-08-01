@@ -5,6 +5,11 @@ import {BasicStoreDetails} from "../../components/BasicStoreDetails/BasicStoreDe
 import {ScrollView, View} from "react-native";
 import {SafeAreaView} from "react-native-safe-area-context";
 
+import { Appbar } from 'react-native-paper';
+import { Platform } from 'react-native';
+
+const MORE_ICON = Platform.OS === 'ios' ? 'dots-horizontal' : 'dots-vertical';
+
 const Home: React.FC = (store: any) => {
     const {user} = useAuth();
 

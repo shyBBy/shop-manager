@@ -3,7 +3,7 @@ import {getStatusColor, OrderStatusConverter} from "../../helpers/orderStatusCon
 import {View} from "react-native";
 import {useNavigation} from "@react-navigation/native";
 import {formatDate} from "../Utils/formatDate.utils";
-import {TouchableOpacity} from "react-native-gesture-handler";
+import {TouchableOpacity} from "react-native";
 import {Button, Text, Card} from "react-native-paper";
 
 

@@ -1,39 +1,39 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 
-import { Button, Text, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import {StyleSheet, TouchableOpacity} from 'react-native';
+import {Text} from "react-native-paper";
 
 //NAVIGATION
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createNativeStackNavigator} from "react-native-screens/native-stack";
-
 
 //SCREENS
 import RefundScreen from '../screens/RefundScreen/RefundScreen';
 import OrdersScreen from '../screens/OrdersScreen/OrdersScreen';
 import ShippingScreen from '../screens/ShippingScreen/ShippingScreen';
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
-import { SingleOrderProfileScreen } from '../screens/OrdersScreen/SingleOrderProfileScreen/SingleOrderProfileScreen';
-import { SingleRefundProfileScreen } from '../screens/RefundScreen/SingleRefundProfileScreen/SingleRefundProfileScreen';
+import {SingleOrderProfileScreen} from '../screens/OrdersScreen/SingleOrderProfileScreen/SingleOrderProfileScreen';
+import {SingleRefundProfileScreen} from '../screens/RefundScreen/SingleRefundProfileScreen/SingleRefundProfileScreen';
 
 
 //ICONS
-import { Ionicons } from '@expo/vector-icons';
+import {Ionicons} from '@expo/vector-icons';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator()
 
+
 const OrdersStack = () => (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Orders" component={OrdersScreen} />
-        <Stack.Screen name="SingleOrderProfile" component={SingleOrderProfileScreen} />
+    <Stack.Navigator screenOptions={{headerShown: false}}>
+        <Stack.Screen name="Orders" component={OrdersScreen}/>
+        <Stack.Screen name="SingleOrderProfile" component={SingleOrderProfileScreen}/>
     </Stack.Navigator>
 );
 
 const RefundsStack = () => (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Refunds" component={RefundScreen} />
-        <Stack.Screen name="SingleRefundProfile" component={SingleRefundProfileScreen} />
+    <Stack.Navigator screenOptions={{headerShown: false}}>
+        <Stack.Screen name="Refunds" component={RefundScreen}/>
+        <Stack.Screen name="SingleRefundProfile" component={SingleRefundProfileScreen}/>
     </Stack.Navigator>
 );
 
@@ -45,37 +45,69 @@ const AuthenticatedApp = () => {
     };
 
     return (
+        <>
+            {/*<Appbar.Header>*/}
+            {/*    <Appbar.Content title={''}/>*/}
+            {/*    <Appbar.Action icon={MORE_ICON} onPress={() => {}} />*/}
+            {/*</Appbar.Header>*/}
             <Tab.Navigator screenOptions={({route}) => ({
                 headerShown: false,
+                tabBarInactiveTintColor: 'grey',
+                tabBarStyle: styles.tabBarStyle,
+                tabBarActiveTintColor: 'blue',
                 tabBarIcon: ({color, size, focused}) => {
                     let iconName;
 
                     if (route.name === 'Główna') {
                         iconName = focused ? 'home-sharp' : 'home-outline'
                     } else if (route.name === 'Zamówienia') {
-                        iconName = focused ? 'home' : 'home-outline'
-                    } else if (route.name === 'Przesyłki') {
-                        iconName = focused ? 'home' : 'home-outline'
+                        iconName = focused ? 'cart-sharp' : 'cart-outline'
+                    } else if (route.name === 'Zwroty') {
+                        iconName = focused ? 'refresh-sharp' : 'refresh-outline'
                     } else {
-                        iconName = focused ? 'home' : 'home-outline'
+                        iconName = focused ? 'settings-sharp' : 'settings-outline'
                     }
 
                     // @ts-ignore
-                    return <Ionicons name={iconName} size={24} color="black" />
+                    return <Ionicons name={iconName} size={24} color="black"/>
+                },
+                tabBarLabel: ({ focused, color }) => {
+                    let label;
+                    if (route.name === 'Główna') {
+                        label = 'Główna';
+                    } else if (route.name === 'Zamówienia') {
+                        label = 'Zamówienia';
+                    } else if (route.name === 'Zwroty') {
+                        label = 'Zwroty';
+                    } else {
+                        label = 'Ustawienia';
+                    }
+
+                    // Zwracamy komponent Text zawierający tekst zakładki oraz odpowiednie style
+                    return (
+                        <Text variant="bodyMedium" style={{ color, fontSize: 12, fontWeight: focused ? 'bold' : 'normal', marginBottom: 5 }}>
+                            {label}
+                        </Text>
+                    );
                 }
             })}>
-                <Tab.Screen name="Główna"  component={HomeScreen}/>
+                <Tab.Screen name="Główna" component={HomeScreen}/>
                 <Tab.Screen name="Zamówienia" component={OrdersStack}/>
-                <Tab.Screen name="Przesyłki" component={ShippingScreen}/>
                 <Tab.Screen name="Zwroty" component={RefundsStack}/>
+                <Tab.Screen name="Ustawienia" component={RefundsStack}/>
             </Tab.Navigator>
-
-            // <Tab.Screen name="Główna" options={{ headerShown: false }} component={HomeScreen} />
-            // <Tab.Screen options={{ headerShown: false }} name="Zamówienia" component={OrdersStack} />
-            // <Tab.Screen name="Przesyłki" component={ShippingScreen} />
-            // <Tab.Screen name="Zwroty" component={RefundsStack} options={{headerShown: false }} />
+        </>
 
     );
 };
 
 export default AuthenticatedApp;
+
+
+const styles = StyleSheet.create({
+    tabBarStyle: {
+        backgroundColor: 'white',
+        borderTopWidth: 0,
+        height: 72,
+    },
+});
