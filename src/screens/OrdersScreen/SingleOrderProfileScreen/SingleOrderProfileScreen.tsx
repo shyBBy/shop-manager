@@ -19,9 +19,10 @@ interface SingleOrderProfileParams {
 }
 
 
-export const SingleOrderProfileScreen = () => {
+export const SingleOrderProfileScreen = (props: any) => {
+    const {route} = props
     const navigation = useNavigation();
-    const route = useRoute<RouteProp<Record<string, SingleOrderProfileParams>, string>>();
+    // const route = useRoute<RouteProp<Record<string, SingleOrderProfileParams>, string>>();
     const [order, setOrder] = useState<GetOneOrderResponse | null>(null)
     const [shipping, setShipping] = useState<any>(null)
     const [shippingTracking, setShippingTracking] = useState<any>(null)

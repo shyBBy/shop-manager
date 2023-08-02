@@ -36,6 +36,7 @@ export const SingleRefundProfileScreen = () => {
             const data = await Api.getRefund(refundId);
             setRefund(data.refund);
             setLoading(false);
+            console.log(refund)
         } catch (e) {
             console.error("Error fetching refunds", e);
         } finally {
@@ -81,12 +82,12 @@ export const SingleRefundProfileScreen = () => {
                 </View>
                 <View>
                     <Card>
-                        <Text>Test</Text>
+                        <Text>Powod: {refund?.reason}</Text>
                     </Card>
                 </View>
                 <View>
                     <Card>
-                        <Text>Test</Text>
+                        <Text>Opis: {refund?.description}</Text>
                     </Card>
                 </View>
 

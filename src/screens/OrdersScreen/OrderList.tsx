@@ -108,9 +108,7 @@ export const OrderList = () => {
             >
 
                 {ordersList.map((order) => (
-                    <Card key={order.id}>
-                        <SingleOrderElementOfList order={order}/>
-                    </Card>
+                    <SingleOrderElementOfList order={order} key={order.id}/>
                 ))}
             </ScrollView>
         </>

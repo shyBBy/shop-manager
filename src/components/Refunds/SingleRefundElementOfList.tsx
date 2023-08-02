@@ -2,7 +2,7 @@ import React from "react";
 import {useNavigation} from "@react-navigation/native";
 import {TouchableOpacity} from "react-native-gesture-handler";
 import {View} from "react-native";
-import {Text} from "react-native-paper";
+import {Card, Text} from "react-native-paper";
 
 export const SingleRefundElementOfList = (props: any) => {
     const {refund} = props
@@ -17,6 +17,7 @@ export const SingleRefundElementOfList = (props: any) => {
     return (
         <>
             <TouchableOpacity onPress={() => showRefundProfileScreen(refund.uuid)}>
+                <Card>
                 <View style={{flexDirection: 'row', marginTop: 1}}>
                     <View style={{flex: 1}}>
                         <Text style={{fontWeight: 'bold', fontSize: 18}}>
@@ -42,6 +43,7 @@ export const SingleRefundElementOfList = (props: any) => {
                         <Text style={{fontSize: 18}}>{refund.status}</Text>
                     </View>
                 </View>
+                </Card>
             </TouchableOpacity>
         </>
     )

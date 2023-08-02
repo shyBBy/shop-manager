@@ -8,9 +8,7 @@ const RefundScreen: React.FC = () => {
 
     return (
         <>
-            <View style={{backgroundColor: ThemeOLD.card.backgroundColor }}>
-                <RefundList/>
-            </View>
+            <RefundList/>
         </>
     );
 };

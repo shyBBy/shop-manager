@@ -6,7 +6,7 @@ import {SafeAreaView} from "react-native-safe-area-context";
 import {Loader} from "../../components/Loader/Loader";
 import {GetListOfAllRefundsResponse} from "../../interfaces/refund.interface";
 import {SingleRefundElementOfList} from "../../components/Refunds/SingleRefundElementOfList";
-import {Card, Text} from "react-native-paper";
+import {Card, Text, Appbar, Menu} from "react-native-paper";
 
 
 export const RefundList = () => {
@@ -15,9 +15,15 @@ export const RefundList = () => {
     const navigation = useNavigation();
     const [loadingOrders, setLoadingOrders] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
+    const [resultsPerPage, setResultsPerPage] = useState(10);
 
     const {width, height} = useWindowDimensions();
     const fontSize = width < 300 ? 9 : 13;
+
+    const [visible, setVisible] = React.useState(false);
+    const showMenu = () => setVisible(true);
+    const hideMenu = () => setVisible(false);
+
 
     useEffect(() => {
         (async () => {
@@ -52,23 +58,38 @@ export const RefundList = () => {
         );
     }
 
+    const handleResultsPerPageSelect = (value: any) => {
+        setResultsPerPage(value);
+        fetchData(); // Call fetchData() again to update the results based on the new value.
+    };
+
     return (
         <>
+            <Appbar.Header>
+                <Appbar.Content title={'Lista zwrotów'}/>
+                <Menu
+                    visible={visible}
+                    onDismiss={hideMenu}
+                    anchor={
+                        <Appbar.Action icon="format-list-bulleted" onPress={showMenu}/>
+                    }
+                    style={{marginTop: 60}}
+                >
+                    <Menu.Item onPress={() => handleResultsPerPageSelect(10)} title="10"/>
+                    <Menu.Item onPress={() => handleResultsPerPageSelect(20)} title="20"/>
+                    <Menu.Item onPress={() => handleResultsPerPageSelect(30)} title="30"/>
+                    <Menu.Item onPress={() => handleResultsPerPageSelect(40)} title="40"/>
+                </Menu>
+                <Text style={{marginRight: 7}}>Max {resultsPerPage}</Text>
+            </Appbar.Header>
             <ScrollView
                 refreshControl={
                     <RefreshControl refreshing={refreshing} onRefresh={handleRefreshRefunds}/>
                 }
             >
-
-                    <View style={{flex: 1}}>
-                        {refundList.map((refund) => (
-                            <View key={refund.uuid} style={{marginTop: 15}}>
-                                <Card>
-                                    <SingleRefundElementOfList refund={refund}/>
-                                </Card>
-                            </View>
-                        ))}
-                    </View>
+                {refundList.map((refund) => (
+                    <SingleRefundElementOfList refund={refund} key={refund.id}/>
+                ))}
 
 
             </ScrollView>

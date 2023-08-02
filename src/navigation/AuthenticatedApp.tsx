@@ -5,7 +5,7 @@ import {Text} from "react-native-paper";
 
 //NAVIGATION
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {createNativeStackNavigator} from "react-native-screens/native-stack";
+import { createStackNavigator } from '@react-navigation/stack';
 
 //SCREENS
 import RefundScreen from '../screens/RefundScreen/RefundScreen';
@@ -19,8 +19,9 @@ import {SingleRefundProfileScreen} from '../screens/RefundScreen/SingleRefundPro
 //ICONS
 import {Ionicons} from '@expo/vector-icons';
 
+
 const Tab = createBottomTabNavigator();
-const Stack = createNativeStackNavigator()
+const Stack = createStackNavigator();
 
 
 const OrdersStack = () => (

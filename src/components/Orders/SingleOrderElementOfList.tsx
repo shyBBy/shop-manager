@@ -27,7 +27,10 @@ export const SingleOrderElementOfList = (props: any) => {
     );
 
     return (
-        <TouchableOpacity onPress={() => showOrderProfileScreen(order.id)}>
+        // <TouchableOpacity onPress={() => showOrderProfileScreen(order.id)}>
+        // @ts-ignore
+        <TouchableOpacity onPress={() => navigation.navigate("SingleOrderProfile", {orderId: order.id})} >
+            <Card>
             <View style={{flexDirection: 'row', marginTop: 1}}>
                 <View style={{flex: 1}}>
                     <Text style={{fontSize: 18}}>{formatDate(order.date_created)}</Text>
@@ -55,6 +58,7 @@ export const SingleOrderElementOfList = (props: any) => {
                     <Text style={{fontSize: 18}}>{`${order.total} zł`}</Text>
                 </View>
             </View>
+            </Card>
         </TouchableOpacity>
 
 

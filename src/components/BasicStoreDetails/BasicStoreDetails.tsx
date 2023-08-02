@@ -24,12 +24,12 @@ export const BasicStoreDetails = () => {
         <>
             <View style={{width: `100%`, height: 250}}>
 
-                <Image source={require('../../../assets/img/undraw_my_app_re_gxtj.png')} style={{
+                {/* <Image source={require('../../../assets/img/undraw_my_app_re_gxtj.png')} style={{
                     width: 200, // Szerokość obrazka (w pikselach)
                     height: 200, // Wysokość obrazka (w pikselach)
                     marginTop: 10, // Górny margines (w pikselach)
                     borderRadius: 10, // Promień zaokrąglenia narożników (w pikselach)
-                }}/>
+                }}/> */}
                     <Text>
                         Witaj!
                     </Text>
