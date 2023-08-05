@@ -11,6 +11,7 @@ import {theme} from './src/theme';
 import {AuthProvider, useAuth} from './src/hooks/useAuth';
 import UnauthenticatedApp from "./src/navigation/UnauthenticatedApp";
 import AuthenticatedApp from "./src/navigation/AuthenticatedApp";
+import {RemoveRefundAndOrderProvider} from "./src/context/RemoveRefundAndOrderContext";
 
 
 const App = () => {
@@ -25,6 +26,12 @@ const App = () => {
         'AsapMedium': require('./assets/fonts/Asap-Medium.ttf'),
         'AsapBold': require('./assets/fonts/Asap-Bold.ttf'),
         'BebasNeu': require('./assets/fonts/BebasNeue-Regular.ttf'),
+        'OswaldBold': require('./assets/fonts/Oswald-Bold.ttf'),
+        'OswaldLight': require('./assets/fonts/Oswald-Light.ttf'),
+        'OswaldMedium': require('./assets/fonts/Oswald-Medium.ttf'),
+        'OswaldRegular': require('./assets/fonts/Oswald-Regular.ttf'),
+        'OswaldExtraLight': require('./assets/fonts/Oswald-ExtraLight.ttf'),
+        'OswaldSemiBold': require('./assets/fonts/Oswald-SemiBold.ttf'),
     })
 
     useEffect(() => {
@@ -46,7 +53,12 @@ const App = () => {
             <PaperProvider theme={theme}>
                 <NavigationContainer>
                     <AuthProvider>
-                        <AppContent/>
+                        <>
+                            <StatusBar style="light" />
+                            <RemoveRefundAndOrderProvider>
+                                <AppContent/>
+                            </RemoveRefundAndOrderProvider>
+                        </>
                     </AuthProvider>
                 </NavigationContainer>
             </PaperProvider>

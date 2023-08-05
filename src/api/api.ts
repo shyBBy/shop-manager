@@ -152,6 +152,24 @@ class API {
         }
     }
 
+    public async deleteRefund(refundId: string | number) {
+        try {
+            const response = await fetch(`${this.baseUrl}/refund/${refundId}`, {
+                method: "DELETE",
+                credentials: 'include',
+            });
+            if (!response.ok) {
+                ToastAndroid.show(`Nie udało się usunąć zwrotu.`, ToastAndroid.SHORT);
+                return;
+            }
+
+            ToastAndroid.show(`Pomyślnie utworzono usunięto zwrot`, ToastAndroid.SHORT);
+            return
+        } catch (e) {
+            ToastAndroid.show(`Coś poszło nie tak`, ToastAndroid.SHORT);
+        }
+    }
+
     //REFUNDS SECTION END
 }
 

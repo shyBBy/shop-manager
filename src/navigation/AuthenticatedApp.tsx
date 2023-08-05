@@ -18,6 +18,7 @@ import {SingleRefundProfileScreen} from '../screens/RefundScreen/SingleRefundPro
 
 //ICONS
 import {Ionicons} from '@expo/vector-icons';
+import {theme} from "../theme";
 
 
 const Tab = createBottomTabNavigator();
@@ -53,9 +54,9 @@ const AuthenticatedApp = () => {
             {/*</Appbar.Header>*/}
             <Tab.Navigator screenOptions={({route}) => ({
                 headerShown: false,
-                tabBarInactiveTintColor: 'grey',
+                tabBarInactiveTintColor: theme.colors.onSurface,
                 tabBarStyle: styles.tabBarStyle,
-                tabBarActiveTintColor: 'blue',
+                tabBarActiveTintColor: theme.colors.primary,
                 tabBarIcon: ({color, size, focused}) => {
                     let iconName;
 
@@ -70,9 +71,9 @@ const AuthenticatedApp = () => {
                     }
 
                     // @ts-ignore
-                    return <Ionicons name={iconName} size={24} color="black"/>
+                    return <Ionicons name={iconName} size={24} color={focused ? theme.colors.primary : theme.colors.onSurface} />;
                 },
-                tabBarLabel: ({ focused, color }) => {
+                tabBarLabel: ({ color }) => {
                     let label;
                     if (route.name === 'Główna') {
                         label = 'Główna';
@@ -86,7 +87,7 @@ const AuthenticatedApp = () => {
 
                     // Zwracamy komponent Text zawierający tekst zakładki oraz odpowiednie style
                     return (
-                        <Text variant="bodyMedium" style={{ color, fontSize: 12, fontWeight: focused ? 'bold' : 'normal', marginBottom: 5 }}>
+                        <Text variant="bodyMedium" style={{ color, fontSize: 13, fontFamily: "OswaldLight" , marginBottom: 5 }}>
                             {label}
                         </Text>
                     );
@@ -107,7 +108,7 @@ export default AuthenticatedApp;
 
 const styles = StyleSheet.create({
     tabBarStyle: {
-        backgroundColor: 'white',
+        backgroundColor: theme.colors.navigationBackground,
         borderTopWidth: 0,
         height: 72,
     },

@@ -5,6 +5,7 @@ import {CreatedBy} from "../../components/CreatedBy/CreatedBy";
 import {useNavigation} from "@react-navigation/native";
 import {StackNavigationProp} from "@react-navigation/stack";
 import {Text} from "react-native-paper";
+import {theme} from "../../theme";
 
 
 const logoImage = require('../../../assets/logo2.png'); // Załóżmy, że logo znajduje się w folderze assets
@@ -27,7 +28,7 @@ const LoginScreen: React.FC = () => {
     };
 
     return (
-        <View style={{height: '100%'}}>
+        <View style={{height: '100%', backgroundColor: theme.colors.background}}>
             <View style={{
                 padding: 5,
                 marginTop: `5%`,

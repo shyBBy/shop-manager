@@ -5,6 +5,7 @@ import {useNavigation} from "@react-navigation/native";
 import {RegisterDescribe} from "./RegisterDescribe";
 import {LoginNavigationProp} from "../../interfaces/navigation.interfaces";
 import {Text} from "react-native-paper";
+import {theme} from "../../theme";
 
 export const RegisterScreen = () => {
     const screenWidth = Dimensions.get('window').width;
@@ -14,7 +15,7 @@ export const RegisterScreen = () => {
         navigation.navigate('Login');
     };
     return (
-        <View style={{height: '100%'}}>
+        <View style={{height: '100%', backgroundColor: theme.colors.background}}>
             <View>
                 <RegisterDescribe/>
                 <RegisterForm/>

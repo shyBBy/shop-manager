@@ -2,7 +2,7 @@ import React from "react";
 import {useNavigation} from "@react-navigation/native";
 import {TouchableOpacity} from "react-native-gesture-handler";
 import {View} from "react-native";
-import {Card, Text} from "react-native-paper";
+import {Button, Card, Text} from "react-native-paper";
 
 export const SingleRefundElementOfList = (props: any) => {
     const {refund} = props
@@ -39,8 +39,7 @@ export const SingleRefundElementOfList = (props: any) => {
                             </Text>
                         </View>
                     </View>
-                    <View style={{alignItems: 'flex-end', justifyContent: 'center'}}>
-                        <Text style={{fontSize: 18}}>{refund.status}</Text>
+                    <View style={{alignItems: 'flex-end', justifyContent: 'center', marginRight: 7}}>
                     </View>
                 </View>
                 </Card>

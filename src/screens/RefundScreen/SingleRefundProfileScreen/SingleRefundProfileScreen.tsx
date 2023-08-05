@@ -1,15 +1,15 @@
 import React, {useEffect, useState} from "react";
 import {RouteProp, useNavigation, useRoute} from "@react-navigation/native";
-import {GetOneOrderResponse} from "../../../interfaces/order.interfaces";
 import Api from "../../../api/api";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {Loader} from "../../../components/Loader/Loader";
-import {RefreshControl, ScrollView, StyleSheet, View} from "react-native";
-import {Ionicons} from "@expo/vector-icons";
+import {RefreshControl, ScrollView, ToastAndroid, View} from "react-native";
 import {RefundRes} from "../../../interfaces/refund.interface";
-import {RefundDetails} from "../../../components/Refunds/RefundDetails";
-import {Card, Text} from "react-native-paper";
-
+import {Appbar, Card, Text, TextInput} from "react-native-paper";
+import {theme} from "../../../theme";
+import {useContext} from "react/index";
+import {RemoveRefundAndOrderContext} from "../../../context/RemoveRefundAndOrderContext";
+import {formatDate, formatDateWithYearAndHours} from "../../../components/Utils/formatDate.utils";
 
 
 interface SingleRefundProfileParams {
@@ -24,6 +24,8 @@ export const SingleRefundProfileScreen = () => {
     const [loading, setLoading] = useState(true);
     const {refundId} = route.params;
     const [refreshing, setRefreshing] = useState(false);
+    const {setIsDeleting} = useContext(RemoveRefundAndOrderContext)
+    const [text, setText] = useState('');
 
     useEffect(() => {
         (async () => {
@@ -34,9 +36,8 @@ export const SingleRefundProfileScreen = () => {
     const fetchData = async () => {
         try {
             const data = await Api.getRefund(refundId);
-            setRefund(data.refund);
+            setRefund(data);
             setLoading(false);
-            console.log(refund)
         } catch (e) {
             console.error("Error fetching refunds", e);
         } finally {
@@ -45,7 +46,7 @@ export const SingleRefundProfileScreen = () => {
         }
     }
 
-    const handleRefreshRefund = async () => {
+    const handleRefreshRefundProfile = async () => {
         setRefreshing(true);
         await fetchData();
     }
@@ -62,59 +63,110 @@ export const SingleRefundProfileScreen = () => {
         navigation.goBack();
     };
 
-    return(
-        <>
-            <SafeAreaView/>
-            <View style={styles.layoutContainer}>
-                <View style={styles.header}>
-                    <Ionicons name="arrow-back" size={27} color="black" onPress={handleGoBack}/>
-                    <Text style={styles.orderTitle} >Zwrot nr: #{refundId}</Text>
-                </View>
-            </View>
-            <ScrollView refreshControl={
-                <RefreshControl refreshing={refreshing} onRefresh={handleRefreshRefund}/>
-            }>
-                <View>
-                    <Card>
-                        <Text >Szczegóły zwrotu</Text>
-                        <RefundDetails/>
-                    </Card>
-                </View>
-                <View>
-                    <Card>
-                        <Text>Powod: {refund?.reason}</Text>
-                    </Card>
-                </View>
-                <View>
-                    <Card>
-                        <Text>Opis: {refund?.description}</Text>
-                    </Card>
-                </View>
+    const handleDelete = async () => {
+        try {
+            setIsDeleting(true);
+            // setIsUpdated((prevState) => !prevState);
+            const res = await Api.deleteRefund(refundId)
+            // @ts-ignore
+            navigation.goBack();
+        } catch (err) {
+            console.error(err);
+            ToastAndroid.show(`Jakiś problem`, ToastAndroid.SHORT)
+        } finally {
+            setIsDeleting(false);
+        }
+    };
 
+    return (
+        <>
+            <Appbar.Header style={{backgroundColor: theme.colors.navigationBackground}}>
+                <Appbar.BackAction onPress={handleGoBack}/>
+                <Appbar.Content title={`Zamówienie: `}/>
+                {/*<Text style={{marginRight: 7}}>Max</Text>*/}
+                <Appbar.Action icon="delete" onPress={handleDelete}/>
+            </Appbar.Header>
+            <ScrollView refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={handleRefreshRefundProfile}/>
+            }>
+                <View style={{backgroundColor: theme.colors.background, padding: 10}}>
+                    <Card style={{padding: 10, marginTop: 10, marginBottom: 10}}>
+                        <View style={{alignItems: 'center', justifyContent: 'center', paddingBottom: 10}}>
+                            <Text variant='titleLarge'
+                                  style={{color: theme.colors.primary, fontFamily: 'OswaldRegular'}}>Szczegóły
+                                zwrotu</Text>
+                        </View>
+                        <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+                            <Text variant='titleMedium' style={{color: theme.colors.appBarTitleColor}}>E-mail: </Text>
+                            <Text variant='bodyMedium'>{refund?.email}</Text>
+                        </View>
+                        <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+                            <Text variant='titleMedium' style={{color: theme.colors.appBarTitleColor}}>Zamówienie
+                                nr: </Text>
+                            <Text variant='bodyMedium'>{refund?.orderId}</Text>
+                        </View>
+                        <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+                            <Text variant='titleMedium' style={{color: theme.colors.appBarTitleColor}}>Produkt: </Text>
+                            <Text variant='bodyMedium'>{refund?.productTitle}</Text>
+                        </View>
+                        <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+                            <Text variant='titleMedium' style={{color: theme.colors.appBarTitleColor}}>Kod
+                                produktu: </Text>
+                            <Text variant='bodyMedium'>{refund?.productCode}</Text>
+                        </View>
+                        <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+                            <Text variant='titleMedium' style={{color: theme.colors.appBarTitleColor}}>Status
+                                zwrotu: </Text>
+                            <Text variant='bodyMedium'>{refund?.status}</Text>
+                        </View>
+                        <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+                            <Text variant='titleMedium' style={{color: theme.colors.appBarTitleColor}}>Data utworzenia
+                                zwrotu: </Text>
+                            <Text variant='bodyMedium'>{formatDate(refund?.createdAt)}</Text>
+                        </View>
+                        <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+                            <Text variant='titleMedium' style={{color: theme.colors.appBarTitleColor}}>Ostatnia
+                                aktualizacja: </Text>
+                            <Text variant='bodyMedium'>{formatDate(refund?.updatedAt)}</Text>
+                        </View>
+                        <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+                            <Text variant='titleMedium' style={{color: theme.colors.appBarTitleColor}}>Przyczyna
+                                zwrotu: </Text>
+                            <Text variant='bodyMedium'>{refund?.reason}</Text>
+                        </View>
+                    </Card>
+
+                    <Card style={{padding: 10, marginTop: 10, marginBottom: 10}}>
+                        <View>
+                            <Text variant='titleMedium' style={{color: theme.colors.appBarTitleColor}}>Opis
+                                zwrotu</Text>
+                            <Text>{refund?.description}</Text>
+                        </View>
+                    </Card>
+
+                    <View>
+                        <Card style={{padding: 10, marginTop: 10, marginBottom: 10}}>
+                            <View style={{alignItems: 'center', justifyContent: 'center', paddingBottom: 10}}>
+                                <Text variant='titleLarge'
+                                      style={{color: theme.colors.primary, fontFamily: 'OswaldRegular'}}>Zarzadzaj
+                                    zwrotem</Text>
+                            </View>
+                            <View>
+                                <TextInput
+                                    label="Dodaj odpowiedź"
+                                    value={text}
+                                    mode='outlined'
+                                    onChangeText={setText}
+                                    multiline
+                                    numberOfLines={4} // Możesz określić liczbę widocznych wierszy (opcjonalne)
+                                    style={{height: 220, textAlignVertical: 'top'}} // Ustaw wysokość obszaru tekstowego
+                                />
+                            </View>
+                        </Card>
+                    </View>
+                </View>
             </ScrollView>
+
         </>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-    layoutContainer: {
-        width: '100%',
-    },
-    header: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginHorizontal: 8,
-        padding: 10
-    },
-    backText: {
-        marginLeft: 8,
-        marginRight: 8,
-    },
-    orderTitle: {
-        marginLeft: 15,
-    },
-});
-

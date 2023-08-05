@@ -59,6 +59,7 @@ export const RegisterForm = () => {
                             onBlur={onBlur}
                             value={value}
                             style={{ marginBottom: 10 }}
+                            mode='outlined'
                         />
                         {errors.email && <Text style={{ color: 'red' }}>{errors.email.message}</Text>}
                     </View>
@@ -81,6 +82,7 @@ export const RegisterForm = () => {
                             value={value}
                             style={{ marginBottom: 10 }}
                             secureTextEntry={true}
+                            mode='outlined'
                         />
                         {errors.password && <Text style={{ color: 'red' }}>{errors.password.message}</Text>}
                     </View>
@@ -89,7 +91,7 @@ export const RegisterForm = () => {
                 defaultValue=""
             />
             <View style={{ alignItems: 'center' }}>
-                <Button onPress={handleSubmit(onSubmit)}>Stwórz konto</Button>
+                <Button onPress={handleSubmit(onSubmit)} mode="contained">Stwórz konto</Button>
             </View>
         </View>
     )

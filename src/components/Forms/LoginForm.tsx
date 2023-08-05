@@ -44,6 +44,7 @@ const LoginForm = () => {
                             onBlur={onBlur}
                             value={value}
                             style={{marginBottom: 10}}
+                            mode='outlined'
                         />
                         {errors.email && <Text style={{color: 'red'}}>{errors.email.message}</Text>}
                     </View>
@@ -66,6 +67,7 @@ const LoginForm = () => {
                             value={value}
                             style={{marginBottom: 10}}
                             secureTextEntry={true}
+                            mode='outlined'
                         />
                         {errors.password && <Text style={{color: 'red'}}>{errors.password.message}</Text>}
                     </View>
@@ -74,7 +76,7 @@ const LoginForm = () => {
                 defaultValue=""
             />
             <View style={{alignItems: 'center'}}>
-                <Button onPress={handleSubmit(handleFormSubmit)}>Zaloguj się</Button>
+                <Button onPress={handleSubmit(handleFormSubmit)} mode="contained">Zaloguj się</Button>
             </View>
         </View>
     );

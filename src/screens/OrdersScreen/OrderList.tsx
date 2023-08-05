@@ -2,11 +2,11 @@ import React, {useEffect, useState} from "react";
 import {GetListOfOrdersResponse, OrderStatus} from "../../interfaces/order.interfaces";
 import Api from "../../api/api";
 import {Loader} from "../../components/Loader/Loader";
-import {SafeAreaView} from "react-native-safe-area-context";
 import {SingleOrderElementOfList} from "../../components/Orders/SingleOrderElementOfList";
-import {RefreshControl, ScrollView, useWindowDimensions} from "react-native";
+import {RefreshControl, ScrollView, useWindowDimensions, View} from "react-native";
 import {useNavigation} from "@react-navigation/native";
-import {Appbar, Card, Menu, Text} from "react-native-paper";
+import {Appbar, Menu, Text} from "react-native-paper";
+import {theme} from "../../theme";
 
 
 interface OrderListProps {
@@ -67,11 +67,7 @@ export const OrderList = () => {
     };
 
     if (loading || loadingOrders) {
-        return (
-            <SafeAreaView>
-                <Loader title={"Wczytywanie listy zamówień..."}/>
-            </SafeAreaView>
-        );
+        return <Loader title={"Wczytywanie listy zamówień..."}/>;
     }
 
 
@@ -81,36 +77,37 @@ export const OrderList = () => {
     };
 
 
-
     return (
         <>
-            <Appbar.Header>
-                <Appbar.Content title={'Lista zamówień'}/>
-                <Menu
-                    visible={visible}
-                    onDismiss={hideMenu}
-                    anchor={
-                        <Appbar.Action icon="format-list-bulleted" onPress={showMenu}/>
+            <View style={{backgroundColor: theme.colors.background}}>
+                <Appbar.Header style={{backgroundColor: theme.colors.navigationBackground}}>
+                    <Appbar.Content title={'Lista zamówień'} titleStyle={{color: theme.colors.appBarTitleColor}}/>
+                    <Menu
+                        visible={visible}
+                        onDismiss={hideMenu}
+                        anchor={
+                            <Appbar.Action icon="format-list-bulleted" onPress={showMenu}/>
+                        }
+                        style={{marginTop: 60}}
+                    >
+                        <Menu.Item onPress={() => handleResultsPerPageSelect(10)} title="10"/>
+                        <Menu.Item onPress={() => handleResultsPerPageSelect(20)} title="20"/>
+                        <Menu.Item onPress={() => handleResultsPerPageSelect(30)} title="30"/>
+                        <Menu.Item onPress={() => handleResultsPerPageSelect(40)} title="40"/>
+                    </Menu>
+                    <Text style={{marginRight: 7}}>Max {resultsPerPage}</Text>
+                </Appbar.Header>
+                <ScrollView
+                    refreshControl={
+                        <RefreshControl refreshing={refreshing} onRefresh={handleRefreshOrders}/>
                     }
-                    style={{marginTop: 60}}
                 >
-                    <Menu.Item onPress={() => handleResultsPerPageSelect(10)} title="10"/>
-                    <Menu.Item onPress={() => handleResultsPerPageSelect(20)} title="20"/>
-                    <Menu.Item onPress={() => handleResultsPerPageSelect(30)} title="30"/>
-                    <Menu.Item onPress={() => handleResultsPerPageSelect(40)} title="40"/>
-                </Menu>
-                <Text style={{marginRight: 7}}>Max {resultsPerPage}</Text>
-            </Appbar.Header>
-            <ScrollView
-                refreshControl={
-                    <RefreshControl refreshing={refreshing} onRefresh={handleRefreshOrders}/>
-                }
-            >
 
-                {ordersList.map((order) => (
-                    <SingleOrderElementOfList order={order} key={order.id}/>
-                ))}
-            </ScrollView>
+                    {ordersList.map((order) => (
+                        <SingleOrderElementOfList order={order} key={order.id}/>
+                    ))}
+                </ScrollView>
+            </View>
         </>
     );
 };

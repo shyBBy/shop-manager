@@ -10,14 +10,10 @@ const Stack = createStackNavigator();
 
 const UnauthenticatedApp = () => {
     return (
-        <SafeAreaView style={{ flex: 1 }}>
-            <Text>{config.APP_NAME}</Text>
-
             <Stack.Navigator screenOptions={{headerShown: false}}>
                 <Stack.Screen name="Login" component={LoginScreen} />
                 <Stack.Screen name='Register' component={RegisterScreen}/>
             </Stack.Navigator>
-        </SafeAreaView>
     );
 };
 
