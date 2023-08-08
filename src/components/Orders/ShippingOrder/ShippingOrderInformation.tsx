@@ -1,9 +1,8 @@
 import React, {useCallback} from "react";
 import {SingleShippingInterface} from "../../../interfaces/shipping.interfaces";
 import {Button, Text} from "react-native-paper";
-import {Linking, TouchableOpacity, View} from "react-native";
+import {Linking, useWindowDimensions, View} from "react-native";
 import {OrderProfileInterface} from "../../../interfaces/order.interfaces";
-import {theme} from "../../../theme";
 
 interface ShippingOrderInformationProps {
     shipping: SingleShippingInterface;
@@ -12,18 +11,17 @@ interface ShippingOrderInformationProps {
 }
 
 
-export const ShippingOrderInformation: React.FC<ShippingOrderInformationProps> = ({
-                                                                                      shipping,
-                                                                                      order,
-                                                                                      shippingTracking
-                                                                                  }) => {
+export const ShippingOrderInformation: React.FC<ShippingOrderInformationProps> = ({shipping, order, shippingTracking
+}) => {
+    const { width } = useWindowDimensions();
+    const isNormalScreenSize = width <= 300;
 
     const handleOpenURL = useCallback(async () => {
         const url = 'https://furgonetka.pl/konto/sprzedaz';
         await Linking.openURL(url);
     }, []);
 
-    const handleOpenTrackingShiping = useCallback(async (url: any) => {
+    const handleOpenTrackingShipping = useCallback(async (url: any) => {
         await Linking.openURL(url);
     }, []);
 
@@ -45,29 +43,16 @@ export const ShippingOrderInformation: React.FC<ShippingOrderInformationProps> =
 
     return (
         <>
-            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <View style={{flexDirection: isNormalScreenSize ? 'row' : 'column', justifyContent: 'space-between'}}>
                 <Text>Numer przesyłki:</Text>
                 <Text>{shipping.parcels[0].package_no}</Text>
             </View>
-            <View style={{flexDirection: 'row', justifyContent: 'space-around', marginTop: 15}}>
+            <View style={{flexDirection: isNormalScreenSize ? 'row' : 'column', justifyContent: 'space-around', marginTop: 15,}}>
                 <Button onPress={() => handleOpenShippingLabelDownload(shipping.parcels[0].package_no)}
                         mode='contained'>Pobierz etykiete PDF</Button>
-                <Button onPress={() => handleOpenTrackingShiping(shipping.parcels[0].tracking_url)}
-                        mode='contained'>Śledź paczkę</Button>
+                <Button onPress={() => handleOpenTrackingShipping(shipping.parcels[0].tracking_url)}
+                        mode='contained'style={{marginTop: isNormalScreenSize ? 0 : 20}} >Śledź paczkę</Button>
             </View>
-            {/*<View>*/}
-            {/*    <View style={{flexDirection: 'column', justifyContent: 'space-between'}}>*/}
-            {/*        <View style={{flexDirection: 'row'}}>*/}
-            {/*            <Text>Numer przesyłki:</Text>*/}
-            {/*            <Text>{shipping.parcels[0].package_no}</Text>*/}
-            {/*        </View>*/}
-            {/*        <TouchableOpacity onPress={handleOpenURL}*/}
-            {/*                          style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>*/}
-            {/*            <Button onPress={() => handleOpenTrackingShiping(shipping.parcels[0].tracking_url)}*/}
-            {/*                    mode='contained'>Śledź paczkę</Button>*/}
-            {/*        </TouchableOpacity>*/}
-            {/*    </View>*/}
-            {/*</View>*/}
         </>
     );
 };

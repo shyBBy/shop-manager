@@ -96,7 +96,7 @@ const AuthenticatedApp = () => {
                 <Tab.Screen name="Główna" component={HomeScreen}/>
                 <Tab.Screen name="Zamówienia" component={OrdersStack}/>
                 <Tab.Screen name="Zwroty" component={RefundsStack}/>
-                <Tab.Screen name="Ustawienia" component={RefundsStack}/>
+                {/*<Tab.Screen name="Ustawienia" component={}/>*/}
             </Tab.Navigator>
         </>
 

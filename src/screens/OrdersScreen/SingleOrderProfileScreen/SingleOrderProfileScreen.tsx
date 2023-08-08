@@ -95,7 +95,6 @@ export const SingleOrderProfileScreen = (props: any) => {
                         </View>
                     </Card>
 
-                    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                         <Card style={{padding: 10, marginTop: 10, marginBottom: 10}}>
                             <Text variant='titleLarge' style={{color: theme.colors.primary, fontFamily: 'OswaldRegular'}}>Dane kupującego:</Text>
                             <View>
@@ -111,22 +110,7 @@ export const SingleOrderProfileScreen = (props: any) => {
                                     <Text>{`${order?.billing.company}`}</Text>
                                 </View></View> : <Text>Brak</Text>}
                         </Card>
-                        <Card style={{padding: 10, marginTop: 10, marginBottom: 10}}>
-                            <Text variant='titleLarge' style={{color: theme.colors.primary, fontFamily: 'OswaldRegular'}}>Dane Firmy:</Text>
-                            <View>
-                                <Text variant='bodyMedium'>{`${order?.billing.first_name} ${order?.billing.last_name}`}</Text>
-                                <Text>{`${order?.billing.address_1}`}</Text>
-                                <Text>{`${order?.billing.postcode} ${order?.billing.city}`}</Text>
-                                <Text>{`${order?.billing.country}`}</Text>
-                                <Text>{`${order?.billing.email}`}</Text>
-                                <Text>{`${order?.billing.phone}`}</Text>
-                            </View>
-                            {order?.billing.company ? <View><Text>Dane Firmy:</Text>
-                                <View>
-                                    <Text>{`${order?.billing.company}`}</Text>
-                                </View></View> : <Text>Brak</Text>}
-                        </Card>
-                    </View>
+
 
                     <Card style={{padding: 10, marginTop: 10, marginBottom: 10}}>
                         <Text variant='titleLarge' style={{color: theme.colors.primary, fontFamily: 'OswaldRegular'}}>Zamówione produkty</Text>

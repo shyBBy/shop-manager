@@ -3,7 +3,7 @@ import {RouteProp, useNavigation, useRoute} from "@react-navigation/native";
 import Api from "../../../api/api";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {Loader} from "../../../components/Loader/Loader";
-import {RefreshControl, ScrollView, ToastAndroid, View} from "react-native";
+import {RefreshControl, ScrollView, ToastAndroid, useWindowDimensions, View} from "react-native";
 import {RefundRes} from "../../../interfaces/refund.interface";
 import {Appbar, Card, Text, TextInput} from "react-native-paper";
 import {theme} from "../../../theme";
@@ -17,6 +17,8 @@ interface SingleRefundProfileParams {
 }
 
 export const SingleRefundProfileScreen = () => {
+    const { width } = useWindowDimensions();
+    const isNormalScreenSize = width <= 300;
 
     const navigation = useNavigation();
     const route = useRoute<RouteProp<Record<string, SingleRefundProfileParams>, string>>();
@@ -78,6 +80,7 @@ export const SingleRefundProfileScreen = () => {
         }
     };
 
+
     return (
         <>
             <Appbar.Header style={{backgroundColor: theme.colors.navigationBackground}}>
@@ -96,8 +99,8 @@ export const SingleRefundProfileScreen = () => {
                                   style={{color: theme.colors.primary, fontFamily: 'OswaldRegular'}}>Szczegóły
                                 zwrotu</Text>
                         </View>
-                        <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
-                            <Text variant='titleMedium' style={{color: theme.colors.appBarTitleColor}}>E-mail: </Text>
+                        <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 15}}>
+
                             <Text variant='bodyMedium'>{refund?.email}</Text>
                         </View>
                         <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
@@ -129,7 +132,7 @@ export const SingleRefundProfileScreen = () => {
                                 aktualizacja: </Text>
                             <Text variant='bodyMedium'>{formatDate(refund?.updatedAt)}</Text>
                         </View>
-                        <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+                        <View style={{flexDirection: isNormalScreenSize ? 'row' : 'column', alignItems: 'center', justifyContent: 'space-between'}}>
                             <Text variant='titleMedium' style={{color: theme.colors.appBarTitleColor}}>Przyczyna
                                 zwrotu: </Text>
                             <Text variant='bodyMedium'>{refund?.reason}</Text>

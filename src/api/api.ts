@@ -37,6 +37,7 @@ class API {
                 credentials: 'include',
             });
             const data = await response.json()
+            console.log(`RESPONSE`, data)
             return data
         } catch (error) {
             console.error('Błąd pobierania zamówienia:', error);

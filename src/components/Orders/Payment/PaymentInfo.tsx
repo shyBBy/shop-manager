@@ -27,8 +27,8 @@ export const PaymentInfo = (props: Props) => {
                 <Text>{`${order?.total_tax} zł`}</Text>
             </View>
             <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 2}}>
-                <Text  style={{fontSize: 17}}>Łączna wartość brutto:</Text>
-                <Text  style={{fontSize: 17}}>{`${order?.total} zł`}</Text>
+                <Text  style={{fontSize: 16}}>Łączna wartość brutto:</Text>
+                <Text  style={{fontSize: 16}}>{`${order?.total} zł`}</Text>
             </View>
             <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 20}}>
                 <Text>Rodzaj:</Text>

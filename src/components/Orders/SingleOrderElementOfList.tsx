@@ -64,11 +64,12 @@ export const SingleOrderElementOfList = (props: any) => {
             {/*    </View>*/}
             {/*</View>*/}
             {/*</Card>*/}
+            <Text variant='labelSmall' style={{marginLeft: 20}}>{formatDate(order.date_created)}</Text>
             <Card style={styles.card}>
                 <View style={styles.container}>
                     <View style={styles.leftContainer}>
-                        <Text style={styles.firstText}>{formatDate(order.date_created)}</Text>
-                        <Text style={styles.firstText}>{`#${order.id} ${order.billing.first_name} ${order.billing.last_name}`}</Text>
+                        <Text style={styles.firstText}>{`#${order.id}`}</Text>
+                        <Text style={styles.firstText}>{`${order.billing.first_name} ${order.billing.last_name}`}</Text>
                                 <View
                                     style={{
                                         backgroundColor: statusColor,
