@@ -8,6 +8,7 @@ import {loginSchema} from '../../schemas/login.schema';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import {Text, Card, Button, TextInput} from "react-native-paper";
+import {theme} from "../../theme";
 
 const LoginForm = () => {
     const [message, setMessage] = useState('');
@@ -35,7 +36,7 @@ const LoginForm = () => {
                 control={control}
                 render={({field: {onChange, onBlur, value}}) => (
                     <View>
-                        <Text  style={{fontWeight: 'bold'}}>Login</Text>
+                        <Text variant='titleLarge' style={{color: theme.colors.primary, fontFamily: 'OswaldLight'}}>Login:</Text>
                         <TextInput
                             placeholder="Wpisz swój adres e-mail"
                             keyboardType="default"
@@ -57,7 +58,7 @@ const LoginForm = () => {
                 control={control}
                 render={({field: {onChange, onBlur, value}}) => (
                     <View>
-                        <Text  style={{fontWeight: 'bold'}}>Hasło</Text>
+                        <Text variant='titleLarge' style={{color: theme.colors.primary, fontFamily: 'OswaldLight'}}>Hasło:</Text>
                         <TextInput
                             placeholder="Wpisz swoje hasło"
                             keyboardType="default"

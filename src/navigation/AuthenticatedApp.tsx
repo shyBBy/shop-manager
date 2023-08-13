@@ -1,16 +1,15 @@
 import React, {useState} from 'react';
 
-import {StyleSheet, TouchableOpacity} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {Text} from "react-native-paper";
 
 //NAVIGATION
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
+import {createStackNavigator} from '@react-navigation/stack';
 
 //SCREENS
 import RefundScreen from '../screens/RefundScreen/RefundScreen';
 import OrdersScreen from '../screens/OrdersScreen/OrdersScreen';
-import ShippingScreen from '../screens/ShippingScreen/ShippingScreen';
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import {SingleOrderProfileScreen} from '../screens/OrdersScreen/SingleOrderProfileScreen/SingleOrderProfileScreen';
 import {SingleRefundProfileScreen} from '../screens/RefundScreen/SingleRefundProfileScreen/SingleRefundProfileScreen';
@@ -71,9 +70,10 @@ const AuthenticatedApp = () => {
                     }
 
                     // @ts-ignore
-                    return <Ionicons name={iconName} size={24} color={focused ? theme.colors.primary : theme.colors.onSurface} />;
+                    return <Ionicons name={iconName} size={24}
+                                     color={focused ? theme.colors.primary : theme.colors.onSurface}/>;
                 },
-                tabBarLabel: ({ color }) => {
+                tabBarLabel: ({color}) => {
                     let label;
                     if (route.name === 'Główna') {
                         label = 'Główna';
@@ -87,7 +87,8 @@ const AuthenticatedApp = () => {
 
                     // Zwracamy komponent Text zawierający tekst zakładki oraz odpowiednie style
                     return (
-                        <Text variant="bodyMedium" style={{ color, fontSize: 13, fontFamily: "OswaldLight" , marginBottom: 5 }}>
+                        <Text variant="bodyMedium"
+                              style={{color, fontSize: 13, fontFamily: "OswaldLight", marginBottom: 5}}>
                             {label}
                         </Text>
                     );
