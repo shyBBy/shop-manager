@@ -46,7 +46,7 @@ export const AuthProvider = ({children}: { children: JSX.Element }) => {
                 BackHandler.removeEventListener("hardwareBackPress", handleBackButton); // Usuwanie nasłuchiwania na wciśnięcie przycisku powrotu
                 navigation.reset({
                     index: 0,
-                    routes: [{name: "Login"}],
+                    routes: [{name: "App"}],
                 });
             } else {
                 const errorData = await response.json();

@@ -8,6 +8,7 @@ import PagerView from 'react-native-pager-view';
 import {Ionicons} from '@expo/vector-icons';
 import {useNavigation} from "@react-navigation/native";
 import {LoginNavigationProp, RegisterNavigationProp} from "../../interfaces/navigation.interfaces";
+import {CreatedBy} from "../../components/CreatedBy/CreatedBy";
 
 const shipping = require('../../../assets/img/shipping.png');
 const payment = require('../../../assets/img/payment.png');
@@ -202,19 +203,13 @@ export const UnauthenticatedAppScreen = () => {
                     padding: 10,
                     alignItems: 'center',
                     flexDirection: 'row',
-                    justifyContent: 'space-around'
+                    justifyContent: 'space-around',
+                    marginBottom: `7%`
                 }}>
                     <Button mode='contained' onPress={() => navigation.navigate('Login')}>Zaloguj się</Button>
                     <Button mode='contained' onPress={() => navigation.navigate('Register')}>Stwórz konto</Button>
                 </View>
-                {/*<View style={{padding: 10, alignItems: 'center', flexDirection: 'row', justifyContent: 'space-around'}}>*/}
-                {/*    <Text>ShopManager to zaawansowana aplikacja do zarządzania sklepem opartym na platformie WooCommerce. Ta innowacyjna technologia łączyw niezodzejnych systemów jak płatności Payu i system wysyłki furgonetka.pl, umożliwiając sprawdzanie, generowanie etykiet przesyłek i monitorowanie statusów. Za jej pomocą można wygodnie zarządzać najważniejszymi elementami swojego sklepu.*/}
-
-                {/*        Poza standardowymi udogodnieniami, ShopManager oferuje dodatkowe możliwości. Dzięki niemu można w prosty sposób przejrzeć rejestr zamówień, a także dostęp do informacji o klientach, ich zakupach i historii. Prowadzi on również automatyczny monitoring statusów zamówień. Jeżeli zajdzie taka potrzeba, wyśle do każdego klienta maila z aktualnymi informacjami, a także linkiem do śledzenia paczki.*/}
-
-                {/*        Korzystanie ze ShopManager umożliwia skuteczne zarządzanie zwrotami oraz utrzymywanie stałego kontaktu z klientami, wszystko to dzięki intuicyjnej i przystępnej aplikacji. Funkcje te służą do usprawnienia procesów sklepowych i wzrostu w jakości obsługi gości.*/}
-                {/*    </Text>*/}
-                {/*</View>*/}
+                <CreatedBy/>
             </View>
         </>
     )

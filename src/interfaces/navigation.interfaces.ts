@@ -4,6 +4,7 @@ export type RootStackParamList = {
     Login: undefined;
     Główna: undefined;
     Register: undefined;
+    App: undefined;
     // Dodaj inne ekrany, jeśli są wymagane
 };
 

@@ -172,6 +172,37 @@ class API {
     }
 
     //REFUNDS SECTION END
+
+    //REPORTS SECTION START
+
+    public async getSalesReport() {
+        try {
+            const response = await fetch(`${this.baseUrl}/order/reports/sales`, {
+                credentials: 'include',
+            });
+            const data = await response.json()
+            return data
+        } catch (error) {
+            console.error('Błąd pobierania raportu:', error);
+            throw error;
+        }
+    }
+
+    public async getTopProductSalesReport() {
+        try {
+            const response = await fetch(`${this.baseUrl}/order/reports/topproducts`, {
+                credentials: 'include',
+            });
+            const data = await response.json()
+            return data
+        } catch (error) {
+            console.error('Błąd pobierania raportu:', error);
+            throw error;
+        }
+    }
+
+
+    //REPORTS SECTION END
 }
 
 export default new API();

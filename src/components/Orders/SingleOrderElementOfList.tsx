@@ -1,12 +1,9 @@
 import React from "react";
 import {getStatusColor, OrderStatusConverter} from "../../helpers/orderStatusConverter";
-import {View, StyleSheet} from "react-native";
+import {StyleSheet, TouchableOpacity, View} from "react-native";
 import {useNavigation} from "@react-navigation/native";
 import {formatDate} from "../Utils/formatDate.utils";
-import {TouchableOpacity} from "react-native";
-import {Button, Text, Card, List, useTheme} from "react-native-paper";
-import {theme} from "../../theme";
-
+import {Card, Text, useTheme} from "react-native-paper";
 
 
 const TestComponent: React.FC = () => {
@@ -34,7 +31,7 @@ export const SingleOrderElementOfList = (props: any) => {
     return (
         // <TouchableOpacity onPress={() => showOrderProfileScreen(order.id)}>
         // @ts-ignore
-        <TouchableOpacity onPress={() => navigation.navigate("SingleOrderProfile", {orderId: order.id})} >
+        <TouchableOpacity onPress={() => navigation.navigate("SingleOrderProfile", {orderId: order.id})}>
             {/*<Card mode='elevated'>*/}
             {/*<View style={{flexDirection: 'row', marginTop: 1}}>*/}
             {/*    <View style={{flex: 1}}>*/}
@@ -70,19 +67,19 @@ export const SingleOrderElementOfList = (props: any) => {
                     <View style={styles.leftContainer}>
                         <Text style={styles.firstText}>{`#${order.id}`}</Text>
                         <Text style={styles.firstText}>{`${order.billing.first_name} ${order.billing.last_name}`}</Text>
-                                <View
-                                    style={{
-                                        backgroundColor: statusColor,
-                                        borderRadius: 3,
-                                        padding: 4,
-                                        alignSelf: 'flex-start',
-                                        marginTop: 4,
-                                    }}
-                                >
-                                    <Text style={{fontSize: 12, color: 'black'}}>
-                                        {OrderStatusConverter(order.status)}
-                                    </Text>
-                                </View>
+                        <View
+                            style={{
+                                backgroundColor: statusColor,
+                                borderRadius: 3,
+                                padding: 4,
+                                alignSelf: 'flex-start',
+                                marginTop: 4,
+                            }}
+                        >
+                            <Text style={{fontSize: 12, color: 'black'}}>
+                                {OrderStatusConverter(order.status)}
+                            </Text>
+                        </View>
                     </View>
                     <Text style={styles.secondText}>{`${order.total} zł`}</Text>
                 </View>

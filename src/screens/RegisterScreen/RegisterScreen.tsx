@@ -16,7 +16,10 @@ export const RegisterScreen = () => {
     };
     return (
         <View style={{height: '100%', backgroundColor: theme.colors.background}}>
-            <View>
+            <View style={{
+                padding: 5,
+                marginTop: `25%`,
+            }}>
                 <RegisterDescribe/>
                 <RegisterForm/>
                 <TouchableOpacity onPress={handlePress}>
