@@ -64,7 +64,7 @@ export const RefundList = () => {
 
     return (
         <>
-            <View style={{backgroundColor: theme.colors.background}}>
+            <View style={{flex: 1, backgroundColor: theme.colors.background}}>
                 <Appbar.Header style={{backgroundColor: theme.colors.navigationBackground}}>
                     <Appbar.Content title={'Lista zwrotów'} titleStyle={{color: theme.colors.appBarTitleColor}}/>
                     <Menu

@@ -18,6 +18,9 @@ import {SingleRefundProfileScreen} from '../screens/RefundScreen/SingleRefundPro
 //ICONS
 import {Ionicons} from '@expo/vector-icons';
 import {theme} from "../theme";
+import {CouponsScreen} from "../screens/CouponsScreen/CouponsScreen";
+import {SingleCouponProfileScreen} from "../screens/CouponsScreen/SingleCouponProfileScreen/SingleCouponProfileScreen";
+import {CouponCreateScreen} from "../screens/CouponsScreen/CouponCreateScreen/CouponCreateScreen";
 
 
 const Tab = createBottomTabNavigator();
@@ -38,6 +41,14 @@ const RefundsStack = () => (
     </Stack.Navigator>
 );
 
+const CouponsStack = () => (
+    <Stack.Navigator screenOptions={{headerShown: false}}>
+        <Stack.Screen name="Coupons" component={CouponsScreen}/>
+        <Stack.Screen name="SingleCouponProfile" component={SingleCouponProfileScreen}/>
+        <Stack.Screen name="CouponCreate" component={CouponCreateScreen}/>
+    </Stack.Navigator>
+)
+
 const AuthenticatedApp = () => {
     const [menuVisible, setMenuVisible] = useState(false);
 
@@ -47,10 +58,6 @@ const AuthenticatedApp = () => {
 
     return (
         <>
-            {/*<Appbar.Header>*/}
-            {/*    <Appbar.Content title={''}/>*/}
-            {/*    <Appbar.Action icon={MORE_ICON} onPress={() => {}} />*/}
-            {/*</Appbar.Header>*/}
             <Tab.Navigator screenOptions={({route}) => ({
                 headerShown: false,
                 tabBarInactiveTintColor: theme.colors.onSurface,
@@ -66,7 +73,7 @@ const AuthenticatedApp = () => {
                     } else if (route.name === 'Zwroty') {
                         iconName = focused ? 'refresh-sharp' : 'refresh-outline'
                     } else {
-                        iconName = focused ? 'settings-sharp' : 'settings-outline'
+                        iconName = focused ? 'pricetags-sharp' : 'pricetags-outline'
                     }
 
                     // @ts-ignore
@@ -82,7 +89,7 @@ const AuthenticatedApp = () => {
                     } else if (route.name === 'Zwroty') {
                         label = 'Zwroty';
                     } else {
-                        label = 'Ustawienia';
+                        label = 'Kupony';
                     }
 
                     // Zwracamy komponent Text zawierający tekst zakładki oraz odpowiednie style
@@ -97,7 +104,7 @@ const AuthenticatedApp = () => {
                 <Tab.Screen name="Główna" component={HomeScreen}/>
                 <Tab.Screen name="Zamówienia" component={OrdersStack}/>
                 <Tab.Screen name="Zwroty" component={RefundsStack}/>
-                {/*<Tab.Screen name="Ustawienia" component={}/>*/}
+                <Tab.Screen name="Kupony" component={CouponsStack}/>
             </Tab.Navigator>
         </>
 

@@ -6,15 +6,16 @@ import {config} from "../../config/config";
 import {ToastAndroid, View} from "react-native";
 import {Button, Text, TextInput} from "react-native-paper";
 
-export const SendMessageToClientForm = () => {
+export const SendMessageToClientForm = (props: any) => {
+    const {refundUuid} = props
 
-    const {control, handleSubmit, formState: {errors}} = useForm<{ message: string }>({
+    const {control, handleSubmit, formState: {errors}} = useForm<{ emailContent: string }>({
         resolver: yupResolver(sendMessageSchema),
     });
 
     const onSubmit = async (data: any) => {
         try {
-            const res = await fetch(`${config.API_URL}/user/create`, {
+            const res = await fetch(`${config.API_URL}/refund/${refundUuid}/sendemail`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -22,14 +23,15 @@ export const SendMessageToClientForm = () => {
                 body: JSON.stringify(data)
             });
 
+            console.log(`data:`, data)
+            console.log(`RES:`, res)
             if (!res.ok) {
-                ToastAndroid.show(`${data.message}`, ToastAndroid.SHORT);
+                ToastAndroid.show(`Coś poszło nie tak`, ToastAndroid.SHORT);
                 return;
             }
 
             const response = await res.json();
-            ToastAndroid.show('Pomyślnie utworzono konto', ToastAndroid.SHORT);
-
+            ToastAndroid.show('Pomyślnie wysłano wiadomość do klienta', ToastAndroid.SHORT);
             return response;
         } catch (e) {
             ToastAndroid.show('Coś poszło nie tak, spróbuj jeszcze raz.', ToastAndroid.SHORT);
@@ -37,31 +39,35 @@ export const SendMessageToClientForm = () => {
         }
     };
 
+
+
     return(
         <>
             <Controller
                 control={control}
                 render={({ field: { onChange, onBlur, value } }) => (
                     <View>
-                        <Text  style={{ fontWeight: 'bold' }}>Login</Text>
+                        <Text  style={{ fontWeight: 'bold' }}>Treść wiadomości:</Text>
                         <TextInput
-                            placeholder="Wpisz swój e-mail"
+                            placeholder="Dodaj odpowiedź"
                             keyboardType="default"
                             autoCapitalize="none"
                             onChangeText={onChange}
                             onBlur={onBlur}
                             value={value}
-                            style={{ marginBottom: 10 }}
                             mode='outlined'
+                            multiline  // Włącza wieloliniowy tryb tekstu
+                            numberOfLines={4}  // Domyślna liczba widocznych linii
+                            style={{ height: 120 }}  // Określa wysokość pola tekstowego
                         />
-                        {errors.message && <Text style={{ color: 'red' }}>{errors.message.message}</Text>}
+                        {errors.emailContent && <Text style={{ color: 'red' }}>{errors.emailContent.message}</Text>}
                     </View>
                 )}
-                name="message"
+                name="emailContent"
                 defaultValue=""
             />
             <View style={{ alignItems: 'center' }}>
-                <Button onPress={handleSubmit(onSubmit)} mode="contained">Stwórz konto</Button>
+                <Button onPress={handleSubmit(onSubmit)} mode="contained">Wyślij wiadomość</Button>
             </View>
         </>
     )

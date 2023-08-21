@@ -1,7 +1,7 @@
 import {config} from "../config/config";
 import {ToastAndroid} from "react-native";
 import {useNavigation} from "@react-navigation/native";
-import {HomeNavigationProp} from "../interfaces/navigation.interfaces";
+import {HomeCouponNavigationProp, HomeNavigationProp} from "../interfaces/navigation.interfaces";
 
 class API {
     private baseUrl: string;
@@ -37,7 +37,6 @@ class API {
                 credentials: 'include',
             });
             const data = await response.json()
-            console.log(`RESPONSE`, data)
             return data
         } catch (error) {
             console.error('Błąd pobierania zamówienia:', error);
@@ -123,7 +122,6 @@ class API {
     }
 
 
-
     //REFUNDS SECTION START
 
     public async getAllRefunds() {
@@ -203,6 +201,83 @@ class API {
 
 
     //REPORTS SECTION END
+
+
+    //COUPONS SECTION START
+
+    public async getOneCoupon(couponId: string | number) {
+        try {
+            const response = await fetch(`${this.baseUrl}/store/coupon/${couponId}`, {
+                credentials: 'include',
+            });
+            const data = await response.json()
+            return data
+        } catch (error) {
+            console.error('Błąd pobierania kuponu:', error);
+            throw error;
+        }
+    }
+
+    public async getAllCoupons() {
+        try {
+
+            const response = await fetch(`${this.baseUrl}/store/coupon/list`, {
+                credentials: 'include',
+            });
+            const data = await response.json()
+            return data
+        } catch (error) {
+            console.error('Błąd pobierania wszystkich kuponów', error);
+            throw error;
+        }
+    }
+
+    public async createCoupon(couponData: any) {
+        try {
+            const headers = await this.getAuthorizationHeader();
+            const response = await fetch(`${this.baseUrl}/store/coupon/create`, {
+                method: 'POST',
+                headers: {
+                    ...headers,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(couponData),
+            });
+
+
+
+            if (!response.ok) {
+                ToastAndroid.show(`${couponData.message}`, ToastAndroid.SHORT);
+                return;
+            }
+
+            const res = await response.json();
+            ToastAndroid.show(`Pomyślnie utworzono kupon: ${couponData.code}`, ToastAndroid.SHORT);
+            return res
+        } catch (error) {
+            console.log(error)
+            ToastAndroid.show('Coś poszło nie tak, spróbuj jeszcze raz.', ToastAndroid.SHORT);
+            return;
+        }
+    }
+
+    public async removeCoupon(couponId: string | number) {
+        try {
+            const response = await fetch(`${this.baseUrl}/store/coupon/${couponId}`, {
+                method: 'DELETE',
+                credentials: 'include',
+            });
+            const data = await response.json()
+            ToastAndroid.show('Pomyślnie usunięto kupon', ToastAndroid.SHORT);
+            return data
+        } catch (error) {
+            console.error('Błąd usuwania kuponu:', error);
+            throw error;
+        }
+    }
+
+
+    //COUPONS SECTION END
 }
 
 export default new API();

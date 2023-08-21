@@ -10,6 +10,7 @@ import {theme} from "../../../theme";
 import {useContext} from "react/index";
 import {RemoveRefundAndOrderContext} from "../../../context/RemoveRefundAndOrderContext";
 import {formatDate, formatDateWithYearAndHours} from "../../../components/Utils/formatDate.utils";
+import {SendMessageToClientForm} from "../../../components/Forms/SendMessageToClientForm";
 
 
 interface SingleRefundProfileParams {
@@ -154,17 +155,7 @@ export const SingleRefundProfileScreen = () => {
                                       style={{color: theme.colors.primary, fontFamily: 'OswaldRegular'}}>Zarzadzaj
                                     zwrotem</Text>
                             </View>
-                            <View>
-                                <TextInput
-                                    label="Dodaj odpowiedź"
-                                    value={text}
-                                    mode='outlined'
-                                    onChangeText={setText}
-                                    multiline
-                                    numberOfLines={4} // Możesz określić liczbę widocznych wierszy (opcjonalne)
-                                    style={{height: 220, textAlignVertical: 'top'}} // Ustaw wysokość obszaru tekstowego
-                                />
-                            </View>
+                            <SendMessageToClientForm key={refundId} refundUuid={refundId}/>
                         </Card>
                     </View>
                 </View>

@@ -5,6 +5,8 @@ export type RootStackParamList = {
     Główna: undefined;
     Register: undefined;
     App: undefined;
+    Coupons: undefined;
+    CouponCreate: undefined;
     // Dodaj inne ekrany, jeśli są wymagane
 };
 
@@ -17,3 +19,9 @@ export type HomeNavigationProp = StackNavigationProp<RootStackParamList,
 
 export type RegisterNavigationProp = StackNavigationProp<RootStackParamList,
     "Register">;
+
+export type HomeCouponNavigationProp = StackNavigationProp<RootStackParamList,
+    "Coupons">;
+
+export type CreateCouponNavigationProp = StackNavigationProp<RootStackParamList,
+    "CouponCreate">;

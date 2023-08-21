@@ -10,6 +10,7 @@ import {Loader} from "../Loader/Loader";
 import {SingleTopProductsSalesElementOfList} from "./SingleTopProductsSalesElementOfList";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Ionicons } from '@expo/vector-icons';
+import {checkDeviceFontSize} from "../../helpers/checkDeviceFontSize";
 
 const image = require('../../../assets/img/myApp2.png');
 
@@ -20,22 +21,7 @@ export const BasicStoreDetails = () => {
     const [topProductSalesReport, setTopProductSalesReport] = useState<GetListOfTopProductsResponse>([])
     const [loading, setLoading] = useState(true);
 
-    const {width, height} = useWindowDimensions();
-    // Pobierz szerokość ekranu
-    const screenWidth = Dimensions.get('window').width;
-
-    // Pobierz skale czcionki systemowej (współczynnik)
-    const fontScale = Dimensions.get('window').fontScale;
-
-    // Ustal rozmiar czcionki XL (przykładowo)
-    const fontSizeXL = 20;
-
-    // Oblicz rzeczywisty rozmiar czcionki, uwzględniając skalę
-    const actualFontSize = fontSizeXL * fontScale;
-
-    // Ustaw bigScreenSize na true, jeśli rzeczywisty rozmiar czcionki jest większy niż założony próg
-    const bigScreenSize = actualFontSize > 20; // Możesz dostosować próg według swoich potrzeb
-
+    const bigScreenSize = checkDeviceFontSize();
 
     //DATE PICKER STATES
     const [date, setDate] = useState(new Date());
