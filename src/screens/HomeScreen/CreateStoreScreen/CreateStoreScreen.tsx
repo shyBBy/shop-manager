@@ -1,10 +1,10 @@
 import React from "react";
 import {createMaterialTopTabNavigator} from "@react-navigation/material-top-tabs";
-import {Text, Card} from "react-native-paper";
+import {Card, Text} from "react-native-paper";
 import {CreateStoreForm} from "../../../components/Forms/CreateStoreForm";
-import {useAuth} from "../../../hooks/useAuth";
 import {View} from "react-native";
-import {TabBar} from "react-native-tab-view";
+import {theme} from "../../../theme";
+import {SafeAreaView} from "react-native-safe-area-context";
 
 interface TopTabBarProps {
     navigation: any;
@@ -13,13 +13,14 @@ interface TopTabBarProps {
 
 const {Navigator, Screen} = createMaterialTopTabNavigator();
 
-const TutorialScreen = () => (
-    <View style={{flex: 1}}>
+export const TutorialScreen = () => (
+    <View style={{flex: 1, backgroundColor: theme.colors.background}}>
         <Card>
-            <Text style={{ marginBottom: 10 }}>Konfiguracja sklepu WooCommerce</Text>
-            <Text style={{ marginBottom: 15 }}>
+            <Text style={{marginBottom: 10}}>Konfiguracja sklepu WooCommerce</Text>
+            <Text style={{marginBottom: 15}}>
                 Jeśli widzisz ten komunikat, oznacza to, że nie masz jeszcze skonfigurowanego sklepu WooCommerce.
-                Aby wygenerować klucz klienta (consumer key) i klucz sekretny (consumer secret) dla swojego sklepu WooCommerce,
+                Aby wygenerować klucz klienta (consumer key) i klucz sekretny (consumer secret) dla swojego sklepu
+                WooCommerce,
                 postępuj zgodnie z poniższymi krokami:
             </Text>
             <Text>
@@ -42,7 +43,8 @@ const TutorialScreen = () => (
                 6. Po wygenerowaniu klucza klienta i klucza sekretnego, skopiuj je i zapisz w bezpiecznym miejscu.
             </Text>
             <Text>
-                Gotowe! Teraz możesz użyć tych kluczy do integracji swojego sklepu WooCommerce z innymi aplikacjami lub usługami.
+                Gotowe! Teraz możesz użyć tych kluczy do integracji swojego sklepu WooCommerce z innymi aplikacjami lub
+                usługami.
             </Text>
         </Card>
     </View>
@@ -73,6 +75,11 @@ const CreateStoreScreen = () => (
 
 export const CreateStoreScreenContainer = () => {
     return (
-        <Text>NAWIGACJA</Text>
+        <>
+            <View style={{flex: 1, backgroundColor: theme.colors.background}}>
+                <Text>TEST</Text>
+            </View>
+        </>
+
     )
 }

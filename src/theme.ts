@@ -7,6 +7,7 @@ export const theme = {
     "colors": {
         ...MD3LightTheme.colors,
         "primary": "rgb(236,54,86)",
+        "warning": "rgb(255,193,7)",
         "onPrimary": "rgb(255, 255, 255)",
         "primaryContainer": "rgb(238,238,238)",
         "onPrimaryContainer": "rgb(44, 0, 81)",
@@ -28,7 +29,7 @@ export const theme = {
         "surface": "rgb(255, 251, 255)",
         "onSurface": "rgb(186, 186, 186)", //KOLOR TEKSTU
         "appBarTitleColor": "rgb(255, 255, 255)", //KOLOR TEKSTU Z APPBAR TITLE
-        "surfaceVariant": "rgb(250,216,167)", //KOLOR INPUTA, TLA jak ma mode: flat
+        "surfaceVariant": "rgb(23,23,23)", //KOLOR INPUTA, TLA jak ma mode: flat
         "onSurfaceVariant": "rgb(250, 249, 250)", // kolor Menu.Item chyba ikonka oraz tekstu np w INPUCIE (jako podpowiedz)
         "outline": "rgb(133,133,133)", //KOLOR OBRAMÓWKI INPUTA z mode OUTLINED - jak jest nieaktywny
         "outlineVariant": "rgb(204, 196, 206)",

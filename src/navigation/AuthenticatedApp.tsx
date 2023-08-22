@@ -21,6 +21,9 @@ import {theme} from "../theme";
 import {CouponsScreen} from "../screens/CouponsScreen/CouponsScreen";
 import {SingleCouponProfileScreen} from "../screens/CouponsScreen/SingleCouponProfileScreen/SingleCouponProfileScreen";
 import {CouponCreateScreen} from "../screens/CouponsScreen/CouponCreateScreen/CouponCreateScreen";
+import {useAuth} from "../hooks/useAuth";
+import {YourStoreScreen} from "../screens/YourStoreScreen/YourStoreScreen";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 
 const Tab = createBottomTabNavigator();
@@ -51,6 +54,8 @@ const CouponsStack = () => (
 
 const AuthenticatedApp = () => {
     const [menuVisible, setMenuVisible] = useState(false);
+    const {user} = useAuth();
+    const [userStore, setUserStore] = useState(user?.store);
 
     const toggleMenu = () => {
         setMenuVisible(!menuVisible);
@@ -72,6 +77,10 @@ const AuthenticatedApp = () => {
                         iconName = focused ? 'cart-sharp' : 'cart-outline'
                     } else if (route.name === 'Zwroty') {
                         iconName = focused ? 'refresh-sharp' : 'refresh-outline'
+                    } else if (route.name === 'Sklep') {
+                        iconName = focused ? 'storefront' : 'storefront-outline';
+                        // @ts-ignore
+                        return <MaterialCommunityIcons name={iconName} size={24} color={focused ? theme.colors.primary : theme.colors.onSurface} />;
                     } else {
                         iconName = focused ? 'pricetags-sharp' : 'pricetags-outline'
                     }
@@ -88,6 +97,8 @@ const AuthenticatedApp = () => {
                         label = 'Zamówienia';
                     } else if (route.name === 'Zwroty') {
                         label = 'Zwroty';
+                    } else if (route.name === 'Sklep') {
+                        label = 'Twój Sklep';
                     } else {
                         label = 'Kupony';
                     }
@@ -101,10 +112,17 @@ const AuthenticatedApp = () => {
                     );
                 }
             })}>
-                <Tab.Screen name="Główna" component={HomeScreen}/>
-                <Tab.Screen name="Zamówienia" component={OrdersStack}/>
-                <Tab.Screen name="Zwroty" component={RefundsStack}/>
-                <Tab.Screen name="Kupony" component={CouponsStack}/>
+                {user?.store && (
+                    <>
+                        <Tab.Screen name="Główna" component={HomeScreen}/>
+                        <Tab.Screen name="Zamówienia" component={OrdersStack}/>
+                        <Tab.Screen name="Zwroty" component={RefundsStack}/>
+                        <Tab.Screen name="Kupony" component={CouponsStack}/>
+                    </>
+                )}
+                {!user?.store && (
+                    <Tab.Screen name="Sklep" component={YourStoreScreen}/>
+                )}
             </Tab.Navigator>
         </>
 

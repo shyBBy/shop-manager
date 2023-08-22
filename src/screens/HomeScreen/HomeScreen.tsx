@@ -2,11 +2,9 @@ import React, {useEffect, useState} from 'react';
 import {useAuth} from "../../hooks/useAuth";
 import {CreateStoreScreenContainer} from "./CreateStoreScreen/CreateStoreScreen";
 import {BasicStoreDetails} from "../../components/BasicStoreDetails/BasicStoreDetails";
-import {ScrollView, View} from "react-native";
-import {SafeAreaView} from "react-native-safe-area-context";
+import {Platform, ScrollView} from "react-native";
 
-import {Appbar, useTheme} from 'react-native-paper';
-import { Platform } from 'react-native';
+import {useTheme} from 'react-native-paper';
 
 const MORE_ICON = Platform.OS === 'ios' ? 'dots-horizontal' : 'dots-vertical';
 

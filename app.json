@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "WooManager",
-    "slug": "WooManager",
+    "slug": "shop-manager",
     "version": "2.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
