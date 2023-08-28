@@ -4,7 +4,7 @@
 
 ## OPIS aplikacji
 
-WooManager to innowacyjne rozwiązanie, które powstało w odpowiedzi na wyzwania związane z prowadzeniem sklepów internetowych opartych na platformie WooCommerce. Aplikacja umożliwia wygodną integrację różnych systemów, takich jak PayU czy Furgonetka.pl, w jednym miejscu, przyczyniając się do bardziej efektywnego zarządzania sklepem oraz procesem wysyłki.
+WooManager, to innowacyjne rozwiązanie, które powstało w odpowiedzi na wyzwania związane z prowadzeniem sklepów internetowych opartych na platformie WooCommerce. Aplikacja umożliwia wygodną integrację różnych systemów, takich jak PayU czy Furgonetka.pl, w jednym miejscu, przyczyniając się do bardziej efektywnego zarządzania sklepem oraz procesem wysyłki.
 
 [link do Back-End](https://github.com/shyBBy/be_shop_manager).
 
