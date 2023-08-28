@@ -106,6 +106,13 @@ export const AuthProvider = ({children}: { children: JSX.Element }) => {
             }
 
             const userData = (await res.json()) as UserRes;
+
+            if (!userData.isActive) {
+                // @ts-ignore
+                navigation.navigate('Activation', { email: userData.email });
+                return;
+            }
+
             await StorageManager.saveObject('store', userData.store)
             setUser(userData);
             ToastAndroid.show(

@@ -1,24 +1,26 @@
-import React from 'react';
+import React from "react";
+import {useNavigation} from "@react-navigation/native";
+import {LoginNavigationProp} from "../../interfaces/navigation.interfaces";
 import {Controller, useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {registerSchema} from "../../schemas/register.schema";
+import {activationSchema} from "../../schemas/activation.schema";
 import {config} from "../../config/config";
 import {ToastAndroid, View} from "react-native";
-import {useNavigation} from "@react-navigation/native";
-import {LoginNavigationProp} from "../../interfaces/navigation.interfaces";
-import {Text, Card, Button, TextInput} from "react-native-paper";
+import {Button, Text, TextInput} from "react-native-paper";
 
 
-export const RegisterForm = () => {
+
+export const ActivationForm = () => {
     const navigation = useNavigation<LoginNavigationProp>();
 
-    const {control, handleSubmit, formState: {errors}} = useForm<{ email: string; password: string }>({
-        resolver: yupResolver(registerSchema),
+    const {control, handleSubmit, formState: {errors}} = useForm<{activationCode: string; email: string }>({
+        resolver: yupResolver(activationSchema),
     });
 
     const onSubmit = async (data: any) => {
         try {
-            const res = await fetch(`${config.API_URL}/user/create`, {
+            const res = await fetch(`${config.API_URL}/user/activation`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -27,15 +29,15 @@ export const RegisterForm = () => {
             });
 
             if (!res.ok) {
-                ToastAndroid.show(`${data.message}`, ToastAndroid.SHORT);
+                ToastAndroid.show(`Konto nie istnieje lub kod aktywacyjny jest niepoprawny.`, ToastAndroid.SHORT);
                 return;
             }
 
             const response = await res.json();
-            ToastAndroid.show('Pomyślnie utworzono konto, sprawdź skrzynkę pocztową i aktywuj konto', ToastAndroid.SHORT);
+            ToastAndroid.show('Pomyślnie aktywowano konto', ToastAndroid.SHORT);
             navigation.reset({
                 index: 0,
-                routes: [{name: "Activation"}],
+                routes: [{name: "Login"}],
             });
             return response;
         } catch (e) {
@@ -50,9 +52,9 @@ export const RegisterForm = () => {
                 control={control}
                 render={({ field: { onChange, onBlur, value } }) => (
                     <View>
-                        <Text  style={{ fontWeight: 'bold' }}>Login</Text>
+                        <Text  style={{ fontWeight: 'bold' }}>E-mail</Text>
                         <TextInput
-                            placeholder="Wpisz swój e-mail"
+                            placeholder="Wpisz adres e-mail"
                             keyboardType="default"
                             autoCapitalize="none"
                             onChangeText={onChange}
@@ -67,34 +69,31 @@ export const RegisterForm = () => {
                 name="email"
                 defaultValue=""
             />
-
             <Controller
                 control={control}
                 render={({ field: { onChange, onBlur, value } }) => (
                     <View>
-                        <Text  style={{ fontWeight: 'bold' }}>Hasło</Text>
+                        <Text  style={{ fontWeight: 'bold' }}>Kod aktywacyjny</Text>
                         <TextInput
-                            placeholder="Wpisz hasło"
+                            placeholder="Wpisz kod aktywacyjny"
                             keyboardType="default"
                             autoCapitalize="none"
                             onChangeText={onChange}
                             onBlur={onBlur}
                             value={value}
                             style={{ marginBottom: 10 }}
-                            secureTextEntry={true}
                             mode='outlined'
                         />
-                        {errors.password && <Text style={{ color: 'red' }}>{errors.password.message}</Text>}
+                        {errors.activationCode && <Text style={{ color: 'red' }}>{errors.activationCode.message}</Text>}
                     </View>
                 )}
-                name="password"
+                name="activationCode"
                 defaultValue=""
             />
+
             <View style={{ alignItems: 'center' }}>
-                <Button onPress={handleSubmit(onSubmit)} mode="contained">Stwórz konto</Button>
+                <Button onPress={handleSubmit(onSubmit)} mode="contained">Aktywuj konto</Button>
             </View>
         </View>
     )
-
-
 }

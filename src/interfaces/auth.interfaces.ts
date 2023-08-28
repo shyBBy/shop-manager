@@ -28,10 +28,11 @@ export interface StoreData {
 export interface UserData {
     id: string;
     email: string;
+    isActive: boolean;
     store: StoreData | null;
 }
 
-export type UserRes = Pick<UserData, 'id' | 'email'> & { store: StoreData | null };
+export type UserRes = Pick<UserData, 'id' | 'email' | 'isActive'> & { store: StoreData | null };
 
 
 

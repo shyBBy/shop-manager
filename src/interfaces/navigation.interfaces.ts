@@ -7,6 +7,7 @@ export type RootStackParamList = {
     App: undefined;
     Coupons: undefined;
     CouponCreate: undefined;
+    Activation: undefined;
     // Dodaj inne ekrany, jeśli są wymagane
 };
 
