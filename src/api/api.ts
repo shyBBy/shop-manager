@@ -33,33 +33,6 @@ class API {
         }
     }
 
-    public async getOrder(orderId: string | number) {
-        try {
-            const response = await fetch(`${this.baseUrl}/order/${orderId}`, {
-                credentials: 'include',
-            });
-            const data = await response.json()
-            return data
-        } catch (error) {
-            console.error('Błąd pobierania zamówienia:', error);
-            throw error;
-        }
-    }
-
-    public async getAllOrders() {
-        try {
-
-            const response = await fetch(`${this.baseUrl}/order/list`, {
-                credentials: 'include',
-            });
-            const data = await response.json()
-            return data
-        } catch (error) {
-            console.error('Błąd pobierania wszystkich zamówień:', error);
-            throw error;
-        }
-    }
-
 
     public async createStore(storeData: any, navigation: HomeNavigationProp) {
         try {
@@ -91,6 +64,42 @@ class API {
         }
     }
 
+
+
+
+
+
+
+public async getOrder(orderId: string | number) {
+        try {
+            const response = await fetch(`${this.baseUrl}/order/${orderId}`, {
+                credentials: 'include',
+            });
+            const data = await response.json()
+            return data
+        } catch (error) {
+            console.error('Błąd pobierania zamówienia:', error);
+            throw error;
+        }
+    }
+
+   
+    public async getAllOrders() {
+        try {
+
+            const response = await fetch(`${this.baseUrl}/order/list`, {
+                credentials: 'include',
+            });
+            const data = await response.json()
+            return data
+        } catch (error) {
+            console.error('Błąd pobierania wszystkich zamówień:', error);
+            throw error;
+        }
+    }
+
+
+
     public async changeOrderStatus(orderId: string, newStatus: string) {
         try {
             const headers = await this.getAuthorizationHeader();
@@ -109,6 +118,11 @@ class API {
         }
     }
 
+    
+    
+    
+    
+    
     public async getLoggedInUser() {
         try {
             const headers = await this.getAuthorizationHeader();
@@ -123,6 +137,10 @@ class API {
     }
 
 
+   
+   
+   
+   
     //REFUNDS SECTION START
 
     public async getAllRefunds() {
@@ -172,6 +190,10 @@ class API {
 
     //REFUNDS SECTION END
 
+   
+   
+   
+   
     //REPORTS SECTION START
 
     public async getSalesReport() {
@@ -204,6 +226,10 @@ class API {
     //REPORTS SECTION END
 
 
+   
+   
+   
+   
     //COUPONS SECTION START
 
     public async getOneCoupon(couponId: string | number) {
@@ -279,6 +305,42 @@ class API {
 
 
     //COUPONS SECTION END
+    
+    
+    
+   //CLIENTS SECTION START
+   
+   
+    public async getOneCustomer(couponId: string | number) {
+        try {
+            const response = await fetch(`${this.baseUrl}/store/coupon/${couponId}`, {
+                credentials: 'include',
+            });
+            const data = await response.json()
+            return data
+        } catch (error) {
+            console.error('Błąd pobierania kuponu:', error);
+            throw error;
+        }
+    }
+
+    public async getAllCustomers(page: any, rowsPerPage: any) {
+        try {
+
+            const response = await fetch(`${config.API_URL}/customer/list?page=${page}&perPage=${rowsPerPage}`, {
+                credentials: 'include',
+            });
+            const data = await response.json()
+            return data
+        } catch (error) {
+            console.error('Błąd pobierania wszystkich klientów', error);
+            throw error;
+        }
+    }
+
+    
+    
+    
 }
 
 export default new API();

@@ -30,23 +30,20 @@ export const CustomersList = () => {
         })();
     }, []);
 
-    const fetchData = async () => {
+
+const fetchData = async () => {
         try {
             setLoading(true);
-            const res = await fetch(`${config.API_URL}/customer/list?page=${page}&perPage=${rowsPerPage}`, {
-                credentials: 'include',
-            });
-            const data = await res.json();
-            setCustomerList(data.customers);
-            setMaxPage(data.pagesCount)
+            const customers = await Api.getAllCustomers(page, rowsPerPage);
+            setCustomerList(customers);
         } catch (error) {
-            console.error("Error fetching orders", error);
-            setCustomerList([]);
+            console.error("Error fetching customers", error);
         } finally {
             setLoading(false);
             setRefreshing(false);
         }
     };
+
 
     const handleRefreshCustomers = async () => {
         setRefreshing(true)
