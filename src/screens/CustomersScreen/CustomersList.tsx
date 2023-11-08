@@ -36,6 +36,7 @@ const fetchData = async () => {
             setLoading(true);
             const customers = await Api.getAllCustomers(page, rowsPerPage);
             setCustomerList(customers);
+            console.log(customers)
         } catch (error) {
             console.error("Error fetching customers", error);
         } finally {
