@@ -8,8 +8,12 @@ export type RootStackParamList = {
     Coupons: undefined;
     CouponCreate: undefined;
     Activation: undefined;
+    Customers: undefined;
+    WpLogin: undefined;
     // Dodaj inne ekrany, jeśli są wymagane
 };
+
+export type WpLoginNavigationProp = StackNavigationProp<RootStackParamList, "WpLogin">;
 
 export type LoginNavigationProp = StackNavigationProp<RootStackParamList,
     "Login">;

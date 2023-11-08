@@ -2,6 +2,7 @@ import {config} from "../config/config";
 import {ToastAndroid} from "react-native";
 import {useNavigation} from "@react-navigation/native";
 import {HomeCouponNavigationProp, HomeNavigationProp} from "../interfaces/navigation.interfaces";
+import {number, string} from "yup";
 
 class API {
     private baseUrl: string;
@@ -9,6 +10,7 @@ class API {
     constructor() {
         this.baseUrl = `${config.API_URL}`; // Zmień to na właściwy adres API
     }
+
 
     private async getAuthorizationHeader() {
         return {
@@ -59,8 +61,7 @@ class API {
     }
 
 
-    public async createStore(storeData: any) {
-        const navigation = useNavigation<HomeNavigationProp>();
+    public async createStore(storeData: any, navigation: HomeNavigationProp) {
         try {
             const headers = await this.getAuthorizationHeader();
             const response = await fetch(`${this.baseUrl}/store/create`, {
@@ -83,7 +84,7 @@ class API {
                 index: 0,
                 routes: [{name: "Główna"}],
             });
-            return res
+            return res;
         } catch (error) {
             ToastAndroid.show('Coś poszło nie tak, spróbuj jeszcze raz.', ToastAndroid.SHORT);
             return;

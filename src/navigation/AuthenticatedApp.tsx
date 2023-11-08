@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {StyleSheet} from 'react-native';
 import {Text} from "react-native-paper";
@@ -24,6 +24,12 @@ import {CouponCreateScreen} from "../screens/CouponsScreen/CouponCreateScreen/Co
 import {useAuth} from "../hooks/useAuth";
 import {YourStoreScreen} from "../screens/YourStoreScreen/YourStoreScreen";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import {CustomersScreen} from "../screens/CustomersScreen/CustomersScreen";
+import {
+    SingleCustomerProfileScreen
+} from "../screens/CustomersScreen/SingleCustomerProfileScreen/SingleCustomerProfileScreen";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {WpLoginScreen} from "../screens/WpLoginScreen/WpLoginScreen";
 
 
 const Tab = createBottomTabNavigator();
@@ -52,10 +58,28 @@ const CouponsStack = () => (
     </Stack.Navigator>
 )
 
+const CustomersStack = () => (
+    <Stack.Navigator screenOptions={{headerShown: false}}>
+        <Stack.Screen name="Customers" component={CustomersScreen}/>
+        <Stack.Screen name="SingleCustomerProfile" component={SingleCustomerProfileScreen}/>
+    </Stack.Navigator>
+)
+
 const AuthenticatedApp = () => {
     const [menuVisible, setMenuVisible] = useState(false);
     const {user} = useAuth();
     const [userStore, setUserStore] = useState(user?.store);
+    const [wpToken, setWpToken] = useState<string | null>(null); // Dodajemy stan dla wpToken
+
+    // Pobierz wpToken z AsyncStorage przy starcie komponentu
+    // useEffect(() => {
+    //     const getWpToken = async () => {
+    //         const token = await AsyncStorage.getItem("wpToken");
+    //         setWpToken(token);
+    //     };
+    //
+    //     getWpToken();
+    // }, []);
 
     const toggleMenu = () => {
         setMenuVisible(!menuVisible);
@@ -81,6 +105,10 @@ const AuthenticatedApp = () => {
                         iconName = focused ? 'storefront' : 'storefront-outline';
                         // @ts-ignore
                         return <MaterialCommunityIcons name={iconName} size={24} color={focused ? theme.colors.primary : theme.colors.onSurface} />;
+                    } else if (route.name === "Klienci") {
+                        iconName = focused ? 'ios-people-sharp' : 'ios-people-outline'
+                    } else if (route.name === "WpLogin") {
+                        iconName = focused ?  'shield-sharp' : 'shield-outline';
                     } else {
                         iconName = focused ? 'pricetags-sharp' : 'pricetags-outline'
                     }
@@ -99,6 +127,10 @@ const AuthenticatedApp = () => {
                         label = 'Zwroty';
                     } else if (route.name === 'Sklep') {
                         label = 'Twój Sklep';
+                    } else if (route.name === 'Klienci') {
+                        label = 'Klienci'
+                    } else if (route.name === 'WpLogin') {
+                        label = 'Autoryzacja WordPress'
                     } else {
                         label = 'Kupony';
                     }
@@ -112,16 +144,40 @@ const AuthenticatedApp = () => {
                     );
                 }
             })}>
-                {user?.store && (
-                    <>
-                        <Tab.Screen name="Główna" component={HomeScreen}/>
-                        <Tab.Screen name="Zamówienia" component={OrdersStack}/>
-                        <Tab.Screen name="Zwroty" component={RefundsStack}/>
-                        <Tab.Screen name="Kupony" component={CouponsStack}/>
-                    </>
-                )}
-                {!user?.store && (
-                    <Tab.Screen name="Sklep" component={YourStoreScreen}/>
+                {/*{user?.store && (*/}
+                {/*    //DODAC TUTAJ KOD< KTORY SPRAWDZA CZY JEST wpTOKEN i OKNO LOGOWANIA DO WP*/}
+                {/*    <>*/}
+                {/*        <Tab.Screen name="Główna" component={HomeScreen}/>*/}
+                {/*        <Tab.Screen name="Zamówienia" component={OrdersStack}/>*/}
+                {/*        <Tab.Screen name="Zwroty" component={RefundsStack}/>*/}
+                {/*        <Tab.Screen name="Kupony" component={CouponsStack}/>*/}
+                {/*        <Tab.Screen name="Klienci" component={CustomersStack}/>*/}
+                {/*    </>*/}
+                {/*)}*/}
+                {/*{!user?.store && (*/}
+                {/*    <Tab.Screen name="Sklep" component={YourStoreScreen}/>*/}
+                {/*)}*/}
+
+
+                {/* Sprawdzamy, czy user.store istnieje */}
+                {userStore ? (
+                    // Jeśli user.store istnieje, sprawdzamy, czy wpToken istnieje
+                    // wpToken ? (
+                        // Ekrany, gdy user.store i wpToken istnieją
+                        <>
+                            <Tab.Screen name="Główna" component={HomeScreen} />
+                            <Tab.Screen name="Zamówienia" component={OrdersStack} />
+                            <Tab.Screen name="Zwroty" component={RefundsStack} />
+                            <Tab.Screen name="Kupony" component={CouponsStack} />
+                            <Tab.Screen name="Klienci" component={CustomersStack} />
+                        </>
+                    // ) : (
+                    //     // Ekrany, gdy user.store istnieje, ale wpToken nie istnieje
+                    //     <Tab.Screen name="WpLogin" component={WpLoginScreen} />
+                    // )
+                ) : (
+                    // Ekrany, gdy user.store nie istnieje
+                    <Tab.Screen name="Sklep" component={YourStoreScreen} />
                 )}
             </Tab.Navigator>
         </>

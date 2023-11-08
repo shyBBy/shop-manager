@@ -45,3 +45,14 @@ export interface Login {
     email: string;
     password: string;
 }
+
+export interface TokenResponse {
+    token: string;
+}
+
+export interface WpLogin {
+    username: string;
+    password: string;
+    userId?: string;  // Oznaczamy pole jako opcjonalne
+    userEmail?: string;  // Oznaczamy pole jako opcjonalne
+}

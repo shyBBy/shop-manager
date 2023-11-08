@@ -5,11 +5,12 @@ import {BasicStoreDetails} from "../../components/BasicStoreDetails/BasicStoreDe
 import {Platform, ScrollView} from "react-native";
 
 import {useTheme} from 'react-native-paper';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {WpLoginScreen} from "../WpLoginScreen/WpLoginScreen";
 
 const MORE_ICON = Platform.OS === 'ios' ? 'dots-horizontal' : 'dots-vertical';
 
 const Home: React.FC = (store: any) => {
-    const {user} = useAuth();
 
     const theme = useTheme()
 

@@ -1,18 +1,65 @@
 import React, {useEffect, useState} from "react";
-import {Dimensions, Platform, StyleSheet, ToastAndroid, useWindowDimensions, View} from 'react-native';
+import {Platform, StyleSheet, ToastAndroid, View} from 'react-native';
 import {useAuth} from "../../hooks/useAuth";
 import {StorageManager} from "../../helpers/asyncStorage";
-import {Appbar, Button, Surface, Text, TextInput} from "react-native-paper";
+import {Appbar, Button, Text} from "react-native-paper";
 import {theme} from "../../theme";
 import Api from "../../api/api";
 import {GetListOfTopProductsResponse, GetOneSalesReportResponse} from "../../interfaces/reports.interfaces";
 import {Loader} from "../Loader/Loader";
 import {SingleTopProductsSalesElementOfList} from "./SingleTopProductsSalesElementOfList";
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { Ionicons } from '@expo/vector-icons';
 import {checkDeviceFontSize} from "../../helpers/checkDeviceFontSize";
+import {SingleOutsidePanelLink} from "./SingleOutsidePanelLink";
 
 const image = require('../../../assets/img/myApp2.png');
+
+
+const cardsData = [
+    {
+        title: "E-mail",
+        description: "Dostęp do skrzynki pocztowej z poziomu przeglądarki.",
+        link: "https://dpoczta.pl",
+        icon: 'mail',
+        button: 'Zaloguj się'
+    },
+    {
+        title: "Sklep",
+        description: "Odwiedź swój sklep internetowy.",
+        link: "https://suoari.fashion",
+        icon: 'cart',
+        button: 'Odwiedź sklep'
+    },
+    {
+        title: "Płatności",
+        description: "Zaloguj się do systemu płatności PayU.",
+        link: "https://secure.payu.com/pl/standard/user/login",
+        icon: 'card',
+        button: 'Zaloguj się'
+    },
+    {
+        title: "Hosting",
+        description: "Panel do zarządzania hostingiem sklepu.",
+        link: "https://dpanel.pl",
+        icon: 'server',
+        button: 'Zaloguj się'
+    },
+    {
+        title: "Furgonetka",
+        description: "Wszystkie informacje dotyczące wysyłek.",
+        link: "https://furgonetka.pl/wejdz",
+        icon: 'car',
+        button: 'Zaloguj się'
+    },
+    {
+        title: "Panel admina",
+        description: "Panel administratora sklepu WooCommerce.",
+        link: "https://suoari.fashion/wp-admin/",
+        icon: 'shield',
+        button: 'Zaloguj się'
+    },
+    // Dodaj więcej elementów według potrzeb
+];
 
 export const BasicStoreDetails = () => {
     const {user} = useAuth();
@@ -115,7 +162,10 @@ export const BasicStoreDetails = () => {
                 <Appbar.Header style={{backgroundColor: theme.colors.navigationBackground}}>
 
                     <Appbar.Content title={store ? store.name : 'Brak nazwy'}
-                                    titleStyle={{color: theme.colors.appBarTitleColor, fontSize: bigScreenSize ? 14 : 22}}/>
+                                    titleStyle={{
+                                        color: theme.colors.appBarTitleColor,
+                                        fontSize: bigScreenSize ? 14 : 22
+                                    }}/>
                     <Button onPress={handleSignOut}>Wyloguj</Button>
                 </Appbar.Header>
                 {showStartDatePicker && (
@@ -134,9 +184,20 @@ export const BasicStoreDetails = () => {
                         onChange={onChangeEndDate}
                     />
                 )}
-                <Text style={{marginLeft: 10, color: theme.colors.appBarTitleColor, fontFamily: 'BebasNeu', padding: 3, fontSize: bigScreenSize ? 14 : 18}}>Podstawowe statystyki sprzedaży</Text>
+                <Text style={{
+                    marginLeft: 10,
+                    color: theme.colors.appBarTitleColor,
+                    fontFamily: 'BebasNeu',
+                    padding: 3,
+                    fontSize: bigScreenSize ? 14 : 18
+                }}>Podstawowe statystyki sprzedaży</Text>
                 <Text
-                      style={{marginLeft: 10, color: theme.colors.onSurface, fontFamily: 'OswaldLight', fontSize: bigScreenSize ? 10 : 12}}>Statystyki od początku istnienia sklepu do dzisiaj.</Text>
+                    style={{
+                        marginLeft: 10,
+                        color: theme.colors.onSurface,
+                        fontFamily: 'OswaldLight',
+                        fontSize: bigScreenSize ? 10 : 12
+                    }}>Statystyki od początku istnienia sklepu do dzisiaj.</Text>
                 {/*<Text variant='bodySmall'*/}
                 {/*      style={{marginLeft: 10, color: theme.colors.onSurface, fontFamily: 'OswaldLight'}}>Wybierz daty poniżej aby wyświetlić statystyki z wybranego okresu.</Text>*/}
                 {/*<View style={{flexDirection: 'row', margin: 5, alignItems: 'center'}}>*/}
@@ -161,53 +222,119 @@ export const BasicStoreDetails = () => {
                 {/*</View>*/}
                 <View style={{flexDirection: 'column'}}>
                     <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
-                        <View style={[styles.card, { height: bigScreenSize ? 90 : 80, width: bigScreenSize ? 180 : 170 }]}>
+                        <View
+                            style={[styles.card, {height: bigScreenSize ? 90 : 80, width: bigScreenSize ? 180 : 170}]}>
                             <View>
-                                <Text  style={{color: theme.colors.onSurface, fontFamily: 'OswaldLight', padding: 1, fontSize: bigScreenSize? 13 : 17}} >Łączna wartość zamówień</Text>
+                                <Text style={{
+                                    color: theme.colors.onSurface,
+                                    fontFamily: 'OswaldLight',
+                                    padding: 1,
+                                    fontSize: bigScreenSize ? 13 : 17
+                                }}>Łączna wartość zamówień</Text>
                             </View>
                             <View>
-                                <Text  style={{color: theme.colors.primary, fontFamily: 'BebasNeu', padding: 1, fontSize: bigScreenSize? 12 : 16}} >{`${salesReport?.total_sales} zł`}</Text>
+                                <Text style={{
+                                    color: theme.colors.primary,
+                                    fontFamily: 'BebasNeu',
+                                    padding: 1,
+                                    fontSize: bigScreenSize ? 12 : 16
+                                }}>{`${salesReport?.total_sales} zł`}</Text>
                             </View>
                         </View>
-                        <View style={[styles.card, { height: bigScreenSize ? 90 : 80, width: bigScreenSize ? 180 : 170 }]}>
+                        <View
+                            style={[styles.card, {height: bigScreenSize ? 90 : 80, width: bigScreenSize ? 180 : 170}]}>
                             <View>
-                                <Text  style={{color: theme.colors.onSurface, fontFamily: 'OswaldLight', padding: 1, fontSize: bigScreenSize? 13 : 17}} >Ilość zamówień</Text>
+                                <Text style={{
+                                    color: theme.colors.onSurface,
+                                    fontFamily: 'OswaldLight',
+                                    padding: 1,
+                                    fontSize: bigScreenSize ? 13 : 17
+                                }}>Ilość zamówień</Text>
                             </View>
                             <View>
-                                <Text  style={{color: theme.colors.primary, fontFamily: 'BebasNeu', padding: 1, fontSize: bigScreenSize? 12 : 16}} >{`${salesReport?.total_orders}`}</Text>
+                                <Text style={{
+                                    color: theme.colors.primary,
+                                    fontFamily: 'BebasNeu',
+                                    padding: 1,
+                                    fontSize: bigScreenSize ? 12 : 16
+                                }}>{`${salesReport?.total_orders}`}</Text>
                             </View>
                         </View>
                     </View>
 
                     <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
-                        <View style={[styles.card, { height: bigScreenSize ? 90 : 80, width: bigScreenSize ? 180 : 170 }]}>
+                        <View
+                            style={[styles.card, {height: bigScreenSize ? 90 : 80, width: bigScreenSize ? 180 : 170}]}>
                             <View>
-                                <Text  style={{color: theme.colors.onSurface, fontFamily: 'OswaldLight', padding: 1, fontSize: bigScreenSize? 13 : 17}} >Ilość produktów</Text>
+                                <Text style={{
+                                    color: theme.colors.onSurface,
+                                    fontFamily: 'OswaldLight',
+                                    padding: 1,
+                                    fontSize: bigScreenSize ? 13 : 17
+                                }}>Ilość produktów</Text>
                             </View>
                             <View>
-                                <Text  style={{color: theme.colors.primary, fontFamily: 'BebasNeu', padding: 1, fontSize: bigScreenSize? 12 : 16}} >{`${salesReport?.total_items}`}</Text>
+                                <Text style={{
+                                    color: theme.colors.primary,
+                                    fontFamily: 'BebasNeu',
+                                    padding: 1,
+                                    fontSize: bigScreenSize ? 12 : 16
+                                }}>{`${salesReport?.total_items}`}</Text>
                             </View>
                         </View>
-                        <View style={[styles.card, { height: bigScreenSize ? 90 : 80, width: bigScreenSize ? 180 : 170 }]}>
+                        <View
+                            style={[styles.card, {height: bigScreenSize ? 90 : 80, width: bigScreenSize ? 180 : 170}]}>
                             <View>
-                                <Text  style={{color: theme.colors.onSurface, fontFamily: 'OswaldLight', padding: 1, fontSize: bigScreenSize? 13 : 17}} >Średnia wartość zamówienia</Text>
+                                <Text style={{
+                                    color: theme.colors.onSurface,
+                                    fontFamily: 'OswaldLight',
+                                    padding: 1,
+                                    fontSize: bigScreenSize ? 13 : 17
+                                }}>Średnia wartość zamówienia</Text>
                             </View>
                             <View>
-                                <Text  style={{color: theme.colors.primary, fontFamily: 'BebasNeu', padding: 1, fontSize: bigScreenSize? 12 : 16}} >{`${salesReport?.average_sales} zł`}</Text>
+                                <Text style={{
+                                    color: theme.colors.primary,
+                                    fontFamily: 'BebasNeu',
+                                    padding: 1,
+                                    fontSize: bigScreenSize ? 12 : 16
+                                }}>{`${salesReport?.average_sales} zł`}</Text>
                             </View>
                         </View>
                     </View>
 
                 </View>
 
+                <View style={{flexDirection: 'column', justifyContent: 'space-around'}}>
+                    <Text
+                        style={{
+                            marginLeft: 10,
+                            color: theme.colors.appBarTitleColor,
+                            fontFamily: 'BebasNeu',
+                            padding: 3,
+                            fontSize: bigScreenSize ? 14 : 18
+                        }}>Przydatne linki
+                    </Text>
+                    {cardsData.map((card, index) => (
+                        <SingleOutsidePanelLink key={index} card={card}/>
+                    ))}
+                </View>
+
                 <View>
                     <Text
-                          style={{marginLeft: 10, color: theme.colors.appBarTitleColor, fontFamily: 'BebasNeu', padding: 3, fontSize: bigScreenSize ? 14 : 18}}>Top
+                        style={{
+                            marginLeft: 10,
+                            color: theme.colors.appBarTitleColor,
+                            fontFamily: 'BebasNeu',
+                            padding: 3,
+                            fontSize: bigScreenSize ? 14 : 18
+                        }}>Top
                         5 najlepiej sprzedających się produktów</Text>
                     {topProductSalesReport.map((topProduct) => (
                         <SingleTopProductsSalesElementOfList product={topProduct} key={topProduct.product_id}/>
                     ))}
                 </View>
+
             </View>
         </>
     )

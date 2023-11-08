@@ -6,6 +6,8 @@ import {Text, Card, Button, TextInput} from "react-native-paper";
 import React from "react";
 import {KeyboardAvoidingView, ScrollView, View} from "react-native";
 import {theme} from "../../theme";
+import {HomeNavigationProp} from "../../interfaces/navigation.interfaces";
+import {useNavigation} from "@react-navigation/native";
 
 export const CreateStoreForm = () => {
     const {control, handleSubmit, formState: {errors}} = useForm<{ name: string; url: string; consumer_key: string; consumer_secret: string; }>({
@@ -13,7 +15,7 @@ export const CreateStoreForm = () => {
     });
 
     const onSubmit = async (data: any) => {
-       await Api.createStore(data)
+        await Api.createStore(data, useNavigation<HomeNavigationProp>());
     }
 
     return (

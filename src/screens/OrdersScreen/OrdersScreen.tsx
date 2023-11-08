@@ -1,7 +1,5 @@
 import React from 'react';
 import {OrderList} from "./OrderList";
-import {View} from "react-native";
-import {theme} from "../../theme";
 
 const OrdersScreen: React.FC = () => {
 
@@ -10,7 +8,7 @@ const OrdersScreen: React.FC = () => {
         <>
             <OrderList/>
         </>
-    );
+    )
 };
 
 export default OrdersScreen;
